@@ -1,210 +1,31 @@
 /**
  * Admin Layout - for admin panel pages
+ * Uses shared BaseLayout component
  */
 
-import { useState, type ReactNode } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { Button } from 'primereact/button';
-import { Badge } from 'primereact/badge';
-import { cn } from '@/utils/cn';
-import { APP_CONFIG, STORAGE_KEYS } from '@/config/constants';
+import type { ReactNode } from 'react';
+import { BaseLayout } from '@/components/layout';
 import { ADMIN_NAV_ITEMS, ROUTES } from '@/config/routes';
-import { useAuthStore } from '@/store/authStore';
-import { useLocalStorage } from '@/hooks/useLocalStorage';
-import { useBreakpoint } from '@/hooks/useMediaQuery';
-import { ThemeToggle } from '@/components/ui/ThemeToggle';
-import { getInitials } from '@/utils/format';
 
 interface AdminLayoutProps {
   children: ReactNode;
 }
 
 export function AdminLayout({ children }: AdminLayoutProps) {
-  const navigate = useNavigate();
-  const { user, logout } = useAuthStore();
-  const { isMobile } = useBreakpoint();
-  const [sidebarCollapsed, setSidebarCollapsed] = useLocalStorage(
-    STORAGE_KEYS.sidebarCollapsed,
-    false
-  );
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const handleLogout = () => {
-    logout();
-    navigate(ROUTES.login);
-  };
-
-  const toggleSidebar = () => {
-    if (isMobile) {
-      setMobileMenuOpen(!mobileMenuOpen);
-    } else {
-      setSidebarCollapsed(!sidebarCollapsed);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-secondary-50 dark:bg-secondary-900">
-      {/* Sidebar */}
-      <aside
-        className={cn(
-          'fixed top-0 left-0 z-40 h-screen transition-transform duration-300',
-          'bg-secondary-900 dark:bg-secondary-950 border-r border-secondary-800',
-          sidebarCollapsed ? 'w-20' : 'w-64',
-          isMobile && !mobileMenuOpen && '-translate-x-full'
-        )}
-      >
-        {/* Logo */}
-        <div className="h-16 flex items-center justify-center border-b border-secondary-800">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center flex-shrink-0">
-              <i className="pi pi-star-fill text-white text-xl" />
-            </div>
-            {!sidebarCollapsed && (
-              <div>
-                <span className="text-lg font-bold text-white block leading-tight">
-                  {APP_CONFIG.name}
-                </span>
-                <Badge value="Admin" severity="warning" className="text-xs" />
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Navigation */}
-        <nav className="p-4 space-y-2">
-          {ADMIN_NAV_ITEMS.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                cn(
-                  'flex items-center gap-3 px-4 py-3 rounded-lg transition-colors',
-                  'text-secondary-300',
-                  'hover:bg-secondary-800 hover:text-gold-400',
-                  isActive && 'bg-gold-900/40 text-gold-400 border-l-4 border-gold-400',
-                  sidebarCollapsed && 'justify-center'
-                )
-              }
-              onClick={() => isMobile && setMobileMenuOpen(false)}
-            >
-              <i className={cn(item.icon, 'text-lg')} />
-              {!sidebarCollapsed && <span>{item.label}</span>}
-            </NavLink>
-          ))}
-        </nav>
-
-        {/* Divider */}
-        <div className="mx-4 border-t border-secondary-800" />
-
-        {/* Quick links */}
-        {!sidebarCollapsed && (
-          <div className="p-4">
-            <p className="text-xs uppercase tracking-wider text-secondary-500 mb-3">
-              Quick Links
-            </p>
-            <NavLink
-              to={ROUTES.dashboard}
-              className="flex items-center gap-2 text-secondary-400 hover:text-gold-400 text-sm py-2"
-            >
-              <i className="pi pi-external-link text-xs" />
-              <span>User Dashboard</span>
-            </NavLink>
-          </div>
-        )}
-
-        {/* User section at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-secondary-800">
-          <div className={cn('flex items-center gap-3', sidebarCollapsed && 'justify-center')}>
-            <div className="w-10 h-10 rounded-full bg-gold-600 flex items-center justify-center text-white font-semibold ring-2 ring-gold-400">
-              {user ? getInitials(`${user.firstName} ${user.lastName}`) : 'A'}
-            </div>
-            {!sidebarCollapsed && (
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-white truncate">
-                  {user?.firstName} {user?.lastName}
-                </p>
-                <p className="text-xs text-secondary-400 truncate">Administrator</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </aside>
-
-      {/* Mobile overlay */}
-      {isMobile && mobileMenuOpen && (
-        <div
-          className="fixed inset-0 z-30 bg-black/50"
-          onClick={() => setMobileMenuOpen(false)}
-        />
-      )}
-
-      {/* Main content */}
-      <div
-        className={cn(
-          'transition-all duration-300',
-          !isMobile && (sidebarCollapsed ? 'ml-20' : 'ml-64')
-        )}
-      >
-        {/* Header */}
-        <header className="sticky top-0 z-20 h-16 bg-white dark:bg-secondary-800 border-b border-secondary-200 dark:border-secondary-700">
-          <div className="h-full px-4 flex items-center justify-between">
-            {/* Left side */}
-            <div className="flex items-center gap-4">
-              {/* Menu toggle */}
-              <Button
-                icon="pi pi-bars"
-                text
-                severity="secondary"
-                onClick={toggleSidebar}
-                className="lg:hidden"
-              />
-
-              {/* Desktop collapse toggle */}
-              <Button
-                icon={sidebarCollapsed ? 'pi pi-angle-right' : 'pi pi-angle-left'}
-                text
-                severity="secondary"
-                onClick={toggleSidebar}
-                className="hidden lg:flex"
-              />
-
-              {/* Breadcrumb placeholder */}
-              <div className="hidden md:flex items-center gap-2 text-sm text-secondary-500">
-                <i className="pi pi-home" />
-                <span>/</span>
-                <span className="text-secondary-900 dark:text-white">Admin Panel</span>
-              </div>
-            </div>
-
-            {/* Right side */}
-            <div className="flex items-center gap-2">
-              <ThemeToggle />
-
-              {/* Notifications */}
-              <Button
-                icon="pi pi-bell"
-                text
-                severity="secondary"
-                badge="3"
-                badgeClassName="p-badge-danger"
-              />
-
-              <Button
-                icon="pi pi-sign-out"
-                text
-                severity="secondary"
-                tooltip="Logout"
-                tooltipOptions={{ position: 'bottom' }}
-                onClick={handleLogout}
-              />
-            </div>
-          </div>
-        </header>
-
-        {/* Page content */}
-        <main className="p-6">{children}</main>
-      </div>
-    </div>
+    <BaseLayout
+      navItems={ADMIN_NAV_ITEMS}
+      showAdminBadge={true}
+      showQuickLinks={true}
+      quickLinksPath={ROUTES.dashboard}
+      quickLinksLabel="User Dashboard"
+      showBreadcrumb={true}
+      breadcrumbLabel="Admin Panel"
+      showNotifications={true}
+      notificationCount={3}
+    >
+      {children}
+    </BaseLayout>
   );
 }
 

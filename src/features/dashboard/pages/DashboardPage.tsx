@@ -6,34 +6,36 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 import { useAuthStore } from '@/store/authStore';
 import { formatCurrency } from '@/utils/format';
+import { Icon } from '@/components/ui/Icon';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 
 // Mock data for demonstration
 const mockStats = [
   {
     title: 'Total Gold Stock',
     value: '245.5g',
-    icon: 'pi pi-box',
+    icon: 'package_2', // Material Symbols
     change: '+12.5%',
     changeType: 'positive' as const,
   },
   {
     title: 'Today\'s Sales',
     value: formatCurrency(125000),
-    icon: 'pi pi-indian-rupee',
+    icon: 'currency_rupee', // Material Symbols
     change: '+8.2%',
     changeType: 'positive' as const,
   },
   {
     title: 'Pending Orders',
     value: '8',
-    icon: 'pi pi-clock',
+    icon: 'schedule', // Material Symbols
     change: '-2',
     changeType: 'negative' as const,
   },
   {
     title: 'Active Customers',
     value: '156',
-    icon: 'pi pi-users',
+    icon: 'person', // Material Symbols
     change: '+5',
     changeType: 'positive' as const,
   },
@@ -77,7 +79,7 @@ export function DashboardPage() {
                 </p>
               </div>
               <div className="w-12 h-12 rounded-xl bg-gold-100 dark:bg-gold-900/30 flex items-center justify-center">
-                <i className={`${stat.icon} text-xl text-gold-600`} />
+                <Icon name={stat.icon} size={24} className="text-gold-600" />
               </div>
             </div>
           </Card>
@@ -89,25 +91,25 @@ export function DashboardPage() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <Button
             label="New Sale"
-            icon="pi pi-plus"
+            icon={<PrimeReactIcon name="add" size={20} />}
             severity="success"
             className="w-full"
           />
           <Button
             label="Add Stock"
-            icon="pi pi-box"
+            icon={<PrimeReactIcon name="package_2" size={20} />}
             severity="info"
             className="w-full"
           />
           <Button
             label="View Orders"
-            icon="pi pi-list"
+            icon={<PrimeReactIcon name="list" size={20} />}
             severity="warning"
             className="w-full"
           />
           <Button
             label="Reports"
-            icon="pi pi-chart-bar"
+            icon={<PrimeReactIcon name="bar_chart" size={20} />}
             severity="help"
             className="w-full"
           />
@@ -125,7 +127,7 @@ export function DashboardPage() {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-secondary-100 dark:bg-secondary-700 flex items-center justify-center">
-                    <i className="pi pi-shopping-cart text-secondary-500" />
+                    <Icon name="shopping_cart" size={20} className="text-secondary-500" />
                   </div>
                   <div>
                     <p className="font-medium text-secondary-900 dark:text-white">
@@ -166,7 +168,7 @@ export function DashboardPage() {
                 </div>
                 <div className="text-right">
                   <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-sm">
-                    <i className="pi pi-arrow-up text-xs" />
+                    <Icon name="arrow_upward" size={12} />
                     +0.5%
                   </span>
                 </div>
@@ -185,7 +187,7 @@ export function DashboardPage() {
                 </div>
                 <div className="text-right">
                   <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded text-sm">
-                    <i className="pi pi-arrow-up text-xs" />
+                    <Icon name="arrow_upward" size={12} />
                     +0.5%
                   </span>
                 </div>
@@ -204,7 +206,7 @@ export function DashboardPage() {
                 </div>
                 <div className="text-right">
                   <span className="inline-flex items-center gap-1 px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded text-sm">
-                    <i className="pi pi-arrow-down text-xs" />
+                    <Icon name="arrow_downward" size={12} />
                     -0.2%
                   </span>
                 </div>

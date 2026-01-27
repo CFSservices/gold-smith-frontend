@@ -16,7 +16,7 @@
 
 /* PrimeReact Core Styles */
 @import 'primereact/resources/primereact.min.css';
-@import 'primeicons/primeicons.css';
+/* PrimeIcons removed - using Material Symbols Rounded instead */
 
 /* Tailwind Utilities (the classes you use in HTML) */
 @import 'tailwindcss/utilities' layer(utilities);
@@ -29,7 +29,7 @@
  * Gold brand colors based on amber palette
  */
 @theme {
-  /* Gold Brand Colors */
+  /* Gold Brand Colors - Updated from Figma */
   --color-gold-50: #fffbeb;
   --color-gold-100: #fef3c7;
   --color-gold-200: #fde68a;
@@ -41,6 +41,14 @@
   --color-gold-800: #92400e;
   --color-gold-900: #78350f;
   --color-gold-950: #451a03;
+  
+  /* Figma Gold Colors */
+  --color-gold-dark: #675122;
+  --color-gold-medium: #a97f00;
+  --color-gold-light: #fff9e5;
+  --color-gold-light-alt: #ece0c5;
+  --color-gold-gradient-start: #54421c;
+  --color-gold-gradient-end: #2e240f;
 
   /* Secondary Colors (Warm Stone Gray) */
   --color-secondary-50: #fafaf9;
@@ -55,7 +63,8 @@
   --color-secondary-900: #1c1917;
   --color-secondary-950: #0c0a09;
 
-  /* Font Family */
+  /* Font Family - Keeping Inter, but Figma uses Noto Sans */
+  /* Note: To match Figma exactly, would need to add Noto Sans font */
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
 }
@@ -66,6 +75,64 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Radial gradient utility for sidebar - Exact Figma gradient */
+  .bg-gradient-radial {
+    background: radial-gradient(
+      circle at -5.46% -9.94%,
+      #54421c 0%,
+      #2e240f 100%
+    );
+  }
+  
+  /* Remove underline from all links in sidebar */
+  aside nav a {
+    text-decoration: none;
+  }
+  
+  /* NavBar button states matching Figma */
+  .nav-button-default {
+    background: transparent;
+    color: #ffffff;
+  }
+  
+  .nav-button-hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+  }
+  
+  .nav-button-pressed {
+    background: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+  }
+  
+  .nav-button-active {
+    background: #ffffff;
+    color: #2e240f;
+  }
+  
+  /* Material Symbols Rounded base styles */
+  .material-symbols-rounded {
+    font-family: 'Material Symbols Rounded';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  
+  /* Material Symbols filled variant */
+  .material-symbols-rounded-filled {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
 
   body {

@@ -8,6 +8,7 @@ import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { useAuthStore } from '@/store/authStore';
 import { getInitials, formatDate } from '@/utils/format';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 
 export function ProfilePage() {
   const { user } = useAuthStore();
@@ -114,7 +115,7 @@ export function ProfilePage() {
               <div className="flex justify-end pt-4">
                 <Button
                   label="Edit Profile"
-                  icon="pi pi-pencil"
+                  icon={<PrimeReactIcon name="edit" size={20} />}
                   severity="warning"
                 />
               </div>

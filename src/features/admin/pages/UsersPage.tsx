@@ -12,6 +12,8 @@ import { Tag } from 'primereact/tag';
 import { Avatar } from 'primereact/avatar';
 import { Dropdown } from 'primereact/dropdown';
 import { formatDate, getInitials } from '@/utils/format';
+import { Icon } from '@/components/ui/Icon';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 
 // Mock data
 const mockUsers = [
@@ -118,9 +120,9 @@ export function UsersPage() {
   const actionsTemplate = () => {
     return (
       <div className="flex items-center gap-2">
-        <Button icon="pi pi-eye" text severity="info" size="small" tooltip="View" />
-        <Button icon="pi pi-pencil" text severity="warning" size="small" tooltip="Edit" />
-        <Button icon="pi pi-trash" text severity="danger" size="small" tooltip="Delete" />
+        <Button icon={<PrimeReactIcon name="visibility" size={18} />} text severity="info" size="small" tooltip="View" />
+        <Button icon={<PrimeReactIcon name="edit" size={18} />} text severity="warning" size="small" tooltip="Edit" />
+        <Button icon={<PrimeReactIcon name="delete" size={18} />} text severity="danger" size="small" tooltip="Delete" />
       </div>
     );
   };
@@ -130,7 +132,7 @@ export function UsersPage() {
     <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
       <div className="flex flex-wrap gap-2">
         <span className="p-input-icon-left">
-          <i className="pi pi-search" />
+          <Icon name="search" size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary-400" />
           <InputText
             value={globalFilter}
             onChange={(e) => setGlobalFilter(e.target.value)}
@@ -157,7 +159,7 @@ export function UsersPage() {
           className="w-40"
         />
       </div>
-      <Button label="Add User" icon="pi pi-plus" />
+      <Button label="Add User" icon={<PrimeReactIcon name="add" size={20} />} />
     </div>
   );
 

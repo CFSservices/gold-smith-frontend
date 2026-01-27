@@ -8,6 +8,7 @@ import { InputNumber } from 'primereact/inputnumber';
 import { InputSwitch } from 'primereact/inputswitch';
 import { Button } from 'primereact/button';
 import { Divider } from 'primereact/divider';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 
 export function AdminSettingsPage() {
   return (
@@ -223,7 +224,7 @@ export function AdminSettingsPage() {
       {/* Save Button */}
       <div className="flex justify-end gap-2">
         <Button label="Reset to Defaults" severity="secondary" outlined />
-        <Button label="Save Settings" icon="pi pi-check" />
+        <Button label="Save Settings" icon={<PrimeReactIcon name="check" size={20} />} />
       </div>
     </div>
   );

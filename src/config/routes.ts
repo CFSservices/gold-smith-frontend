@@ -16,6 +16,11 @@ export const ROUTES = {
 
   // Protected routes - Dashboard
   dashboard: '/dashboard',
+  orders: '/orders',
+  schemes: '/schemes',
+  jewels: '/jewels',
+  content: '/content',
+  customers: '/customers',
   profile: '/profile',
   settings: '/settings',
 
@@ -37,55 +42,77 @@ export const ROUTES = {
   serverError: '/500',
 } as const;
 
-// Navigation items for sidebar
+// Navigation items for sidebar - Updated to match Figma design
+// Icons use Material Symbols Rounded names directly (matching Figma design)
 export const DASHBOARD_NAV_ITEMS: NavItem[] = [
   {
     label: 'Dashboard',
     path: ROUTES.dashboard,
-    icon: 'pi pi-home',
+    icon: 'area_chart', // Material Symbols - matches Figma
+    hasDropdown: true,
   },
   {
-    label: 'Profile',
-    path: ROUTES.profile,
-    icon: 'pi pi-user',
+    label: 'Orders',
+    path: ROUTES.orders,
+    icon: 'package_2', // Material Symbols - matches Figma
+    hasDropdown: true,
   },
   {
-    label: 'Settings',
-    path: ROUTES.settings,
-    icon: 'pi pi-cog',
+    label: 'Schemes',
+    path: ROUTES.schemes,
+    icon: 'book_5', // Material Symbols - matches Figma
+    hasDropdown: true,
+  },
+  {
+    label: 'Jewels',
+    path: ROUTES.jewels,
+    icon: 'diamond', // Material Symbols - matches Figma
+    hasDropdown: true,
+  },
+  {
+    label: 'Content',
+    path: ROUTES.content,
+    icon: 'app_registration', // Material Symbols - matches Figma
+    hasDropdown: true,
+  },
+  {
+    label: 'Customers',
+    path: ROUTES.customers,
+    icon: 'person', // Material Symbols - matches Figma (PERSON)
+    hasDropdown: true,
   },
 ];
 
-// Admin navigation items
+// Admin navigation items - Using Material Symbols names directly
 export const ADMIN_NAV_ITEMS: NavItem[] = [
   {
     label: 'Dashboard',
     path: ROUTES.admin.dashboard,
-    icon: 'pi pi-th-large',
+    icon: 'dashboard', // Material Symbols
     roles: ['admin'],
   },
   {
     label: 'Users',
     path: ROUTES.admin.users,
-    icon: 'pi pi-users',
+    icon: 'person', // Material Symbols
     roles: ['admin'],
   },
   {
     label: 'Merchants',
     path: ROUTES.admin.merchants,
-    icon: 'pi pi-building',
+    icon: 'store', // Material Symbols
     roles: ['admin'],
   },
   {
     label: 'Reports',
     path: ROUTES.admin.reports,
-    icon: 'pi pi-chart-bar',
+    icon: 'bar_chart', // Material Symbols
     roles: ['admin'],
   },
   {
     label: 'Settings',
     path: ROUTES.admin.settings,
-    icon: 'pi pi-cog',
+    icon: 'settings', // Material Symbols
     roles: ['admin'],
   },
 ];
@@ -106,6 +133,11 @@ export const getRouteTitle = (pathname: string): string => {
     [ROUTES.register]: 'Register',
     [ROUTES.forgotPassword]: 'Forgot Password',
     [ROUTES.dashboard]: 'Dashboard',
+    [ROUTES.orders]: 'Orders',
+    [ROUTES.schemes]: 'Schemes',
+    [ROUTES.jewels]: 'Jewels',
+    [ROUTES.content]: 'Content',
+    [ROUTES.customers]: 'Customers',
     [ROUTES.profile]: 'Profile',
     [ROUTES.settings]: 'Settings',
     [ROUTES.admin.dashboard]: 'Admin Dashboard',

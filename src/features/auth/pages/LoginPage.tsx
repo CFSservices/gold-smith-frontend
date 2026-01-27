@@ -14,6 +14,7 @@ import { cn } from '@/utils/cn';
 import { loginSchema, type LoginFormData } from '@/utils/validation';
 import { useAuth } from '@/hooks/useAuth';
 import { ROUTES } from '@/config/routes';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 
 export function LoginPage() {
   const location = useLocation();
@@ -149,7 +150,7 @@ export function LoginPage() {
         <Button
           type="submit"
           label="Sign In"
-          icon="pi pi-sign-in"
+          icon={<PrimeReactIcon name="login" size={20} />}
           loading={isLoading}
           className="w-full"
         />

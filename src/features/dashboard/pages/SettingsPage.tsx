@@ -9,11 +9,13 @@ import { Dropdown } from 'primereact/dropdown';
 import { Button } from 'primereact/button';
 import { useTheme } from '@/hooks/useTheme';
 import type { Theme } from '@/types';
+import { Icon } from '@/components/ui/Icon';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 
 const themeOptions = [
-  { label: 'Light', value: 'light', icon: 'pi pi-sun' },
-  { label: 'Dark', value: 'dark', icon: 'pi pi-moon' },
-  { label: 'System', value: 'system', icon: 'pi pi-desktop' },
+  { label: 'Light', value: 'light', icon: 'light_mode' }, // Material Symbols
+  { label: 'Dark', value: 'dark', icon: 'dark_mode' }, // Material Symbols
+  { label: 'System', value: 'system', icon: 'computer' }, // Material Symbols
 ];
 
 const languageOptions = [
@@ -194,7 +196,7 @@ export function SettingsPage() {
 
       {/* Save Button */}
       <div className="flex justify-end">
-        <Button label="Save Changes" icon="pi pi-check" />
+        <Button label="Save Changes" icon={<PrimeReactIcon name="check" size={20} />} />
       </div>
     </div>
   );

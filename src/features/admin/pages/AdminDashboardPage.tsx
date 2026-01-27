@@ -8,31 +8,32 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Tag } from 'primereact/tag';
 import { formatCurrency, formatDate } from '@/utils/format';
+import { Icon } from '@/components/ui/Icon';
 
 // Mock data
 const mockStats = [
   {
     title: 'Total Users',
     value: '1,234',
-    icon: 'pi pi-users',
+    icon: 'person', // Material Symbols
     color: 'bg-blue-500',
   },
   {
     title: 'Active Merchants',
     value: '456',
-    icon: 'pi pi-building',
+    icon: 'store', // Material Symbols
     color: 'bg-green-500',
   },
   {
     title: 'Total Revenue',
     value: formatCurrency(12500000),
-    icon: 'pi pi-indian-rupee',
+    icon: 'currency_rupee', // Material Symbols
     color: 'bg-gold-500',
   },
   {
     title: 'Pending Approvals',
     value: '23',
-    icon: 'pi pi-clock',
+    icon: 'schedule', // Material Symbols
     color: 'bg-orange-500',
   },
 ];
@@ -118,7 +119,7 @@ export function AdminDashboardPage() {
               <div
                 className={`w-14 h-14 rounded-xl ${stat.color} flex items-center justify-center`}
               >
-                <i className={`${stat.icon} text-2xl text-white`} />
+                <Icon name={stat.icon} size={28} className="text-white" />
               </div>
               <div>
                 <p className="text-sm text-secondary-500 dark:text-secondary-400">

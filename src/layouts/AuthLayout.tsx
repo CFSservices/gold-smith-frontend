@@ -6,6 +6,7 @@ import type { ReactNode } from 'react';
 import { cn } from '@/utils/cn';
 import { APP_CONFIG } from '@/config/constants';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import AppIcon from '@/assets/AppIcon.svg';
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -19,9 +20,11 @@ export function AuthLayout({ children }: AuthLayoutProps) {
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center">
-              <i className="pi pi-star-fill text-white text-xl" />
-            </div>
+            <img 
+              src={AppIcon} 
+              alt={`${APP_CONFIG.name} Logo`}
+              className="w-12 h-12 md:w-16 md:h-16 shrink-0"
+            />
             <span className="text-xl font-bold text-secondary-900 dark:text-white">
               {APP_CONFIG.name}
             </span>

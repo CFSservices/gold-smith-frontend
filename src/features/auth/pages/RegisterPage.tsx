@@ -15,6 +15,7 @@ import { cn } from '@/utils/cn';
 import { registerSchema, type RegisterFormData } from '@/utils/validation';
 import { useAuth } from '@/hooks/useAuth';
 import { ROUTES } from '@/config/routes';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 
 export function RegisterPage() {
   const { register, isLoading, error, clearError } = useAuth();
@@ -276,7 +277,7 @@ export function RegisterPage() {
         <Button
           type="submit"
           label="Create Account"
-          icon="pi pi-user-plus"
+          icon={<PrimeReactIcon name="person_add" size={20} />}
           loading={isLoading}
           className="w-full"
         />

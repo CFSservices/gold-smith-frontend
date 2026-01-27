@@ -24,6 +24,11 @@ const RegisterPage = lazy(() => import('@/features/auth/pages/RegisterPage'));
 const ForgotPasswordPage = lazy(() => import('@/features/auth/pages/ForgotPasswordPage'));
 
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
+const OrdersPage = lazy(() => import('@/features/dashboard/pages/OrdersPage'));
+const SchemesPage = lazy(() => import('@/features/dashboard/pages/SchemesPage'));
+const JewelsPage = lazy(() => import('@/features/dashboard/pages/JewelsPage'));
+const ContentPage = lazy(() => import('@/features/dashboard/pages/ContentPage'));
+const CustomersPage = lazy(() => import('@/features/dashboard/pages/CustomersPage'));
 const ProfilePage = lazy(() => import('@/features/dashboard/pages/ProfilePage'));
 const SettingsPage = lazy(() => import('@/features/dashboard/pages/SettingsPage'));
 
@@ -82,6 +87,26 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard',
         element: <DashboardPage />,
+      },
+      {
+        path: '/orders',
+        element: <OrdersPage />,
+      },
+      {
+        path: '/schemes',
+        element: <SchemesPage />,
+      },
+      {
+        path: '/jewels',
+        element: <JewelsPage />,
+      },
+      {
+        path: '/content',
+        element: <ContentPage />,
+      },
+      {
+        path: '/customers',
+        element: <CustomersPage />,
       },
       {
         path: '/profile',

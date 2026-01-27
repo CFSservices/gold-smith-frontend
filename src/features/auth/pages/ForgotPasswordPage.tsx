@@ -13,6 +13,8 @@ import { cn } from '@/utils/cn';
 import { forgotPasswordSchema, type ForgotPasswordFormData } from '@/utils/validation';
 import { useAuth } from '@/hooks/useAuth';
 import { ROUTES } from '@/config/routes';
+import { Icon } from '@/components/ui/Icon';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 
 export function ForgotPasswordPage() {
   const { forgotPassword, isLoading, error, clearError } = useAuth();
@@ -41,7 +43,7 @@ export function ForgotPasswordPage() {
     return (
       <div className="space-y-6 text-center">
         <div className="w-16 h-16 mx-auto rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-          <i className="pi pi-check text-3xl text-green-600 dark:text-green-400" />
+          <Icon name="check_circle" size={32} className="text-green-600 dark:text-green-400" filled />
         </div>
 
         <div>
@@ -72,7 +74,7 @@ export function ForgotPasswordPage() {
           to={ROUTES.login}
           className="inline-flex items-center gap-2 text-sm text-gold-600 hover:text-gold-700 dark:text-gold-400"
         >
-          <i className="pi pi-arrow-left" />
+          <Icon name="arrow_back" size={16} />
           Back to login
         </Link>
       </div>
@@ -84,7 +86,7 @@ export function ForgotPasswordPage() {
       {/* Header */}
       <div className="text-center">
         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gold-100 dark:bg-gold-900/30 flex items-center justify-center">
-          <i className="pi pi-lock text-3xl text-gold-600 dark:text-gold-400" />
+          <Icon name="lock" size={32} className="text-gold-600 dark:text-gold-400" />
         </div>
         <h1 className="text-2xl font-bold text-secondary-900 dark:text-white">
           Forgot Password?
@@ -129,7 +131,7 @@ export function ForgotPasswordPage() {
         <Button
           type="submit"
           label="Send Reset Link"
-          icon="pi pi-send"
+          icon={<PrimeReactIcon name="send" size={20} />}
           loading={isLoading}
           className="w-full"
         />
@@ -141,7 +143,7 @@ export function ForgotPasswordPage() {
           to={ROUTES.login}
           className="inline-flex items-center gap-2 text-sm text-gold-600 hover:text-gold-700 dark:text-gold-400"
         >
-          <i className="pi pi-arrow-left" />
+          <Icon name="arrow_back" size={16} />
           Back to login
         </Link>
       </div>

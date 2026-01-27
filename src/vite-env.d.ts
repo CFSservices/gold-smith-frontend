@@ -17,3 +17,9 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+// SVG imports
+declare module '*.svg' {
+  const content: string;
+  export default content;
+}
