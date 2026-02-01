@@ -180,3 +180,11 @@ export function getInitials(name: string, maxLength: number = 2): string {
     .toUpperCase()
     .slice(0, maxLength);
 }
+
+/**
+ * Format user role for display (capitalize first letter)
+ */
+export function formatUserRole(role?: string): string {
+  if (!role) return 'Admin';
+  return role.charAt(0).toUpperCase() + role.slice(1);
+}

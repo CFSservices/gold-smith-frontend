@@ -11,12 +11,8 @@ import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 export function NotFoundPage() {
   const { isAuthenticated, user } = useAuthStore();
 
-  // Determine where to redirect
-  const homeRoute = isAuthenticated
-    ? user?.role === 'admin'
-      ? ROUTES.admin.dashboard
-      : ROUTES.dashboard
-    : ROUTES.login;
+  // Determine where to redirect (admin-only app)
+  const homeRoute = isAuthenticated ? ROUTES.dashboard : ROUTES.login;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary-50 dark:bg-secondary-900 px-4">

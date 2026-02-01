@@ -2,26 +2,27 @@
  * Login Page
  */
 
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Link, useLocation } from 'react-router-dom';
-import { InputText } from 'primereact/inputtext';
-import { Password } from 'primereact/password';
-import { Button } from 'primereact/button';
-import { Checkbox } from 'primereact/checkbox';
-import { Message } from 'primereact/message';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
+import { ROUTES } from '@/config/routes';
+import { useAuth } from '@/hooks/useAuth';
 import { cn } from '@/utils/cn';
 import { loginSchema, type LoginFormData } from '@/utils/validation';
-import { useAuth } from '@/hooks/useAuth';
-import { ROUTES } from '@/config/routes';
-import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from 'primereact/button';
+import { Checkbox } from 'primereact/checkbox';
+import { InputText } from 'primereact/inputtext';
+import { Message } from 'primereact/message';
+import { Password } from 'primereact/password';
+import { Controller, useForm } from 'react-hook-form';
+import { Link, useLocation } from 'react-router-dom';
 
 export function LoginPage() {
   const location = useLocation();
   const { login, isLoading, error, clearError } = useAuth();
 
-  // Get success message from registration redirect
-  const successMessage = (location.state as { message?: string })?.message;
+  // Get messages from location state (error from ProtectedRoute)
+  const locationState = location.state as { error?: string } | undefined;
+  const locationError = locationState?.error;
 
   const {
     control,
@@ -51,13 +52,10 @@ export function LoginPage() {
         </p>
       </div>
 
-      {/* Success message from registration */}
-      {successMessage && (
-        <Message severity="success" text={successMessage} className="w-full" />
+      {/* Error message from location state (e.g., ProtectedRoute redirect) or hook */}
+      {(locationError || error) && (
+        <Message severity="error" text={locationError || error} className="w-full" />
       )}
-
-      {/* Error message */}
-      {error && <Message severity="error" text={error} className="w-full" />}
 
       {/* Login Form */}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -126,7 +124,7 @@ export function LoginPage() {
                 <Checkbox
                   inputId="rememberMe"
                   checked={field.value}
-                  onChange={(e) => field.onChange(e.checked)}
+                  onChange={(e) => { field.onChange(e.checked); }}
                   disabled={isLoading}
                 />
                 <label
@@ -155,19 +153,6 @@ export function LoginPage() {
           className="w-full"
         />
       </form>
-
-      {/* Register link */}
-      <div className="text-center">
-        <p className="text-sm text-secondary-600 dark:text-secondary-400">
-          Don&apos;t have an account?{' '}
-          <Link
-            to={ROUTES.register}
-            className="font-medium text-gold-600 hover:text-gold-700 dark:text-gold-400"
-          >
-            Create an account
-          </Link>
-        </p>
-      </div>
     </div>
   );
 }

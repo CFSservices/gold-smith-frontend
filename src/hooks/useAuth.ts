@@ -2,14 +2,15 @@
  * Authentication hook with React Query integration
  */
 
+import { clearAuthToken, setAuthToken } from '@/api/client';
+import { authService } from '@/api/services/auth.service';
+import { AUTH_ERRORS } from '@/config/constants';
+import { ROUTES } from '@/config/routes';
+import { useAuthStore } from '@/store/authStore';
+import type { LoginRequest } from '@/types';
+import { MutationKeys, QueryKeys } from '@/types/api.types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '@/store/authStore';
-import { authService } from '@/api/services/auth.service';
-import { setAuthToken, clearAuthToken } from '@/api/client';
-import { ROUTES } from '@/config/routes';
-import { QueryKeys, MutationKeys } from '@/types/api.types';
-import type { LoginRequest, RegisterRequest, User } from '@/types';
 
 export function useAuth() {
   const navigate = useNavigate();
@@ -26,7 +27,6 @@ export function useAuth() {
     setError,
     clearError,
     hasRole,
-    isAdmin,
   } = useAuthStore();
 
   // Get current user query
@@ -51,6 +51,13 @@ export function useAuth() {
     onSuccess: (response) => {
       const { user: userData, tokens } = response.data;
       
+      // Verify user is admin (web app is admin-only)
+      if (userData.role !== 'admin') {
+        setError(AUTH_ERRORS.ACCESS_DENIED);
+        setLoading(false);
+        return; // Don't proceed with login
+      }
+      
       // Store tokens
       setAuthToken(tokens.accessToken);
       
@@ -60,38 +67,12 @@ export function useAuth() {
       // Invalidate and refetch user data
       void queryClient.invalidateQueries({ queryKey: QueryKeys.currentUser });
       
-      // Navigate based on role
-      if (userData.role === 'admin') {
-        navigate(ROUTES.admin.dashboard);
-      } else {
-        navigate(ROUTES.dashboard);
-      }
+      // Always navigate to dashboard (admin-only app)
+      navigate(ROUTES.dashboard);
     },
     onError: (error: { message: string }) => {
       setError(error.message);
       setLoading(false);
-    },
-    onSettled: () => {
-      setLoading(false);
-    },
-  });
-
-  // Register mutation
-  const registerMutation = useMutation({
-    mutationKey: MutationKeys.register,
-    mutationFn: (data: RegisterRequest) => authService.register(data),
-    onMutate: () => {
-      setLoading(true);
-      clearError();
-    },
-    onSuccess: () => {
-      // Navigate to login after successful registration
-      navigate(ROUTES.login, { 
-        state: { message: 'Registration successful! Please login.' } 
-      });
-    },
-    onError: (error: { message: string }) => {
-      setError(error.message);
     },
     onSettled: () => {
       setLoading(false);
@@ -137,25 +118,22 @@ export function useAuth() {
 
   return {
     // State
-    user: (currentUserQuery.data as User | undefined) ?? user,
+    user: (currentUserQuery.data) ?? user,
     isAuthenticated,
-    isLoading: storeLoading || loginMutation.isPending || registerMutation.isPending,
+    isLoading: storeLoading || loginMutation.isPending,
     error: storeError,
 
     // Actions
     login: loginMutation.mutate,
-    register: registerMutation.mutate,
     logout: logoutMutation.mutate,
     forgotPassword: forgotPasswordMutation.mutate,
     clearError,
 
     // Role helpers
     hasRole,
-    isAdmin,
 
     // Mutation states
     loginStatus: loginMutation.status,
-    registerStatus: registerMutation.status,
     forgotPasswordStatus: forgotPasswordMutation.status,
   };
 }

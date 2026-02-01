@@ -37,7 +37,6 @@ export interface RequestConfig {
 export interface ApiEndpoints {
   auth: {
     login: string;
-    register: string;
     logout: string;
     refresh: string;
     forgotPassword: string;
@@ -70,7 +69,6 @@ export const QueryKeys = {
 // Mutation keys
 export const MutationKeys = {
   login: ['auth', 'login'] as const,
-  register: ['auth', 'register'] as const,
   logout: ['auth', 'logout'] as const,
   // Add more mutation keys as needed
 } as const;

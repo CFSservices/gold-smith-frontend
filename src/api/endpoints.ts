@@ -6,7 +6,6 @@ export const API_ENDPOINTS = {
   // Authentication
   auth: {
     login: '/auth/login',
-    register: '/auth/register',
     logout: '/auth/logout',
     refresh: '/auth/refresh',
     forgotPassword: '/auth/forgot-password',
@@ -41,14 +40,6 @@ export const API_ENDPOINTS = {
     stats: '/dashboard/stats',
     recentActivity: '/dashboard/recent-activity',
     charts: '/dashboard/charts',
-  },
-
-  // Admin
-  admin: {
-    dashboard: '/admin/dashboard',
-    users: '/admin/users',
-    settings: '/admin/settings',
-    reports: '/admin/reports',
   },
 } as const;
 

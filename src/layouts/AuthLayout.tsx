@@ -1,12 +1,12 @@
 /**
- * Auth Layout - for login, register, and other auth pages
+ * Auth Layout - for login and forgot password pages
  */
 
-import type { ReactNode } from 'react';
-import { cn } from '@/utils/cn';
-import { APP_CONFIG } from '@/config/constants';
-import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import AppIcon from '@/assets/AppIcon.svg';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { APP_CONFIG } from '@/config/constants';
+import { cn } from '@/utils/cn';
+import type { ReactNode } from 'react';
 
 interface AuthLayoutProps {
   children: ReactNode;

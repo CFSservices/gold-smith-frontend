@@ -1,5 +1,5 @@
 /**
- * BaseLayout Component - Shared layout logic for Dashboard and Admin layouts
+ * BaseLayout Component - Shared layout logic for Dashboard (admin-only app)
  */
 
 import { useState, type ReactNode } from 'react';
@@ -11,14 +11,13 @@ import type { NavItem } from '@/types';
 import { useAuthStore } from '@/store/authStore';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useBreakpoint } from '@/hooks/useMediaQuery';
-import { getInitials } from '@/utils/format';
+import { getInitials, formatUserRole } from '@/utils/format';
 import { Sidebar } from '../Sidebar';
 import { Header } from '../Header';
 
 interface BaseLayoutProps {
   children: ReactNode;
   navItems: NavItem[];
-  showAdminBadge?: boolean;
   showQuickLinks?: boolean;
   quickLinksPath?: string;
   quickLinksLabel?: string;
@@ -31,7 +30,6 @@ interface BaseLayoutProps {
 export function BaseLayout({
   children,
   navItems,
-  showAdminBadge = false,
   showQuickLinks = false,
   quickLinksPath,
   quickLinksLabel,
@@ -50,9 +48,9 @@ export function BaseLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Get user display data for sidebar (mobile)
-  const userName = user ? `${user.firstName} ${user.lastName}` : 'User';
-  const userRole = user?.role === 'admin' ? 'Super Admin' : user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'User';
-  const userInitials = user ? getInitials(`${user.firstName} ${user.lastName}`) : 'U';
+  const userName = user ? `${user.firstName} ${user.lastName}` : 'Admin';
+  const userRole = formatUserRole(user?.role);
+  const userInitials = user ? getInitials(`${user.firstName} ${user.lastName}`) : 'A';
 
   const handleLogout = () => {
     logout();
@@ -93,7 +91,6 @@ export function BaseLayout({
         mobileMenuOpen={mobileMenuOpen}
         isMobile={isMobile}
         onMobileMenuClose={handleMobileMenuClose}
-        showAdminBadge={showAdminBadge}
         showQuickLinks={showQuickLinks}
         quickLinksPath={quickLinksPath}
         quickLinksLabel={quickLinksLabel}

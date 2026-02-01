@@ -2,8 +2,8 @@
  * Validation utilities and Zod schemas
  */
 
-import { z } from 'zod';
 import { VALIDATION } from '@/config/constants';
+import { z } from 'zod';
 
 // Email validation schema
 export const emailSchema = z
@@ -55,22 +55,6 @@ export const loginSchema = z.object({
   rememberMe: z.boolean().optional().default(false),
 });
 
-// Registration form schema
-export const registerSchema = z
-  .object({
-    email: emailSchema,
-    password: passwordSchema,
-    confirmPassword: z.string().min(1, 'Please confirm your password'),
-    firstName: nameSchema,
-    lastName: nameSchema,
-    phone: phoneSchema,
-    acceptTerms: z.boolean().refine((val) => val === true, 'You must accept the terms and conditions'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-  });
-
 // Forgot password schema
 export const forgotPasswordSchema = z.object({
   email: emailSchema,
@@ -112,7 +96,6 @@ export const updateProfileSchema = z.object({
 
 // Export types
 export type LoginFormData = z.infer<typeof loginSchema>;
-export type RegisterFormData = z.infer<typeof registerSchema>;
 export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 export type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;

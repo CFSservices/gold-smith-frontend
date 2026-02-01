@@ -17,7 +17,6 @@ interface SidebarProps {
   mobileMenuOpen: boolean;
   isMobile: boolean;
   onMobileMenuClose: () => void;
-  showAdminBadge?: boolean;
   showQuickLinks?: boolean;
   quickLinksPath?: string;
   quickLinksLabel?: string;
@@ -34,14 +33,13 @@ export function Sidebar({
   mobileMenuOpen,
   isMobile,
   onMobileMenuClose,
-  showAdminBadge = false,
   showQuickLinks = false,
   quickLinksPath,
-  quickLinksLabel = 'User Dashboard',
+  quickLinksLabel = 'Dashboard',
   onLogout,
-  userName = 'User',
-  userRole = 'User',
-  userInitials = 'U',
+  userName = 'Admin',
+  userRole = 'Admin',
+  userInitials = 'A',
 }: SidebarProps) {
   return (
     <aside

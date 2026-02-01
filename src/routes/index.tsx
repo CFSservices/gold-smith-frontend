@@ -2,17 +2,15 @@
  * Application routing configuration
  */
 
+import { lazy, Suspense } from 'react';
 import { createBrowserRouter, Navigate, Outlet } from 'react-router-dom';
-import { Suspense, lazy } from 'react';
 
 // Layouts
 import AuthLayout from '@/layouts/AuthLayout';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import AdminLayout from '@/layouts/AdminLayout';
 
 // Route guards
 import { ProtectedRoute } from './ProtectedRoute';
-import { AdminRoute } from './AdminRoute';
 import { PublicRoute } from './PublicRoute';
 
 // Loading component
@@ -20,7 +18,6 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner';
 
 // Lazy load pages for code splitting
 const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
-const RegisterPage = lazy(() => import('@/features/auth/pages/RegisterPage'));
 const ForgotPasswordPage = lazy(() => import('@/features/auth/pages/ForgotPasswordPage'));
 
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
@@ -31,10 +28,6 @@ const ContentPage = lazy(() => import('@/features/dashboard/pages/ContentPage'))
 const CustomersPage = lazy(() => import('@/features/dashboard/pages/CustomersPage'));
 const ProfilePage = lazy(() => import('@/features/dashboard/pages/ProfilePage'));
 const SettingsPage = lazy(() => import('@/features/dashboard/pages/SettingsPage'));
-
-const AdminDashboardPage = lazy(() => import('@/features/admin/pages/AdminDashboardPage'));
-const UsersPage = lazy(() => import('@/features/admin/pages/UsersPage'));
-const AdminSettingsPage = lazy(() => import('@/features/admin/pages/AdminSettingsPage'));
 
 const NotFoundPage = lazy(() => import('@/features/auth/pages/NotFoundPage'));
 
@@ -62,17 +55,13 @@ export const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        path: '/register',
-        element: <RegisterPage />,
-      },
-      {
         path: '/forgot-password',
         element: <ForgotPasswordPage />,
       },
     ],
   },
 
-  // Protected routes (user dashboard)
+  // Protected routes (admin dashboard)
   {
     element: (
       <ProtectedRoute>
@@ -115,37 +104,6 @@ export const router = createBrowserRouter([
       {
         path: '/settings',
         element: <SettingsPage />,
-      },
-    ],
-  },
-
-  // Admin routes
-  {
-    element: (
-      <AdminRoute>
-        <AdminLayout>
-          <SuspenseWrapper>
-            <Outlet />
-          </SuspenseWrapper>
-        </AdminLayout>
-      </AdminRoute>
-    ),
-    children: [
-      {
-        path: '/admin',
-        element: <Navigate to="/admin/dashboard" replace />,
-      },
-      {
-        path: '/admin/dashboard',
-        element: <AdminDashboardPage />,
-      },
-      {
-        path: '/admin/users',
-        element: <UsersPage />,
-      },
-      {
-        path: '/admin/settings',
-        element: <AdminSettingsPage />,
       },
     ],
   },

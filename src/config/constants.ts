@@ -119,3 +119,10 @@ export const VALIDATION = {
     length: 10,
   },
 } as const;
+
+// Authentication error messages
+export const AUTH_ERRORS = {
+  ACCESS_DENIED: 'Access denied. This application is for administrators only.',
+  INVALID_CREDENTIALS: 'Invalid email or password',
+  ACCOUNT_INACTIVE: 'Your account is not active. Please contact support.',
+} as const;

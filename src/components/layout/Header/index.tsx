@@ -11,7 +11,7 @@ import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { APP_CONFIG } from '@/config/constants';
 import { useAuthStore } from '@/store/authStore';
-import { getInitials } from '@/utils/format';
+import { getInitials, formatUserRole } from '@/utils/format';
 import AppIcon from '@/assets/AppIcon.svg';
 
 interface HeaderProps {
@@ -37,9 +37,9 @@ export function Header({
   const { user } = useAuthStore();
   
   // Get user display name and role
-  const userName = user ? `${user.firstName} ${user.lastName}` : 'User';
-  const userRole = user?.role === 'admin' ? 'Super Admin' : user?.role ? user.role.charAt(0).toUpperCase() + user.role.slice(1) : 'User';
-  const userInitials = user ? getInitials(`${user.firstName} ${user.lastName}`) : 'U';
+  const userName = user ? `${user.firstName} ${user.lastName}` : 'Admin';
+  const userRole = formatUserRole(user?.role);
+  const userInitials = user ? getInitials(`${user.firstName} ${user.lastName}`) : 'A';
 
   return (
     <header className="fixed top-0 left-0 right-0 z-20 h-24 bg-white dark:bg-secondary-800 border-b border-secondary-200 dark:border-secondary-700">

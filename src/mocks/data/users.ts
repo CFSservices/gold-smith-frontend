@@ -1,5 +1,8 @@
 /**
  * Mock user data for development
+ * 
+ * Note: Web app is admin-only. Admin users can login to web app.
+ * Other roles (merchant, user, staff) are for mobile app customers.
  */
 
 import type { User } from '@/types';

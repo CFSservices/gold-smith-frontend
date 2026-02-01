@@ -1,5 +1,5 @@
 /**
- * Dashboard Layout - for authenticated user pages
+ * Dashboard Layout - for authenticated admin pages (admin-only app)
  * Uses shared BaseLayout component
  */
 
