@@ -4,12 +4,12 @@
  * On mobile: includes user profile and logout button at the bottom
  */
 
-import { NavLink } from 'react-router-dom';
-import { Avatar } from 'primereact/avatar';
-import { cn } from '@/utils/cn';
-import type { NavItem } from '@/types';
 import { Icon } from '@/components/ui/Icon';
 import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
+import type { NavItem } from '@/types';
+import { cn } from '@/utils/cn';
+import { Avatar } from 'primereact/avatar';
+import { NavLink } from 'react-router-dom';
 
 interface SidebarProps {
   navItems: NavItem[];
@@ -52,11 +52,11 @@ export function Sidebar({
         // Mobile-first: hidden by default, shown when mobileMenuOpen
         // Desktop: width based on collapsed state
         'h-[calc(100vh-96px)]',
-        'rounded-tr-3xl',
+        'rounded-tr-xl',
         // Mobile: overlay style, hidden when menu closed
         isMobile && (mobileMenuOpen ? 'w-[225px]' : '-translate-x-full w-[225px]'),
         // Desktop: width based on collapsed state
-        !isMobile && (collapsed ? 'w-0 overflow-hidden border-r-0' : 'w-[225px]')
+        !isMobile && (collapsed ? 'w-0 overflow-hidden border-r-0' : 'w-[250px]')
       )}
     >
       <div className="flex flex-col h-full overflow-hidden">

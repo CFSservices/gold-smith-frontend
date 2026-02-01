@@ -2,18 +2,18 @@
  * BaseLayout Component - Shared layout logic for Dashboard (admin-only app)
  */
 
-import { useState, type ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { cn } from '@/utils/cn';
 import { STORAGE_KEYS } from '@/config/constants';
 import { ROUTES } from '@/config/routes';
-import type { NavItem } from '@/types';
-import { useAuthStore } from '@/store/authStore';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useBreakpoint } from '@/hooks/useMediaQuery';
-import { getInitials, formatUserRole } from '@/utils/format';
-import { Sidebar } from '../Sidebar';
+import { useAuthStore } from '@/store/authStore';
+import type { NavItem } from '@/types';
+import { cn } from '@/utils/cn';
+import { formatUserRole, getInitials } from '@/utils/format';
+import { useState, type ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Header } from '../Header';
+import { Sidebar } from '../Sidebar';
 
 interface BaseLayoutProps {
   children: ReactNode;
@@ -72,7 +72,7 @@ export function BaseLayout({
   };
 
   return (
-    <div className="min-h-screen bg-secondary-50 dark:bg-secondary-900">
+    <div className="min-h-screen">
       {/* Header - Fixed at top */}
       <Header
         sidebarCollapsed={sidebarCollapsed}
@@ -104,7 +104,7 @@ export function BaseLayout({
       {isMobile && mobileMenuOpen && (
         <div
           className="fixed inset-0 z-30 bg-black/50"
-          onClick={() => setMobileMenuOpen(false)}
+          onClick={() => { setMobileMenuOpen(false); }}
         />
       )}
 
@@ -113,16 +113,20 @@ export function BaseLayout({
       <div
         className={cn(
           'fixed top-24 left-0 right-0 w-screen',
-          'transition-all duration-300 overflow-y-auto',
+          'transition-all duration-300 overflow-hidden',
           'h-[calc(100vh-96px)]',
+          'flex flex-col',
           // Desktop: adjust position and width based on sidebar state
           'md:transition-all md:duration-300',
-          !sidebarCollapsed && 'md:left-[225px] md:w-[calc(100vw-225px)]',
+          !sidebarCollapsed && 'md:left-[250px] md:w-[calc(100vw-250px)]',
           sidebarCollapsed && 'md:left-0 md:w-screen'
         )}
       >
-        {/* Page content - Mobile-first: smaller padding, then desktop padding */}
-        <main className="p-4 md:p-6">{children}</main>
+        {/* Content container - Pure white background with border, margin outside border, top border radius */}
+        <div className="flex-1 min-h-0 overflow-y-auto bg-white dark:bg-secondary-800 border border-[#cccccc] dark:border-secondary-700 rounded-t-xl mx-4 md:mx-12">
+          {/* Page content - Inner padding for content spacing */}
+          <main className="p-4 md:p-6">{children}</main>
+        </div>
       </div>
     </div>
   );

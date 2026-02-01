@@ -4,15 +4,15 @@
  * Right: Notifications, Logged in user
  */
 
-import { Button } from 'primereact/button';
-import { Badge } from 'primereact/badge';
-import { Avatar } from 'primereact/avatar';
+import AppIcon from '@/assets/AppIcon.svg';
 import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import { APP_CONFIG } from '@/config/constants';
 import { useAuthStore } from '@/store/authStore';
-import { getInitials, formatUserRole } from '@/utils/format';
-import AppIcon from '@/assets/AppIcon.svg';
+import { formatUserRole, getInitials } from '@/utils/format';
+import { Avatar } from 'primereact/avatar';
+import { Badge } from 'primereact/badge';
+import { Button } from 'primereact/button';
 
 interface HeaderProps {
   sidebarCollapsed: boolean;
@@ -42,9 +42,9 @@ export function Header({
   const userInitials = user ? getInitials(`${user.firstName} ${user.lastName}`) : 'A';
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-20 h-24 bg-white dark:bg-secondary-800 border-b border-secondary-200 dark:border-secondary-700">
-      {/* Mobile-first: smaller padding, then desktop padding */}
-      <div className="h-full px-4 md:px-6 flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-20 h-24 bg-transparent dark:bg-secondary-800">
+      {/* Mobile-first: smaller padding, then desktop padding matching content margins */}
+      <div className="h-full px-4 md:px-12 flex items-center justify-between">
         {/* Left side - App icon, Toggle, App heading */}
         {/* Mobile-first: smaller gap and icon size, then desktop sizes */}
         <div className="flex items-center gap-2 md:gap-4">
