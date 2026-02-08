@@ -57,7 +57,7 @@ export function AdminLayout({ children }: AdminLayoutProps) {
         <div className="h-16 flex items-center justify-center border-b border-secondary-800">
           <div className="flex items-center gap-2">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center flex-shrink-0">
-              <i className="pi pi-star-fill text-white text-xl" />
+              <i className="pi pi-shopping-bag text-white text-xl" />
             </div>
             {!sidebarCollapsed && (
               <div>
@@ -147,37 +147,39 @@ export function AdminLayout({ children }: AdminLayoutProps) {
       >
         {/* Header */}
         <header className="sticky top-0 z-20 h-16 bg-white dark:bg-secondary-800 border-b border-secondary-200 dark:border-secondary-700">
-          <div className="h-full px-4 flex items-center justify-between">
+          <div className="h-full px-6 flex items-center justify-between">
             {/* Left side */}
             <div className="flex items-center gap-4">
+              {/* Shopping bag icon */}
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center flex-shrink-0">
+                <i className="pi pi-shopping-bag text-white text-xl" />
+              </div>
+
+              {/* Title */}
+              <h1 className="text-xl font-bold text-secondary-900 dark:text-white">
+                Gold Smith - Admin Panel
+              </h1>
+
               {/* Menu toggle */}
               <Button
                 icon="pi pi-bars"
                 text
                 severity="secondary"
                 onClick={toggleSidebar}
-                className="lg:hidden"
+                className="lg:hidden ml-auto"
               />
-
-              {/* Desktop collapse toggle */}
-              <Button
-                icon={sidebarCollapsed ? 'pi pi-angle-right' : 'pi pi-angle-left'}
-                text
-                severity="secondary"
-                onClick={toggleSidebar}
-                className="hidden lg:flex"
-              />
-
-              {/* Breadcrumb placeholder */}
-              <div className="hidden md:flex items-center gap-2 text-sm text-secondary-500">
-                <i className="pi pi-home" />
-                <span>/</span>
-                <span className="text-secondary-900 dark:text-white">Admin Panel</span>
-              </div>
             </div>
 
             {/* Right side */}
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-4">
+              {/* New Order Button */}
+              <Button
+                label="New Order"
+                icon="pi pi-plus-circle"
+                severity="warning"
+                className="hidden md:flex"
+              />
+
               <ThemeToggle />
 
               {/* Notifications */}
@@ -185,9 +187,24 @@ export function AdminLayout({ children }: AdminLayoutProps) {
                 icon="pi pi-bell"
                 text
                 severity="secondary"
-                badge="3"
+                badge="1"
                 badgeClassName="p-badge-danger"
               />
+
+              {/* User Info */}
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-gold-600 flex items-center justify-center text-white font-semibold ring-2 ring-gold-400">
+                  {user ? getInitials(`${user.firstName} ${user.lastName}`) : 'JD'}
+                </div>
+                <div className="hidden lg:flex flex-col">
+                  <span className="text-sm font-semibold text-secondary-900 dark:text-white">
+                    {user ? `${user.firstName} ${user.lastName}` : 'John Doe'}
+                  </span>
+                  <span className="text-xs text-secondary-500 dark:text-secondary-400">
+                    Super Admin
+                  </span>
+                </div>
+              </div>
 
               <Button
                 icon="pi pi-sign-out"

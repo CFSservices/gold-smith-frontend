@@ -25,6 +25,8 @@ const ForgotPasswordPage = lazy(() => import('@/features/auth/pages/ForgotPasswo
 
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
 const ProfilePage = lazy(() => import('@/features/dashboard/pages/ProfilePage'));
+
+const OrdersPage = lazy(() => import('@/features/dashboard/pages/OrdersPage'));
 const SettingsPage = lazy(() => import('@/features/dashboard/pages/SettingsPage'));
 
 const AdminDashboardPage = lazy(() => import('@/features/admin/pages/AdminDashboardPage'));
@@ -84,6 +86,10 @@ export const router = createBrowserRouter([
         element: <DashboardPage />,
       },
       {
+        path: '/orders',
+        element: <OrdersPage />,
+      },
+      {
         path: '/profile',
         element: <ProfilePage />,
       },
@@ -91,6 +97,7 @@ export const router = createBrowserRouter([
         path: '/settings',
         element: <SettingsPage />,
       },
+
     ],
   },
 

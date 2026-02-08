@@ -176,6 +176,76 @@ export async function mockLogout(): Promise<ApiResponse<void>> {
   return createResponse(undefined, 'Logged out successfully');
 }
 
+/**
+ * Mock Send OTP Handler
+ */
+export async function mockSendOtp(
+  orderId: string | number
+): Promise<ApiResponse<{ message: string; expiresIn: number }>> {
+  await delay(600);
+  
+  // In a real app, this would send OTP to customer's phone
+  return createResponse(
+    {
+      message: 'OTP sent successfully to customer mobile number',
+      expiresIn: 30, // seconds
+    },
+    'OTP sent successfully'
+  );
+}
+
+/**
+ * Mock Verify OTP Handler
+ */
+export async function mockVerifyOtp(
+  orderId: string | number,
+  otp: string
+): Promise<ApiResponse<{ verified: boolean; message: string }>> {
+  await delay(500);
+  
+  // Mock validation: accept any 6-digit OTP
+  if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
+    throw createErrorResponse('Invalid OTP format. Please enter a 6-digit code.', 400);
+  }
+  
+  // Mock: accept any OTP starting with 1-9 (reject 000000)
+  if (otp === '000000') {
+    throw createErrorResponse('Invalid OTP. Please try again.', 400);
+  }
+  
+  return createResponse(
+    {
+      verified: true,
+      message: 'OTP verified successfully',
+    },
+    'OTP verified successfully'
+  );
+}
+
+/**
+ * Mock Confirm Delivery Handler
+ */
+export async function mockConfirmDelivery(
+  orderId: string | number,
+  data: {
+    otp: string;
+    deliveryMode: string;
+    comments?: string;
+  }
+): Promise<ApiResponse<{ orderId: string | number; deliveredAt: string; message: string }>> {
+  await delay(800);
+  
+  // In a real app, this would update the order status in the database
+  return createResponse(
+    {
+      orderId,
+      deliveredAt: new Date().toISOString(),
+      message: 'Order delivered successfully',
+    },
+    'Order delivered successfully'
+  );
+}
+
 // Export all handlers
 export const mockHandlers = {
   login: mockLogin,
@@ -184,6 +254,9 @@ export const mockHandlers = {
   forgotPassword: mockForgotPassword,
   refreshToken: mockRefreshToken,
   logout: mockLogout,
+  sendOtp: mockSendOtp,
+  verifyOtp: mockVerifyOtp,
+  confirmDelivery: mockConfirmDelivery,
 };
 
 export default mockHandlers;

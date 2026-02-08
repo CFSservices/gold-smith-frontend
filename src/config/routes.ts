@@ -16,6 +16,7 @@ export const ROUTES = {
 
   // Protected routes - Dashboard
   dashboard: '/dashboard',
+  orders:'/orders',
   profile: '/profile',
   settings: '/settings',
 
@@ -23,6 +24,7 @@ export const ROUTES = {
   admin: {
     root: '/admin',
     dashboard: '/admin/dashboard',
+    orders: '/admin/orders',
     users: '/admin/users',
     userDetail: (id: string) => `/admin/users/${id}`,
     merchants: '/admin/merchants',
@@ -45,6 +47,11 @@ export const DASHBOARD_NAV_ITEMS: NavItem[] = [
     icon: 'pi pi-home',
   },
   {
+    label: 'Orders',
+    path: ROUTES.orders,
+    icon: 'pi pi-box',
+  },
+  {
     label: 'Profile',
     path: ROUTES.profile,
     icon: 'pi pi-user',
@@ -62,6 +69,12 @@ export const ADMIN_NAV_ITEMS: NavItem[] = [
     label: 'Dashboard',
     path: ROUTES.admin.dashboard,
     icon: 'pi pi-th-large',
+    roles: ['admin'],
+  },
+  {
+    label: 'Orders',
+    path: ROUTES.admin.orders,
+    icon: 'pi pi-shopping-bag',
     roles: ['admin'],
   },
   {
@@ -107,8 +120,10 @@ export const getRouteTitle = (pathname: string): string => {
     [ROUTES.forgotPassword]: 'Forgot Password',
     [ROUTES.dashboard]: 'Dashboard',
     [ROUTES.profile]: 'Profile',
+    [ROUTES.orders]: 'Orders',
     [ROUTES.settings]: 'Settings',
     [ROUTES.admin.dashboard]: 'Admin Dashboard',
+    [ROUTES.admin.orders]: 'Orders',
     [ROUTES.admin.users]: 'User Management',
     [ROUTES.admin.merchants]: 'Merchant Management',
     [ROUTES.admin.reports]: 'Reports',

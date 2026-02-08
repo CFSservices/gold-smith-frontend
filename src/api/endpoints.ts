@@ -50,6 +50,18 @@ export const API_ENDPOINTS = {
     settings: '/admin/settings',
     reports: '/admin/reports',
   },
+
+  // Orders & Delivery
+  orders: {
+    list: '/orders',
+    detail: (id: string | number) => `/orders/${id}`,
+    deliver: (id: string | number) => `/orders/${id}/deliver`,
+    sendOtp: (id: string | number) => `/orders/${id}/deliver/send-otp`,
+    verifyOtp: (id: string | number) => `/orders/${id}/deliver/verify-otp`,
+    cancel: (id: string | number) => `/orders/${id}/cancel`,
+    sendCancelOtp: (id: string | number) => `/orders/${id}/cancel/send-otp`,
+    verifyCancelOtp: (id: string | number) => `/orders/${id}/cancel/verify-otp`,
+  },
 } as const;
 
 // Type for endpoints
