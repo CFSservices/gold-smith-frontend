@@ -17,6 +17,7 @@ export const ROUTES = {
   // Protected routes - Dashboard
   dashboard: '/dashboard',
   orders:'/orders',
+  schemes:'/schemes',
   profile: '/profile',
   settings: '/settings',
 
@@ -50,6 +51,11 @@ export const DASHBOARD_NAV_ITEMS: NavItem[] = [
     label: 'Orders',
     path: ROUTES.orders,
     icon: 'pi pi-box',
+  },
+  {
+    label: 'Schemes',
+    path: ROUTES.schemes,
+    icon: 'pi pi-book',
   },
   {
     label: 'Profile',
@@ -120,6 +126,7 @@ export const getRouteTitle = (pathname: string): string => {
     [ROUTES.forgotPassword]: 'Forgot Password',
     [ROUTES.dashboard]: 'Dashboard',
     [ROUTES.profile]: 'Profile',
+    [ROUTES.schemes]:'Schemes',
     [ROUTES.orders]: 'Orders',
     [ROUTES.settings]: 'Settings',
     [ROUTES.admin.dashboard]: 'Admin Dashboard',

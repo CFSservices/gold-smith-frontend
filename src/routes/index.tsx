@@ -25,6 +25,7 @@ const ForgotPasswordPage = lazy(() => import('@/features/auth/pages/ForgotPasswo
 
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
 const ProfilePage = lazy(() => import('@/features/dashboard/pages/ProfilePage'));
+const SchemesPage = lazy(() => import('@/features/dashboard/pages/SchemesPage'));
 
 const OrdersPage = lazy(() => import('@/features/dashboard/pages/OrdersPage'));
 const SettingsPage = lazy(() => import('@/features/dashboard/pages/SettingsPage'));
@@ -88,6 +89,10 @@ export const router = createBrowserRouter([
       {
         path: '/orders',
         element: <OrdersPage />,
+      },
+      {
+        path: '/schemes',
+        element: <SchemesPage />,
       },
       {
         path: '/profile',
