@@ -41,6 +41,15 @@ export const API_ENDPOINTS = {
     recentActivity: '/dashboard/recent-activity',
     charts: '/dashboard/charts',
   },
+
+  // Jewel Products
+  jewelProducts: {
+    list: '/products/getAllProducts',
+    detail: (id: string) => `/jewel-products/${id}`,
+    create: '/jewel-products',
+    update: (id: string) => `/jewel-products/${id}`,
+    delete: (id: string) => `/jewel-products/${id}`,
+  },
 } as const;
 
 // Type for endpoints

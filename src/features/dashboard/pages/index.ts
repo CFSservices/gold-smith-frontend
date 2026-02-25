@@ -7,3 +7,5 @@ export { ContentPage } from './ContentPage';
 export { CustomersPage } from './CustomersPage';
 export { ProfilePage } from './ProfilePage';
 export { SettingsPage } from './SettingsPage';
+export { InventoryPage } from './inventoryPage';
+export { CategoriesPage } from './categoriesPage';
