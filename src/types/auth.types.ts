@@ -9,6 +9,7 @@ export interface User extends BaseEntity {
   email: string;
   firstName: string;
   lastName: string;
+  name: string;
   phone?: string;
   avatar?: string;
   role: UserRole;
@@ -43,11 +44,22 @@ export interface ForgotPasswordRequest {
   email: string;
 }
 
-// Reset password request
+// Verify reset OTP request/response
+export interface VerifyResetOtpRequest {
+  email: string;
+  otp: string;
+  purpose: VERIFY_OTP_PURPOSE;
+}
+
+export interface VerifyResetOtpResponse {
+  reset_token: string;
+}
+
+// Reset password request (backend payload: email, new_password, reset_token)
 export interface ResetPasswordRequest {
-  token: string;
-  password: string;
-  confirmPassword: string;
+  email: string;
+  new_password: string;
+  reset_token: string;
 }
 
 // Change password request
@@ -79,5 +91,9 @@ export interface Permission {
   actions: ('create' | 'read' | 'update' | 'delete')[];
 }
 
+// Optional: constant for reuse
+export enum VERIFY_OTP_PURPOSE {
+  PASSWORD_RESET = 'password_reset',
+}
 // Role permissions mapping
 export type RolePermissions = Record<UserRole, Permission[]>;

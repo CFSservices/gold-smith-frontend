@@ -37,9 +37,13 @@ export function Header({
   const { user } = useAuthStore();
   
   // Get user display name and role
-  const userName = user ? `${user.firstName} ${user.lastName}` : 'Admin';
+  const userName = user ? `${user.name}` : 'Admin';
   const userRole = formatUserRole(user?.role);
-  const userInitials = user ? getInitials(`${user.firstName} ${user.lastName}`) : 'A';
+  const userInitials = user ? getInitials(`${user.name}`) : 'A';
+
+  const handleUserProfileClick = () => {
+    console.log('user profile clicked');
+  }
 
   return (
     <header className="fixed top-0 left-0 right-0 z-20 h-24 bg-transparent dark:bg-secondary-800">
@@ -119,6 +123,7 @@ export function Header({
           <div className="hidden md:flex items-center gap-2 md:gap-4">
             {/* User Profile */}
             <div className="flex items-center gap-2 md:gap-3">
+              <Button text onClick={handleUserProfileClick} style={{ padding: '8px', gap: '6px', border: '#555555', boxShadow: 'none' }}>
               {/* Avatar - Desktop: 38x38px */}
               <Avatar
                 label={userInitials}
@@ -126,7 +131,7 @@ export function Header({
                 size="large"
                 className="bg-[#cc668e] text-white shrink-0 w-[38px] h-[38px] text-sm"
               />
-              
+
               {/* User Name and Role */}
               <div>
                 <p
@@ -154,6 +159,8 @@ export function Header({
                   {userRole}
                 </p>
               </div>
+              </Button>
+              
             </div>
 
             {/* Logout Button */}
