@@ -29,6 +29,8 @@ export interface JewelProductModalProps {
   certificationsUploadRef: React.RefObject<FileUpload | null>;
   onPhotosBeforeSelect?: (event: { files: File[] }) => boolean;
   onCertificationsBeforeSelect?: (event: { files: File[] }) => boolean;
+  /** Called when the photos FileUpload has mounted (so parent can set initial files in edit flow). */
+  onPhotosUploadReady?: () => void;
   onSave: () => void;
   onClose: () => void;
   onViewChange: (view: JewelModalView) => void;
@@ -49,12 +51,15 @@ export function JewelProductModal({
   certificationsUploadRef,
   onPhotosBeforeSelect,
   onCertificationsBeforeSelect,
+  onPhotosUploadReady,
   onSave,
   onClose,
   onViewChange,
   onArchiveConfirm,
 }: JewelProductModalProps) {
-  const previewFiles = (photosUploadRef.current?.getFiles() ?? []) as { objectURL?: string; name?: string }[];
+  const pendingFiles = (photosUploadRef.current?.getFiles() ?? []) as { objectURL?: string; name?: string }[];
+  const uploadedFiles = (photosUploadRef.current?.getUploadedFiles?.() ?? []) as { objectURL?: string; name?: string }[];
+  const previewFiles = [...pendingFiles, ...uploadedFiles];
 
   const header =
     view === 'preview' ? (
@@ -72,11 +77,17 @@ export function JewelProductModal({
           ))}
       </div>
     ) : view === 'archiveConfirm' ? (
-      'Archive Jewel'
+      <div className="flex items-center justify-between w-full gap-2">
+        <span className="text-secondary-900 dark:text-white font-semibold">Archive Jewel</span>
+      </div>
     ) : modalType === 'new' ? (
-      'New Jewel'
+      <div className="flex items-center justify-between w-full gap-2">
+        <span className="text-secondary-900 dark:text-white font-semibold">New Jewel</span>
+      </div>
     ) : (
-      `Edit Jewel${selectedProduct ? `: ${selectedProduct.name}` : ''}`
+      <div className="flex items-center justify-between w-full gap-2">
+        <span className="text-secondary-900 dark:text-white font-semibold">Edit Jewel{selectedProduct ? `: ${selectedProduct.name}` : ''}</span>
+      </div>
     );
 
   const footer =
@@ -128,7 +139,7 @@ export function JewelProductModal({
                     style={{ ...BUTTON_STYLES.iconButton, margin: 0 }}
                     severity="danger"
                     onClick={() => onViewChange('archiveConfirm')}
-                    disabled={selectedProduct?.status !== true}
+                    disabled={selectedProduct?.status === "archived"}
                   >
                     <span
                       className="material-symbols-rounded text-700"
@@ -257,6 +268,9 @@ export function JewelProductModal({
                 previousButton: {
                   className: 'h-8 w-8 rounded-full',
                 },
+                header: {
+                  className: 'text-secondary-900 dark:text-white',
+                }
               }}
             />
           ) : (
@@ -325,6 +339,7 @@ export function JewelProductModal({
           certificationsUploadRef={certificationsUploadRef}
           onPhotosBeforeSelect={onPhotosBeforeSelect}
           onCertificationsBeforeSelect={onCertificationsBeforeSelect}
+          onPhotosUploadReady={onPhotosUploadReady}
         />
       </div>
     </Dialog>

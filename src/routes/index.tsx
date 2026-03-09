@@ -25,6 +25,7 @@ const OrdersPage = lazy(() => import('@/features/dashboard/pages/OrdersPage'));
 const SchemesPage = lazy(() => import('@/features/dashboard/pages/SchemesPage'));
 const JewelsPage = lazy(() => import('@/features/dashboard/pages/JewelsPage'));
 const InventoryPage = lazy(() => import('@/features/dashboard/pages/inventoryPage'));
+const ProductStockPage = lazy(() => import('@/features/dashboard/pages/ProductStockPage'));
 const CategoriesPage = lazy(() => import('@/features/dashboard/pages/categoriesPage'));
 const ContentPage = lazy(() => import('@/features/dashboard/pages/ContentPage'));
 const CustomersPage = lazy(() => import('@/features/dashboard/pages/CustomersPage'));
@@ -93,7 +94,17 @@ export const router = createBrowserRouter([
         children: [
           {
             path: 'inventory',
-            element: <InventoryPage/>
+            element: <Outlet />,
+            children: [
+              {
+                index: true,
+                element: <InventoryPage />,
+              },
+              {
+                path: ':productId',
+                element: <ProductStockPage />,
+              },
+            ],
           },
           {
             path: 'categories',

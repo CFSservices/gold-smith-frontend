@@ -12,8 +12,16 @@ import { useAuthStore } from '@/store/authStore';
 export const apiClient: AxiosInstance = axios.create({
   baseURL: env.apiBaseUrl,
   timeout: env.apiTimeout,
+  /**
+   * Do NOT set a global "Content-Type" here.
+   * Axios will automatically use:
+   * - "application/json" for plain object bodies
+   * - "multipart/form-data" (with boundary) for FormData
+   *
+   * Keeping only the "Accept" header ensures file uploads
+   * using FormData are sent correctly and not JSON-encoded.
+   */
   headers: {
-    'Content-Type': 'application/json',
     Accept: 'application/json',
   },
 });

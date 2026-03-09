@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import { SelectButton } from 'primereact/selectbutton';
 import { IconField } from 'primereact/iconfield';
@@ -13,14 +14,17 @@ import type {
   JewelFormState,
   JewelModalView,
   JewelModalType,
+  ProductImage,
 } from '@/types/jewelProduct.types';
+import { normalizeProductImages } from '@/utils/jewelProductUtils';
 import {
   validateJewelForm,
 } from '@/utils/jewelValidation';
 import { JewelProductModal, NameWeightPriceCell, ActionCell } from '@/features/dashboard/components/inventory';
-import type { FileUpload } from 'primereact/fileupload';
-import type { ApiResponse, PaginatedResponse } from '@/types';
-import { BUTTON_STYLES } from '@/config/inventoryStyles';
+import { formatDateTime } from '@/utils/dateUtils';
+import type { FileUpload, FileUploadFile } from 'primereact/fileupload';
+import { BUTTON_STYLES, DATA_TABLE_DARK_PT } from '@/config/inventoryStyles';
+import { env } from '@/config/env';
 
 const TAB_OPTIONS = [
   { label: 'All', value: 0 },
@@ -35,12 +39,15 @@ const MOCK_PRODUCTS: InventoryJewelProduct[] = [
     category: 'Ring',
     price: 1000,
     stock: 10,
-    images: ['image1.jpg', 'image2.jpg'],
+    images: [
+      { url: 'image1.jpg', name: 'image1.jpg', size: 0 },
+      { url: 'image2.jpg', name: 'image2.jpg', size: 0 },
+    ],
     collection: 'Trending',
     createdAt: '13-02-2026',
     updatedAt: '13-02-2026',
     publishedOn: '13-02-2026',
-    status: true,
+    status: 'published',
     archivedAt: null,
     description: '',
     certifications: [],
@@ -53,12 +60,15 @@ const MOCK_PRODUCTS: InventoryJewelProduct[] = [
     category: 'Necklace',
     price: 2000,
     stock: 20,
-    images: ['image3.jpg', 'image4.jpg'],
+    images: [
+      { url: 'image3.jpg', name: 'image3.jpg', size: 0 },
+      { url: 'image4.jpg', name: 'image4.jpg', size: 0 },
+    ],
     collection: 'Exotic',
     createdAt: '13-02-2026',
     updatedAt: '15-02-2026',
     publishedOn: '13-02-2026',
-    status: false,
+    status: 'archived',
     archivedAt: '15-02-2026',
     description: '',
     certifications: [],
@@ -79,6 +89,7 @@ function getInitialFormState(): JewelFormState {
     jewelSpecs: [],
     formStatus: true,
     archivedAt: null,
+    images: [],
   };
 }
 
@@ -86,12 +97,74 @@ function createEmptySpec(): { id: string; name: string; value: string } {
   return { id: crypto.randomUUID(), name: '', value: '' };
 }
 
+/** Build full image URL for relative paths */
+function toFullImageUrl(url: string): string {
+  if (!url) return '';
+  if (url.startsWith('http')) return url;
+  const apiRoot = env.apiBaseUrl.replace('/api', '');
+  return `${apiRoot}${url.startsWith('/') ? '' : '/'}${url}`;
+}
+
+/** Backend API returns { data: { items: [...], pagination } } - extract product list */
+function extractProductList(response: unknown): unknown[] {
+  const data = (response as { data?: unknown })?.data;
+  if (!data) return [];
+  const raw =
+    (data as { data?: unknown[] })?.data ??
+    (data as { items?: unknown[] })?.items ??
+    (Array.isArray(data) ? data : []);
+  return Array.isArray(raw) ? raw : [];
+}
+
+/** Map backend product shape (product_id, product_name, etc.) to InventoryJewelProduct */
+function mapBackendProductToInventory(p: Record<string, unknown>): InventoryJewelProduct {
+  const metaDetails = (p.product_catalog_details ?? {}) as Record<string, unknown>;
+  const id = (p.product_id ?? p.id ?? metaDetails.product_id ?? metaDetails.id ?? 0) as number | string;
+  // console.log('metaDetails:', metaDetails);
+  const name = (metaDetails.product_name ?? metaDetails.name ?? '') as string;
+  const description = (metaDetails.product_description ?? metaDetails.description ?? '') as string;
+  const createdAt = (p.createdAt ?? p.created_at ?? '') as string;
+  const updatedAt = (p.updatedAt ?? p.updated_at ?? '') as string;
+  const specDetails = metaDetails.product_specification as { name?: string; value?: string }[];
+  // console.log('specDetails:', specDetails, typeof specDetails);
+  const specifications =
+  typeof metaDetails.product_specification === "string"
+    ? JSON.parse(metaDetails.product_specification)
+    : metaDetails.product_specification || [];
+  // console.log('specifications:', specifications);
+  const productslist =  {
+    id,
+    name,
+    description,
+    metal: String(metaDetails.product_metal ?? metaDetails.product_metal_type ?? '').toLowerCase(),
+    price: (metaDetails.unit_price ?? metaDetails.product_price ?? 0) as number,
+    stock: (metaDetails.stock ?? metaDetails.stock_count ??  0) as number,
+    weight: (metaDetails.weight ?? 0) as number,
+    images: normalizeProductImages(metaDetails.product_images),
+    category: (metaDetails.category ?? metaDetails.product_category ?? '') as string,
+    collection: (metaDetails.collection ?? metaDetails.product_collection ?? '') as string,
+    certifications: (Array.isArray(metaDetails.product_certifications) ? metaDetails.product_certifications : []) as string[],
+    publishedOn: (metaDetails.publishedOn ?? metaDetails.product_publish_on ?? metaDetails.updatedAt ?? metaDetails.updated_at ?? metaDetails.createdAt ?? metaDetails.created_at ?? '') as string,
+    createdAt,
+    updatedAt,
+    createdBy: (metaDetails.createdBy ?? metaDetails.created_by ?? '') as string,
+    updatedBy: (metaDetails.updatedBy ?? metaDetails.updated_by ?? '') as string,
+    status: String(metaDetails.product_status).toLowerCase() === 'archived' ? 'archived' : 'published',
+    archivedAt: (metaDetails.archivedAt ?? p.updatedAt ?? null) as string | null,
+    specs: (specifications ?? []) as { name?: string; value?: string }[],
+  };
+  // console.log('productslist:', productslist);
+  return productslist as InventoryJewelProduct;
+}
+
 function mapProductToFormState(product: InventoryJewelProduct): Partial<JewelFormState> {
+  // console.log('product:', product);
   const specs = product.specifications ?? product.specs ?? [];
+  const rawMetal = (product as InventoryJewelProduct & { metal?: string }).metal ?? '';
   return {
     jewelName: product.name ?? '',
     jewelDescription: product.description ?? '',
-    metal: (product as InventoryJewelProduct & { metal?: string }).metal ?? product.category ?? '',
+    metal: String(rawMetal).toLowerCase(),
     category: product.category?.toLowerCase() ?? '',
     price: product.price?.toString() ?? '',
     collection: product.collection?.toLowerCase().replace(/\s+/g, ' ') ?? '',
@@ -107,8 +180,9 @@ function mapProductToFormState(product: InventoryJewelProduct): Partial<JewelFor
           value: s.value ?? '',
         }))
       : [],
-    formStatus: product.status !== false,
+    formStatus: product.status !== 'archived',
     archivedAt: product.archivedAt ? new Date(product.archivedAt) : null,
+    images: product.images ?? []
   };
 }
 
@@ -123,21 +197,35 @@ export function InventoryPage() {
   const [selectedProduct, setSelectedProduct] = useState<InventoryJewelProduct | null>(null);
   const [saving, setSaving] = useState(false);
 
+  const navigate = useNavigate();
   const toastRef = useRef<Toast>(null);
   const photosFileUploadRef = useRef<FileUpload>(null);
   const certificationsFileUploadRef = useRef<FileUpload>(null);
+  /** Pending initial images to set when photos FileUpload mounts (edit flow). */
+  const pendingInitialPhotosRef = useRef<ProductImage[]>([]);
+
+  const onPhotosUploadReady = useCallback(() => {
+    const pending = pendingInitialPhotosRef.current;
+    if (pending.length === 0 || !photosFileUploadRef.current) return;
+    const existingFiles = pending.map((img) => ({
+      name: img.name,
+      objectURL: toFullImageUrl(img.url),
+      size: img.size,
+    })) as unknown as FileUploadFile[];
+    photosFileUploadRef.current.clear?.();
+    photosFileUploadRef.current.setUploadedFiles?.(existingFiles);
+    pendingInitialPhotosRef.current = [];
+  }, []);
 
   useEffect(() => {
     jewelProductService
       .getJewelProducts()
-      .then((response: ApiResponse<PaginatedResponse<InventoryJewelProduct>>) => {
-        const raw = response?.data?.data ?? (response as unknown as { data?: InventoryJewelProduct[] })?.data ?? response;
-        const list = Array.isArray(raw) ? raw : (raw as { data?: InventoryJewelProduct[] })?.data ?? [];
-        const items = (Array.isArray(list) ? list : []).map((p: InventoryJewelProduct) => ({
-          ...p,
-          publishedOn: p.publishedOn ?? p.updatedAt ?? p.createdAt,
-          archivedAt: p.status === false ? (p.archivedAt ?? p.updatedAt) : null,
-        }));
+      .then((response) => {
+        // console.log('response all products:', response);
+        const list = extractProductList(response);
+        const items = list
+          .map((p) => mapBackendProductToInventory(p as Record<string, unknown>))
+        // console.log('items:', items);
         setInventoryProducts(items);
       })
       .catch(() => {
@@ -146,9 +234,10 @@ export function InventoryPage() {
   }, []);
 
   const filteredProducts = useMemo(() => {
+    // console.log('filteredProducts:', inventoryProducts);
     if (tabValue === 0) return inventoryProducts;
-    if (tabValue === 1) return inventoryProducts.filter((p) => p.status === true);
-    if (tabValue === 2) return inventoryProducts.filter((p) => p.status === false);
+    if (tabValue === 1) return inventoryProducts.filter((p) => p.status === 'published');
+    if (tabValue === 2) return inventoryProducts.filter((p) => p.status === 'archived');
     return inventoryProducts;
   }, [inventoryProducts, tabValue]);
 
@@ -157,6 +246,7 @@ export function InventoryPage() {
     photosFileUploadRef.current?.clear();
     certificationsFileUploadRef.current?.clear();
     setSelectedProduct(null);
+    pendingInitialPhotosRef.current = [];
   }, []);
 
   const openNewModal = useCallback(() => {
@@ -173,6 +263,7 @@ export function InventoryPage() {
     setModalType('edit');
     setModalView('form');
     setSelectedProduct(product);
+    pendingInitialPhotosRef.current = product.images?.length ? [...product.images] : [];
     const mapped = mapProductToFormState(product);
     const specs = Array.isArray(mapped.jewelSpecs) && mapped.jewelSpecs.length > 0 ? mapped.jewelSpecs : [createEmptySpec()];
     setFormState({ ...getInitialFormState(), ...mapped, jewelSpecs: specs });
@@ -185,11 +276,50 @@ export function InventoryPage() {
     resetForm();
   }, [resetForm]);
 
-  const handleStatusToggle = useCallback((productId: number, newStatus: boolean) => {
-    setInventoryProducts((prev) =>
-      prev.map((p) => (p.id === productId ? { ...p, status: newStatus } : p))
-    );
-  }, []);
+  const handleStatusToggle = useCallback(
+    async (productId: string | number, newStatus: boolean) => {
+      const idStr = String(productId);
+      if (!idStr || idStr === 'undefined' || idStr === 'null' || idStr === 'NaN') {
+        toastRef.current?.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Invalid product ID.',
+        });
+        return;
+      }
+      const newStatusStr = newStatus ? 'published' : 'archived';
+      const previousStatus = newStatusStr === 'published' ? 'archived' : 'published';
+
+      // Optimistic update (works with string or number ids)
+      setInventoryProducts((prev) =>
+        prev.map((p) =>
+          String(p.id) === idStr ? { ...p, status: newStatusStr } : p
+        )
+      );
+
+      try {
+        const formData = new FormData();
+        formData.append('product_status', newStatusStr);
+        await (newStatusStr === 'published' 
+          ? jewelProductService.publishJewelProduct(idStr) 
+          : jewelProductService.archiveJewelProduct(idStr));
+        toastRef.current?.show({
+          severity: 'success',
+          summary: 'Status updated',
+          detail: `Product ${newStatusStr === 'published' ? 'published' : 'archived'}.`,
+        });
+      } catch (err) {
+        setInventoryProducts((prev) =>
+          prev.map((p) =>
+            String(p.id) === idStr ? { ...p, status: previousStatus } : p
+          )
+        );
+        const message = err instanceof Error ? err.message : 'Failed to update status.';
+        toastRef.current?.show({ severity: 'error', summary: 'Error', detail: message });
+      }
+    },
+    []
+  );
 
   const onPhotosBeforeSelect = useCallback((event: { files: File[] }) => {
     const currentCount = photosFileUploadRef.current?.getFiles()?.length ?? 0;
@@ -218,7 +348,14 @@ export function InventoryPage() {
   }, []);
 
   const handleSave = useCallback(async () => {
-    const photoFiles = (photosFileUploadRef.current?.getFiles() ?? []) as File[];
+    const uploadedPhotoItems =
+      (photosFileUploadRef.current?.getUploadedFiles?.() ?? []) as { url?: string; name?: string }[];
+    // console.log('new ones:', uploadedPhotoItems)
+    const pendingPhotoItems =
+      (photosFileUploadRef.current?.getFiles() ?? []) as (File | { objectURL?: string })[];
+      // console.log('pending ones:', pendingInitialPhotosRef)
+    const photoFiles = pendingPhotoItems.filter((f): f is File => f instanceof File);
+    // console.log('final pending:', photoFiles)
     const result = validateJewelForm(
       {
         jewelName: formState.jewelName,
@@ -230,9 +367,9 @@ export function InventoryPage() {
         collection: formState.collection,
         publishedOn: formState.publishedOn,
       },
-      { mode: modalType, photoCount: photoFiles.length }
+      { mode: modalType, photoCount: uploadedPhotoItems.length + pendingPhotoItems.length }
     );
-    console.log("result validation:", result);
+    // console.log("result validation:", result);
     if (!result.valid) {
       toastRef.current?.show({
         severity: 'error',
@@ -244,35 +381,53 @@ export function InventoryPage() {
 
     setSaving(true);
     const formData = new FormData();
-    formData.append('name', formState.jewelName);
-    formData.append('description', formState.jewelDescription);
-    formData.append('metal', formState.metal);
-    formData.append('category', formState.category);
-    formData.append('price', formState.price);
-    formData.append('collection', formState.collection);
+    formData.append('product_name', formState.jewelName);
+    formData.append('product_description', formState.jewelDescription);
+    formData.append('product_metal_type', formState.metal);
+    formData.append('product_category', formState.category);
+    formData.append('product_price', formState.price);
+    formData.append('product_collection', formState.collection);
     formData.append(
-      'publishedOn',
+      'product_publish_on',
       formState.publishedOn ? new Date(formState.publishedOn).toISOString() : ''
     );
     formData.append(
-      'specifications',
+      'product_specification',
       JSON.stringify(
         formState.jewelSpecs
           .filter((s) => s.name.trim() && s.value.trim())
           .map(({ name, value }) => ({ name, value }))
       )
     );
+    const productStatusStr = formState.formStatus ? 'published' : 'archived';
+    formData.append('product_status', productStatusStr);
     if (modalType === 'edit') {
-      formData.append('status', String(formState.formStatus));
       if (formState.archivedAt) formData.append('archivedAt', new Date(formState.archivedAt).toISOString());
+      // Include currently visible existing images as URLs (respecting removals in the UI)
+      // console.log('selected row:', selectedProduct);
+      if (selectedProduct?.images?.length) {
+        const uploadedObjectUrls = new Set(
+          uploadedPhotoItems
+            .map((f) => f.url)
+            .filter((u): u is string => Boolean(u))
+        );
+        const existingImageUrls = selectedProduct.images
+          .filter((img) => uploadedObjectUrls.has(toFullImageUrl(img.url)))
+          .map((img) => img.url);
+        existingImageUrls.forEach((url) => {
+          formData.append('product_images', url);
+        });
+      }
     }
-    photoFiles.forEach((file) => formData.append('images', file));
+    photoFiles.forEach((file) => formData.append('product_images', file));
     (certificationsFileUploadRef.current?.getFiles() ?? []).forEach((file) =>
-      formData.append('certifications', file as File)
+      formData.append('product_certifications', file as File)
     );
 
     try {
       if (modalType === 'new') {
+        // console.log('formData for new jewel:', Array.from(formData.entries()));
+        // console.log('product images:', formData.get('product_images'));
         await jewelProductService.createJewelProduct(formData);
         toastRef.current?.show({
           severity: 'success',
@@ -280,6 +435,7 @@ export function InventoryPage() {
           detail: 'Jewel created successfully.',
         });
       } else if (selectedProduct?.id) {
+        // console.log('formData for updated jewel:', Array.from(formData.entries()));
         await jewelProductService.updateJewelProduct(String(selectedProduct.id), formData);
         toastRef.current?.show({
           severity: 'success',
@@ -288,14 +444,14 @@ export function InventoryPage() {
         });
       }
       const res = await jewelProductService.getJewelProducts();
-      console.log('response all products:', res);
-      const raw = (res as ApiResponse<PaginatedResponse<InventoryJewelProduct>>)?.data?.data ?? (res as unknown as { data?: InventoryJewelProduct[] })?.data ?? res;
-      const list = Array.isArray(raw) ? raw : [];
-      const items = list.map((p: InventoryJewelProduct) => ({
-        ...p,
-        publishedOn: p.publishedOn ?? p.updatedAt ?? p.createdAt,
-        archivedAt: p.status === false ? (p.archivedAt ?? p.updatedAt) : null,
-      }));
+      const list = extractProductList(res);
+      const items = list
+        .map((p) => mapBackendProductToInventory(p as Record<string, unknown>))
+        .map((p) => ({
+          ...p,
+          publishedOn: p.publishedOn ?? p.updatedAt ?? p.createdAt,
+          archivedAt: p.status === 'archived' ? (p.archivedAt ?? p.updatedAt) : null,
+        }));
       setInventoryProducts(items);
       closeModal();
     } catch (err: unknown) {
@@ -313,11 +469,21 @@ export function InventoryPage() {
 
   const handleRowClick = useCallback(
     (event: DataTableRowClickEvent) => {
+      // console.log('event.data:', event.data);
       if (event.data) openEditModal(event.data as InventoryJewelProduct);
     },
     [openEditModal]
   );
 
+  const handleBookClick = useCallback(
+    (product: InventoryJewelProduct) => {
+      navigate(`/jewels/inventory/${product.id}`);
+    },
+    [navigate]
+  );
+
+  const serialNumberBodyTemplate = (_rowData: InventoryJewelProduct, options: { rowIndex?: number }): number => (options.rowIndex ?? 0) + 1;
+  
   return (
     <div>
       <Toast ref={toastRef} />
@@ -327,7 +493,7 @@ export function InventoryPage() {
             <Button
               text
               style={{ ...BUTTON_STYLES.iconButton, height: '32px', width: '32px' }}
-              onClick={() => window.history.back()}
+              onClick={() => navigate('/jewels')}
             >
               <span
                 className="material-symbols-rounded flex items-center justify-center-safe text-[#704F01] dark:text-white h-8 w-7 font-light text-2xl"
@@ -371,6 +537,7 @@ export function InventoryPage() {
           certificationsUploadRef={certificationsFileUploadRef}
           onPhotosBeforeSelect={onPhotosBeforeSelect}
           onCertificationsBeforeSelect={onCertificationsBeforeSelect}
+          onPhotosUploadReady={onPhotosUploadReady}
           onSave={handleSave}
           onClose={closeModal}
           onViewChange={setModalView}
@@ -445,20 +612,29 @@ export function InventoryPage() {
           paginator
           rows={5}
           rowsPerPageOptions={[5, 10, 15, 20]}
+          pt={DATA_TABLE_DARK_PT}
         >
-          <Column field="id" header="#" style={{ width: '3rem' }} />
+          <Column header="S.No" style={{ width: '3rem' }} body={serialNumberBodyTemplate} />
           <Column
             header="Name, Weight & Price"
             body={(rowData: InventoryJewelProduct) => <NameWeightPriceCell rowData={rowData} />}
           />
           <Column field="stock" header="Stock" />
           <Column field="collection" header="Collections" />
-          <Column field="createdAt" header="Created" />
-          <Column field="updatedAt" header="Last Modified" />
+          <Column
+            field="createdAt"
+            header="Created"
+            body={(row: InventoryJewelProduct) => formatDateTime(row.createdAt)}
+          />
+          <Column
+            field="updatedAt"
+            header="Last Modified"
+            body={(row: InventoryJewelProduct) => formatDateTime(row.updatedAt)}
+          />
           <Column
             header="Actions"
             body={(rowData: InventoryJewelProduct) => (
-              <ActionCell rowData={rowData} onStatusToggle={handleStatusToggle} />
+              <ActionCell rowData={rowData} onStatusToggle={handleStatusToggle} onBookClick={handleBookClick} />
             )}
           />
         </DataTable>

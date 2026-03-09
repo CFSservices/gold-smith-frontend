@@ -80,3 +80,66 @@ export const FILE_UPLOAD_CLASSES = {
   upload: '!bg-[#704f01] !border-[#704f01] !text-white shadow-none',
   cancel: '!bg-[#704f01] !border-[#704f01] !text-white shadow-none',
 } as const;
+
+/** Dark mode table colors: bluish-gray background, white text, gold accent for active states */
+export const DATA_TABLE_DARK_PT = {
+  root: {
+    className: 'dark:!bg-[#2A2D3B] dark:!text-white dark:border dark:border-[#3d4150] dark:rounded-lg overflow-hidden',
+  },
+  header: {
+    className: 'dark:!bg-[#2A2D3B] dark:!text-white dark:border-b dark:border-[#3d4150]',
+  },
+  thead: {
+    className: 'dark:!bg-[#2A2D3B] dark:!text-white',
+  },
+  headerRow: {
+    className: 'dark:!bg-[#2A2D3B] dark:!text-white',
+  },
+  headerCell: {
+    className: 'dark:!bg-[#2A2D3B] dark:!text-white dark:font-semibold dark:border-b dark:border-[#3d4150]',
+  },
+  body: {
+    className: 'dark:!bg-[#2A2D3B] dark:!text-white',
+  },
+  tbody: {
+    className: 'dark:!bg-[#2A2D3B]',
+  },
+  bodyRow: {
+    className: 'dark:!bg-[#2A2D3B] dark:!text-white dark:hover:!bg-[#35384A] dark:border-b dark:border-[#3d4150]',
+  },
+  column: {
+    bodyCell: {
+      className: 'dark:!bg-[#2A2D3B] dark:!text-white dark:border-b dark:border-[#3d4150]',
+    },
+  },
+  footer: {
+    className: 'dark:!bg-[#2A2D3B] dark:!text-white dark:border-t dark:border-[#3d4150]',
+  },
+  paginator: {
+    root: {
+      className: 'dark:!bg-[#2A2D3B] dark:!text-white dark:border-t dark:border-[#3d4150]',
+    },
+    first: {
+      className: 'dark:!text-white dark:hover:!bg-[#35384A] dark:!border-[#3d4150]',
+    },
+    prev: {
+      className: 'dark:!text-white dark:hover:!bg-[#35384A] dark:!border-[#3d4150]',
+    },
+    next: {
+      className: 'dark:!text-white dark:hover:!bg-[#35384A] dark:!border-[#3d4150]',
+    },
+    last: {
+      className: 'dark:!text-white dark:hover:!bg-[#35384A] dark:!border-[#3d4150]',
+    },
+    pageButton: ({ context }: { context?: { active?: boolean } }) => ({
+      className: context?.active
+        ? 'dark:!bg-[#b8860b] dark:!text-[#1c1917] dark:!border-[#b8860b]'
+        : 'dark:!text-white dark:hover:!bg-[#35384A] dark:!border-[#3d4150]',
+    }),
+    rowsPerPageDropdown: {
+      root: {
+        className: 'dark:!bg-[#35384A] dark:!text-white dark:!border-[#3d4150]',
+      },
+    },
+  },
+} as const;

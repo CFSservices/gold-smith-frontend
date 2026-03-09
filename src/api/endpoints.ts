@@ -46,10 +46,22 @@ export const API_ENDPOINTS = {
   // Jewel Products
   jewelProducts: {
     list: '/products/getAllProducts',
-    detail: (id: string) => `/jewel-products/${id}`,
-    create: '/jewel-products',
-    update: (id: string) => `/jewel-products/${id}`,
-    delete: (id: string) => `/jewel-products/${id}`,
+    detail: (id: string) => `/products/getProduct/${id}`,
+    create: '/products/createProduct',
+    update: (id: string) => `/products/updateProduct/${id}`,
+    toArchive: (id: string) => `/products/archiveProduct/${id}`,
+    toPublish: (id: string) => `/products/unArchiveProduct/${id}`,
+    delete: (id: string) => `/products/deleteProduct/${id}`,
+  },
+
+  // Stock Items
+  stockManagement: {
+    list: (productId: string) => `/stocks/${productId}/getStockItems`,
+    detail: (id: string) => `/stock/getStock/${id}`,
+    create: (productId: string) => `/stocks/${productId}/addNewStockItem`,
+    update: (productId: string, id: string) => `/stocks/${productId}/${id}`,
+    changeStatus: (id: string) => `/stocks/${id}/changeStatus`,
+    delete: (productId: string, id: string) => `/stocks/${productId}/${id}`,
   },
 } as const;
 

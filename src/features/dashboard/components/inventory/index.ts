@@ -1,5 +1,3 @@
-export { InventoryFileUpload } from './InventoryFileUpload';
-export type { InventoryFileUploadProps } from './InventoryFileUpload';
 export { JewelProductForm } from './JewelProductForm';
 export type { JewelProductFormProps } from './JewelProductForm';
 export { JewelProductModal } from './JewelProductModal';

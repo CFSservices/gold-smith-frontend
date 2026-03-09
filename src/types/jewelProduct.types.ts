@@ -5,6 +5,13 @@
 import type { BaseEntity } from './common.types';
 import type { SelectOption } from './common.types';
 
+/** Product image with url, name, and size (from backend) */
+export interface ProductImage {
+  url: string;
+  name: string;
+  size: number;
+}
+
 // Jewel product entity
 export interface JewelProduct extends BaseEntity {
   id: number;
@@ -21,11 +28,19 @@ export interface JewelProduct extends BaseEntity {
   updatedBy: string;
 }
 
-// Inventory list item (API may return status, archivedAt, specifications)
-export interface InventoryJewelProduct extends JewelProduct {
-  status?: boolean;
+export interface StockItem extends BaseEntity {
+  id: number;
+  stockId: string;
+  purity: string;
+  added: string;
+  lastModified: string;
+}
+// Inventory list item (API may return status, archivedAt, specifications, ProductImage[])
+export interface InventoryJewelProduct extends Omit<JewelProduct, 'images'> {
+  images: ProductImage[];
+  status?: string;
   archivedAt?: string | null;
-  weight?: string;
+  weight?: number;
   metal?: string;
   specifications?: { name?: string; value?: string }[];
   specs?: { name?: string; value?: string }[];
@@ -50,6 +65,7 @@ export interface JewelFormState {
   jewelSpecs: JewelSpecItem[];
   formStatus: boolean;
   archivedAt: Date | null;
+  images?: ProductImage[];
 }
 
 // Modal state

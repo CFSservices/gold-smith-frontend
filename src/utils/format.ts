@@ -32,6 +32,17 @@ export function formatCurrency(
 }
 
 /**
+ * Format weight for table display: whole number when decimals are zeros,
+ * otherwise up to 2 decimal places.
+ * Accepts string or number from backend (e.g. "10.000" → "10", "10.0235734" → "10.02")
+ */
+export function formatWeightDisplay(value: number | string | undefined | null): string {
+  const num = typeof value === 'string' ? parseFloat(value) : Number(value);
+  if (Number.isNaN(num)) return '0';
+  return num % 1 === 0 ? String(Math.round(num)) : num.toFixed(2);
+}
+
+/**
  * Format weight with unit
  */
 export function formatWeight(

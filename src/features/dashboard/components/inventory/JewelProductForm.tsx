@@ -7,10 +7,11 @@ import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import type { JewelFormState, JewelSpecItem } from '@/types/jewelProduct.types';
 import { METAL_OPTIONS, CATEGORY_OPTIONS, COLLECTION_OPTIONS } from '@/types/jewelProduct.types';
+import { toDateOnly } from '@/utils/dateUtils';
 import { JEWEL_NAME_MAX_LENGTH } from '@/utils/jewelValidation';
 import { useReorderableList } from '@/hooks/useReorderableList';
-import { InventoryFileUpload } from './InventoryFileUpload';
-import type { FileUpload } from 'primereact/fileupload';
+import { FileUpload } from '@/components/ui/FileUpload';
+import type { FileUpload as PrimeFileUploadRef } from 'primereact/fileupload';
 
 const INPUT_CLASS = 'w-full shadow-none hover:border-secondary-400 focus:border-[#704F01]';
 const SECTION_HR_CLASS = 'mb-0 w-full border-[#CCCCCC]';
@@ -21,10 +22,12 @@ export interface JewelProductFormProps {
   mode: 'new' | 'edit';
   state: JewelFormState;
   onChange: (updates: Partial<JewelFormState>) => void;
-  photosUploadRef: React.RefObject<FileUpload | null>;
-  certificationsUploadRef: React.RefObject<FileUpload | null>;
+  photosUploadRef: React.RefObject<PrimeFileUploadRef | null>;
+  certificationsUploadRef: React.RefObject<PrimeFileUploadRef | null>;
   onPhotosBeforeSelect?: (event: { files: File[] }) => boolean;
   onCertificationsBeforeSelect?: (event: { files: File[] }) => boolean;
+  /** Called when the photos FileUpload has mounted (so parent can set initial files). */
+  onPhotosUploadReady?: () => void;
 }
 
 function createEmptySpec(): JewelSpecItem {
@@ -39,6 +42,7 @@ export function JewelProductForm({
   certificationsUploadRef,
   onPhotosBeforeSelect,
   onCertificationsBeforeSelect,
+  onPhotosUploadReady,
 }: JewelProductFormProps) {
   const toastRef = useRef<Toast>(null);
 
@@ -81,6 +85,14 @@ export function JewelProductForm({
     const val = e.target.value;
     if (val === '' || /^\d*\.?\d*$/.test(val)) update({ price: val });
   };
+
+  const pubDate = toDateOnly(state.publishedOn);
+  const today = toDateOnly(new Date());
+  const isPublishDateInFuture =
+    mode === 'new' &&
+    pubDate != null &&
+    today != null &&
+    pubDate.getTime() > today.getTime();
 
   return (
     <div className="grid grid-cols-1 gap-4">
@@ -154,12 +166,13 @@ export function JewelProductForm({
         <div className="grid grid-cols-1 gap-4">
           <div>
             <h4 className={`${LABEL_CLASS} mb-2`}>Photos (Min 1, Max 10) *</h4>
-            <InventoryFileUpload
+            <FileUpload
               ref={photosUploadRef}
               variant="photos"
               name="images[]"
               maxFiles={10}
               onBeforeSelect={onPhotosBeforeSelect}
+              onMount={onPhotosUploadReady}
             />
           </div>
           <div className="w-full grid gap-2">
@@ -276,12 +289,13 @@ export function JewelProductForm({
           </div>
           <div className="w-full grid gap-2">
             <h4 className={`${LABEL_CLASS} mb-2`}>Certifications (if any)</h4>
-            <InventoryFileUpload
+            <FileUpload
               ref={certificationsUploadRef}
               variant="certifications"
               name="certifications[]"
               maxFiles={10}
               onBeforeSelect={onCertificationsBeforeSelect}
+              disabled={true}
             />
           </div>
         </div>
