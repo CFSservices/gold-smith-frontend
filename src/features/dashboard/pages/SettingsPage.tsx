@@ -2,18 +2,18 @@
  * Settings Page
  */
 
-import { Card } from 'primereact/card';
-import { SelectButton } from 'primereact/selectbutton';
-import { InputSwitch } from 'primereact/inputswitch';
-import { InputText } from 'primereact/inputtext';
-import { InputNumber } from 'primereact/inputnumber';
-import { Dropdown } from 'primereact/dropdown';
-import { Button } from 'primereact/button';
-import { Divider } from 'primereact/divider';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
+import { PageHeader } from '@/components/ui/PageHeader';
 import { useTheme } from '@/hooks/useTheme';
 import type { Theme } from '@/types';
-import { Icon } from '@/components/ui/Icon';
-import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
+import { Button } from 'primereact/button';
+import { Card } from 'primereact/card';
+import { Divider } from 'primereact/divider';
+import { Dropdown } from 'primereact/dropdown';
+import { InputNumber } from 'primereact/inputnumber';
+import { InputSwitch } from 'primereact/inputswitch';
+import { InputText } from 'primereact/inputtext';
+import { SelectButton } from 'primereact/selectbutton';
 
 const themeOptions = [
   { label: 'Light', value: 'light', icon: 'light_mode' }, // Material Symbols
@@ -41,16 +41,14 @@ export function SettingsPage() {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-secondary-900 dark:text-white">Settings</h1>
-        <p className="text-secondary-500 dark:text-secondary-400">
-          Configure system-wide settings and preferences
-        </p>
-      </div>
+    <div className="flex flex-col h-full overflow-hidden">
+      {/* Fixed Page Title Section */}
+      <PageHeader title="Settings" breadcrumb="Settings" />
 
-      {/* General Settings */}
+      {/* Scrollable Content Section */}
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        <div className="space-y-6 p-4 md:p-6 pt-7 md:pt-7">
+          {/* General Settings */}
       <Card title="General Settings" className="shadow-sm">
         <div className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -97,7 +95,7 @@ export function SettingsPage() {
             </div>
             <SelectButton
               value={theme}
-              onChange={(e) => setTheme(e.value as Theme)}
+              onChange={(e) => { setTheme(e.value as Theme); }}
               options={themeOptions}
               itemTemplate={themeTemplate}
               optionLabel="label"
@@ -350,10 +348,12 @@ export function SettingsPage() {
         </div>
       </Card>
 
-      {/* Save Button */}
-      <div className="flex justify-end gap-2">
-        <Button label="Reset to Defaults" severity="secondary" outlined />
-        <Button label="Save Settings" icon={<PrimeReactIcon name="check" size={20} />} />
+          {/* Save Button */}
+          <div className="flex justify-end gap-2">
+            <Button label="Reset to Defaults" severity="secondary" outlined />
+            <Button label="Save Settings" icon={<PrimeReactIcon name="check" size={20} />} />
+          </div>
+        </div>
       </div>
     </div>
   );

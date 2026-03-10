@@ -65,18 +65,62 @@
   --color-secondary-900: #1c1917;
   --color-secondary-950: #0c0a09;
 
-  /* Font Family - Keeping Inter, but Figma uses Noto Sans */
-  /* Note: To match Figma exactly, would need to add Noto Sans font */
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+  /* Font Family - Figma Design System */
+  /* Primary: Noto Sans (from Figma), Fallback: Inter */
+  --font-sans: 'Noto Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
+  
+  /* Typography Scale - Based on Figma Design System */
+  /* Font Sizes */
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 32px;
+  
+  /* Line Heights - Matching Figma specifications */
+  --line-height-xs: 13.62px;    /* 10px font */
+  --line-height-sm: 16.34px;     /* 12px font */
+  --line-height-base: 19.07px;   /* 14px font */
+  --line-height-md: 21.79px;     /* 16px font */
+  --line-height-lg: 24.52px;     /* 18px font */
+  --line-height-xl: 32.69px;     /* 24px font */
+  --line-height-2xl: 43.58px;    /* 32px font */
+  
+  /* Font Weights - Figma Design System */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 }
 
 /* Base Styles */
 @layer base {
+  /* Global Font Configuration - Figma Design System */
   html {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: normal;
+  }
+  
+  /* Base body typography */
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+    font-weight: var(--font-weight-normal);
+    color: #000000;
+    margin: 0;
+    min-height: 100vh;
+    background-color: #f2f2f2; /* Base application background color from Figma */
+  }
+  
+  .dark body {
+    background-color: var(--color-secondary-900);
+    color: #ffffff;
   }
   
   /* Radial gradient utility for sidebar - Exact Figma gradient */
@@ -127,6 +171,7 @@
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
+    font-feature-settings: 'liga';
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
@@ -137,15 +182,270 @@
     font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
 
-  body {
-    margin: 0; /* Reset browser default 8px margin */
-    min-height: 100vh;
-    background-color: #f2f2f2; /* Base application background color from Figma */
+  /* Typography System - Figma Design System */
+  /* Base typography properties */
+  .text-base-font {
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+    margin: 0;
+    color: #000000;
   }
   
-  /* Dark mode base background */
-  .dark body {
-    background-color: var(--color-secondary-900);
+  .dark .text-base-font {
+    color: #ffffff;
+  }
+
+  /* Page Title - 32px, Bold (700), line-height 43.58px */
+  .text-xl-bold {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-2xl);
+    line-height: var(--line-height-2xl);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .text-xl-bold {
+    color: #ffffff;
+  }
+
+  /* Section Title / Large Value - 18px, SemiBold (600), line-height 24.52px */
+  .text-lg-semibold {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-lg);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .text-lg-semibold {
+    color: #ffffff;
+  }
+
+  /* Body Text / Label - 16px, Medium (500), line-height 21.79px */
+  .text-md-medium {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .text-md-medium {
+    color: #ffffff;
+  }
+
+  /* Small Text / Breadcrumb - 12px, SemiBold (600), line-height 16.34px */
+  .text-sm-semibold {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .text-sm-semibold {
+    color: #ffffff;
+  }
+  
+  /* Additional Typography Variants - Figma Design System */
+  
+  /* Extra Small Text - 10px, Normal (400), line-height 13.62px */
+  .text-xs-normal {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-xs);
+    line-height: var(--line-height-xs);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .text-xs-normal {
+    color: #ffffff;
+  }
+  
+  /* Small Text - 12px, Normal (400), line-height 16.34px */
+  .text-sm-normal {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .text-sm-normal {
+    color: #ffffff;
+  }
+  
+  /* Base Text - 14px, Normal (400), line-height 19.07px */
+  .text-base-normal {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .text-base-normal {
+    color: #ffffff;
+  }
+  
+  /* Medium Text - 16px, Normal (400), line-height 21.79px */
+  .text-md-normal {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .text-md-normal {
+    color: #ffffff;
+  }
+  
+  /* Large Text - 18px, Normal (400), line-height 24.52px */
+  .text-lg-normal {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-normal);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-lg);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .text-lg-normal {
+    color: #ffffff;
+  }
+  
+  /* Extra Large Text - 24px, SemiBold (600), line-height 32.69px */
+  .text-xl-semibold {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-xl);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .text-xl-semibold {
+    color: #ffffff;
+  }
+  
+  /* Extra Large Text - 24px, Bold (700), line-height 32.69px */
+  .text-xl-bold-alt {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-xl);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .text-xl-bold-alt {
+    color: #ffffff;
+  }
+
+  /* Page Header Container - Fixed height 80px with border, sticky positioning */
+  .page-header {
+    height: 80px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #cccccc;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  
+  .dark .page-header {
+    background-color: var(--color-secondary-800);
+    border-bottom-color: var(--color-secondary-700);
+  }
+
+  /* Legacy classes for backward compatibility - use CSS variables */
+  .page-title {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-2xl);
+    line-height: var(--line-height-2xl);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .page-title {
+    color: #ffffff;
+  }
+
+  .page-breadcrumb {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-sm);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .page-breadcrumb {
+    color: #ffffff;
+  }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-lg);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .section-title {
+    color: #ffffff;
+  }
+
+  .metal-rate-price {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-lg);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .metal-rate-price {
+    color: #ffffff;
+  }
+
+  .metal-rate-label {
+    font-family: var(--font-sans);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+    letter-spacing: 0;
+    color: #000000;
+    margin: 0;
+  }
+  
+  .dark .metal-rate-label {
+    color: #ffffff;
   }
 
   #root {
