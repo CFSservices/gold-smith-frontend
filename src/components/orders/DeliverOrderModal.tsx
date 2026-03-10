@@ -9,6 +9,8 @@ import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Dropdown } from 'primereact/dropdown';
 import { Message } from 'primereact/message';
+import { Icon } from '@/components/ui/Icon';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 import { type Order } from '@/mocks/data/orders';
 import { deliveryService } from '@/api/services/delivery.service';
 import type { ApiError } from '@/types';
@@ -199,7 +201,7 @@ export function DeliverOrderModal({
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               aria-label="Close error message"
             >
-              <i className="pi pi-times" />
+              <Icon name="close" size={18} />
             </button>
           </div>
         )}
@@ -234,7 +236,7 @@ export function DeliverOrderModal({
             {!otpSent ? (
               <Button
                 label="Send OTP"
-                icon="pi pi-send"
+                icon={<PrimeReactIcon name="send" size={20} />}
                 onClick={handleSendOtp}
                 severity="info"
                 className="flex-shrink-0"
@@ -245,7 +247,7 @@ export function DeliverOrderModal({
               <div className="flex items-center gap-3">
                 <Button
                   label="Send OTP"
-                  icon="pi pi-send"
+                  icon={<PrimeReactIcon name="send" size={20} />}
                   onClick={handleSendOtp}
                   severity="info"
                   disabled={resendTimer > 0 || loading.sendOtp}
@@ -277,7 +279,7 @@ export function DeliverOrderModal({
                 />
                 <Button
                   label="✓ Verify OTP"
-                  icon="pi pi-check"
+                  icon={<PrimeReactIcon name="check" size={20} />}
                   onClick={handleVerifyOtp}
                   severity="success"
                   disabled={otp.length !== 6 || otpVerified || loading.verifyOtp}
@@ -286,7 +288,7 @@ export function DeliverOrderModal({
               </div>
               {otpVerified && (
                 <p className="text-sm text-green-600 dark:text-green-400 flex items-center gap-2">
-                  <i className="pi pi-check-circle" />
+                  <Icon name="check_circle" size={20} className="text-green-600 dark:text-green-400" />
                   OTP verified successfully
                 </p>
               )}
@@ -328,7 +330,7 @@ export function DeliverOrderModal({
         <div className="flex justify-end pt-4 border-t border-gray-200 dark:border-secondary-700">
           <Button
             label="✓ Confirm Delivery"
-            icon="pi pi-check"
+            icon={<PrimeReactIcon name="check" size={20} />}
             onClick={handleConfirmDelivery}
             severity="warning"
             disabled={!otpVerified || !deliveryMode || loading.confirmDelivery}

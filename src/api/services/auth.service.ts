@@ -2,21 +2,19 @@
  * Authentication API service
  */
 
-import { api } from '../client';
-import { API_ENDPOINTS } from '../endpoints';
 import { env } from '@/config/env';
 import { mockHandlers } from '@/mocks/handlers';
 import type {
-  LoginRequest,
-  LoginResponse,
-  RegisterRequest,
-  RegisterResponse,
-  ForgotPasswordRequest,
-  ResetPasswordRequest,
-  ChangePasswordRequest,
-  User,
-  ApiResponse,
+    ApiResponse,
+    ChangePasswordRequest,
+    ForgotPasswordRequest,
+    LoginRequest,
+    LoginResponse,
+    ResetPasswordRequest,
+    User,
 } from '@/types';
+import { api } from '../client';
+import { API_ENDPOINTS } from '../endpoints';
 
 // Check if mock API is enabled (evaluated at runtime)
 const isMockEnabled = (): boolean => env.enableMockApi;
@@ -30,21 +28,6 @@ export const authService = {
       return mockHandlers.login(data.email, data.password);
     }
     return api.post<LoginResponse>(API_ENDPOINTS.auth.login, data);
-  },
-
-  /**
-   * Register new user
-   */
-  register: async (data: RegisterRequest): Promise<ApiResponse<RegisterResponse>> => {
-    if (isMockEnabled()) {
-      return mockHandlers.register({
-        email: data.email,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        phone: data.phone,
-      });
-    }
-    return api.post<RegisterResponse>(API_ENDPOINTS.auth.register, data);
   },
 
   /**

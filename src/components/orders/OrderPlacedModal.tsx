@@ -7,6 +7,8 @@ import { useState } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
+import { Icon } from '@/components/ui/Icon';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 import { type Order } from '@/mocks/data/orders';
 import { formatCurrency, formatDate } from '@/utils/format';
 import { DeliverOrderModal } from './DeliverOrderModal';
@@ -163,11 +165,11 @@ export function OrderPlacedModal({
                 {order.status === 'pending' ? (
                   <>
                     <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <i className="pi pi-map-marker text-amber-600" />
+                      <Icon name="location_on" size={20} className="text-gold-600 dark:text-gold-400" />
                       <span>Delivery Pending</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <i className="pi text-red-600 text-lg" />
+                      <Icon name="close" size={24} className="text-red-600 dark:text-red-400" />
                       <Button 
                         label="Deliver Order" 
                         severity="warning" 
@@ -178,7 +180,7 @@ export function OrderPlacedModal({
                 ) : order.status === 'delivered' ? (
                   <>
                     <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
-                      <i className="pi pi-check-circle text-green-600 dark:text-green-400" />
+                      <Icon name="check_circle" size={20} className="text-green-600 dark:text-green-400" />
                       <span className="font-semibold">Delivered</span>
                     </div>
                     <div className="px-4 py-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
@@ -190,7 +192,7 @@ export function OrderPlacedModal({
                 ) : order.status === 'cancelled' ? (
                   <>
                     <div className="flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
-                      <i className="pi pi-times-circle text-red-600 dark:text-red-400" />
+                      <Icon name="error" size={20} className="text-red-600 dark:text-red-400" />
                       <span className="font-semibold">Cancelled</span>
                     </div>
                     <div className="px-4 py-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
@@ -249,7 +251,7 @@ export function OrderPlacedModal({
         {/* Footer Actions */}
         <div className="flex items-center justify-between gap-2 pt-4 border-t border-gray-200 dark:border-secondary-700">
           <Button
-            icon="pi pi-trash"
+            icon={<PrimeReactIcon name="delete" size={20} />}
             text
             tooltip="Cancel Order"
             tooltipOptions={{ position: 'top' }}
@@ -257,26 +259,26 @@ export function OrderPlacedModal({
           />
           <div className="flex items-center gap-2">
             <Button
-              icon="pi pi-undo"
+              icon={<PrimeReactIcon name="undo" size={20} />}
               text
               tooltip="Undo"
               tooltipOptions={{ position: 'top' }}
             />
             <Button
-              icon="pi pi-download"
+              icon={<PrimeReactIcon name="download" size={20} />}
               text
               tooltip="Download"
               tooltipOptions={{ position: 'top' }}
             />
             <Button
-              icon="pi pi-print"
+              icon={<PrimeReactIcon name="print" size={20} />}
               text
               tooltip="Print"
               tooltipOptions={{ position: 'top' }}
             />
             <Button
               label="Done"
-              icon="pi pi-check"
+              icon={<PrimeReactIcon name="check" size={20} />}
               onClick={() => {
                 // Add order to list when "Done" is clicked
                 if (onOrderConfirm) {

@@ -5,6 +5,8 @@
 import { useState } from 'react';
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
+import { Icon } from '@/components/ui/Icon';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 import { formatCurrency } from '@/utils/format';
 
 interface Customer {
@@ -51,7 +53,7 @@ export function PaymentMethodModal({
     {
       id: 'scheme_redemption' as PaymentMethod,
       label: 'Scheme Redemption',
-      icon: 'pi pi-book',
+      icon: 'book_5',
       iconType: 'icon' as const,
     },
     {
@@ -146,12 +148,14 @@ export function PaymentMethodModal({
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   {method.iconType === 'icon' ? (
-                    <i
-                      className={`${method.icon} text-2xl ${
+                    <Icon
+                      name={method.icon}
+                      size={24}
+                      className={
                         selectedPaymentMethod === method.id
-                          ? 'text-primary-600 dark:text-primary-400'
-                          : 'text-gray-500 dark:text-gray-400'
-                      }`}
+                          ? 'text-gold-600 dark:text-gold-400'
+                          : 'text-secondary-500 dark:text-secondary-400'
+                      }
                     />
                   ) : (
                     <div
@@ -175,7 +179,7 @@ export function PaymentMethodModal({
                   </span>
                 </div>
                 {selectedPaymentMethod === method.id && (
-                  <i className="pi pi-check-circle text-2xl text-primary-600 dark:text-primary-400" />
+                  <Icon name="check_circle" size={24} className="text-gold-600 dark:text-gold-400" />
                 )}
               </div>
             </button>
@@ -186,7 +190,7 @@ export function PaymentMethodModal({
         <div className="pt-4 border-t border-gray-200 dark:border-secondary-700">
           <Button
             label="Confirm & Place Order"
-            icon="pi pi-check"
+            icon={<PrimeReactIcon name="check" size={20} />}
             severity="warning"
             className="w-full"
             onClick={handleConfirm}

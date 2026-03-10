@@ -5,22 +5,31 @@
 import { Button } from 'primereact/button';
 import { useTheme } from '@/hooks/useTheme';
 import { cn } from '@/utils/cn';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 
 interface ThemeToggleProps {
   /** Show label next to icon */
   showLabel?: boolean;
   /** Custom class name */
   className?: string;
+  /** Icon size in pixels */
+  iconSize?: number;
 }
 
-export function ThemeToggle({ showLabel = false, className }: ThemeToggleProps) {
+export function ThemeToggle({ showLabel = false, className, iconSize = 20 }: ThemeToggleProps) {
   const { isDarkMode, toggleTheme, theme } = useTheme();
 
   const getIcon = () => {
+    // Consistent icon color: #675122 (light mode), #d4a574 (dark mode)
+    const iconClassName = 'text-[#675122] dark:text-[#d4a574]';
     if (theme === 'system') {
-      return 'pi pi-desktop';
+      return <PrimeReactIcon name="computer" size={iconSize} className={iconClassName} />;
     }
-    return isDarkMode ? 'pi pi-moon' : 'pi pi-sun';
+    return isDarkMode ? (
+      <PrimeReactIcon name="dark_mode" size={iconSize} className={iconClassName} />
+    ) : (
+      <PrimeReactIcon name="light_mode" size={iconSize} className={iconClassName} />
+    );
   };
 
   const getLabel = () => {

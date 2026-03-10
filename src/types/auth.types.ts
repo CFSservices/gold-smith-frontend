@@ -2,7 +2,7 @@
  * Authentication and Authorization types
  */
 
-import type { BaseEntity, UserRole, Status } from './common.types';
+import type { BaseEntity, Status, UserRole } from './common.types';
 
 // User entity
 export interface User extends BaseEntity {
@@ -36,23 +36,6 @@ export interface LoginRequest {
 export interface LoginResponse {
   user: User;
   tokens: AuthTokens;
-}
-
-// Register request
-export interface RegisterRequest {
-  email: string;
-  password: string;
-  confirmPassword: string;
-  firstName: string;
-  lastName: string;
-  phone?: string;
-  acceptTerms: boolean;
-}
-
-// Register response
-export interface RegisterResponse {
-  user: User;
-  message: string;
 }
 
 // Forgot password request

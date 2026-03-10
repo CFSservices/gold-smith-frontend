@@ -7,10 +7,11 @@
 import type { Theme } from '@/types';
 
 // Theme options for UI
+// Icons are Material Symbols names directly
 export const THEMES: { value: Theme; label: string; icon: string }[] = [
-  { value: 'light', label: 'Light', icon: 'pi pi-sun' },
-  { value: 'dark', label: 'Dark', icon: 'pi pi-moon' },
-  { value: 'system', label: 'System', icon: 'pi pi-desktop' },
+  { value: 'light', label: 'Light', icon: 'light_mode' }, // Material Symbols
+  { value: 'dark', label: 'Dark', icon: 'dark_mode' }, // Material Symbols
+  { value: 'system', label: 'System', icon: 'computer' }, // Material Symbols
 ];
 
 // PrimeReact theme names (lara-*-amber for gold brand)
