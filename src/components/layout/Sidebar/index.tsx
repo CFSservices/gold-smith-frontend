@@ -52,7 +52,7 @@ export function Sidebar({
         // Mobile-first: hidden by default, shown when mobileMenuOpen
         // Desktop: width based on collapsed state
         'h-[calc(100vh-96px)]',
-        'rounded-tr-xl',
+        'rounded-tr-3xl',
         // Mobile: overlay style, hidden when menu closed
         isMobile && (mobileMenuOpen ? 'w-[225px]' : '-translate-x-full w-[225px]'),
         // Desktop: width based on collapsed state
@@ -94,7 +94,7 @@ export function Sidebar({
                     'active:bg-white/25', // Figma: Pressed - white overlay 25% opacity
                   ],
                   // Figma: Active state - white bg (#ffffff), dark text (#2e240f)
-                  isActive && 'bg-white text-[#2e240f] font-medium'
+                  isActive && 'bg-white text-gold-gradient-end font-medium'
                 )
               }
               onClick={onMobileMenuClose}

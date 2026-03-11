@@ -2,13 +2,13 @@
  * Profile Page
  */
 
-import { Card } from 'primereact/card';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
+import { useAuthStore } from '@/store/authStore';
+import { formatDate, getInitials } from '@/utils/format';
 import { Avatar } from 'primereact/avatar';
 import { Button } from 'primereact/button';
+import { Card } from 'primereact/card';
 import { InputText } from 'primereact/inputtext';
-import { useAuthStore } from '@/store/authStore';
-import { getInitials, formatDate } from '@/utils/format';
-import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 
 export function ProfilePage() {
   const { user } = useAuthStore();

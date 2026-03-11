@@ -2,4 +2,6 @@
 export * from './ui';
 
 // Re-export layout components
-export { Sidebar, Header, BaseLayout } from './layout';
+export { BaseLayout, Header, Sidebar } from './layout';
+export * from './orders';
+

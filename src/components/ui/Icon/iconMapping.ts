@@ -99,6 +99,10 @@ export const ICON_MAPPING: Record<string, string> = {
   'pi-copy': 'content_copy',
   'pi-undo': 'undo',
   'pi-redo': 'redo',
+  'pi-ban': 'block',
+  'pi-wallet': 'account_balance_wallet',
+  'pi-qrcode': 'qr_code_scanner',
+  'pi-plus-circle': 'add_circle',
 };
 
 /**

@@ -1,0 +1,35 @@
+/**
+ * Typography Tokens - Gold Smith Design System
+ * Font family, sizes, weights, and line heights.
+ * Source: Figma design system
+ */
+
+:root {
+  /* Font Family - Primary: Noto Sans (Figma), Fallback: Inter */
+  --font-sans: 'Noto Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  /* Font Sizes */
+  --font-size-xs: 10px;
+  --font-size-sm: 12px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 24px;
+  --font-size-2xl: 32px;
+
+  /* Line Heights - Matching Figma specifications */
+  --line-height-xs: 13.62px;
+  --line-height-sm: 16.34px;
+  --line-height-base: 19.07px;
+  --line-height-md: 21.79px;
+  --line-height-lg: 24.52px;
+  --line-height-xl: 32.69px;
+  --line-height-2xl: 43.58px;
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+}

@@ -1,0 +1,7 @@
+/**
+ * Gold Smith Design System - Base styles only
+ * PrimeReact vars are imported unlayered in index.css to override the theme link.
+ * Tokens are loaded in index.css before @theme inline.
+ */
+
+@import './base/index.css';

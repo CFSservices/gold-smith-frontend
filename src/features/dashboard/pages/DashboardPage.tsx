@@ -1,13 +1,45 @@
 /**
- * User Dashboard Page
+ * User Dashboard Page - Refactored according to Figma design
+ * Fixed page title that stays visible while scrolling
  */
 
-import { Card } from 'primereact/card';
-import { Button } from 'primereact/button';
-import { useAuthStore } from '@/store/authStore';
-import { formatCurrency } from '@/utils/format';
 import { Icon } from '@/components/ui/Icon';
 import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
+import { PageHeader } from '@/components/ui/PageHeader';
+import { formatCurrency } from '@/utils/format';
+import { Button } from 'primereact/button';
+import { Calendar } from 'primereact/calendar';
+import { Card } from 'primereact/card';
+import { useState } from 'react';
+
+// Metal Rates data from Figma
+const metalRates = [
+  {
+    label: 'Gold 24K',
+    price: 11314,
+    icon: 'diamond', // Gold icon
+  },
+  {
+    label: 'Gold 22K',
+    price: 12370,
+    icon: 'diamond', // Gold icon
+  },
+  {
+    label: 'Gold 18K',
+    price: 10330,
+    icon: 'diamond', // Gold icon
+  },
+  {
+    label: 'Silver',
+    price: 210,
+    icon: 'diamond', // Silver icon
+  },
+  {
+    label: 'Platinum',
+    price: 5071,
+    icon: 'diamond', // Platinum icon
+  },
+];
 
 // Mock data for demonstration
 const mockStats = [
@@ -42,22 +74,88 @@ const mockStats = [
 ];
 
 export function DashboardPage() {
-  const { user } = useAuthStore();
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date('2010-01-15'));
 
   return (
-    <div className="space-y-6">
-      {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-gold-500 to-gold-600 rounded-2xl p-6 text-white">
-        <h1 className="text-2xl font-bold">
-          Welcome back, {user?.firstName ?? 'User'}!
-        </h1>
-        <p className="mt-1 text-gold-100">
-          Here&apos;s what&apos;s happening with your business today.
-        </p>
-      </div>
+    <div className="flex flex-col h-full overflow-hidden">
+      {/* Fixed Page Title Section - Uses global typography classes */}
+      <PageHeader title="Dashboard" breadcrumb="Dashboard" />
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {/* Scrollable Content Section - Only this area scrolls */}
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        <div className="space-y-6">
+          {/* Metal Rates Section - Figma Frame 3 */}
+          {/* No outer border/spacing - spans full width */}
+          <div className="bg-base-bg dark:bg-secondary-800" style={{ minHeight: '174px' }}>
+            {/* Header Row - Padding: 16px left, 24px top */}
+            <div className="flex items-center justify-between px-4 pt-6 pb-4">
+              {/* Metal Rates Title - Figma: Noto Sans SemiCondensed ExtraBold, 600 weight, 18px */}
+              <h2
+                className="text-black dark:text-white m-0"
+                style={{
+                  fontFamily: "'Noto Sans', 'Inter', sans-serif",
+                  fontStyle: 'SemiCondensed ExtraBold',
+                  fontWeight: 600,
+                  fontSize: '18px',
+                  lineHeight: '24.52px',
+                  letterSpacing: 0,
+                }}
+              >
+                Metal Rates
+              </h2>
+              
+              {/* Date Picker - PrimeReact Calendar Component */}
+              <div className="relative">
+                <Calendar
+                  value={selectedDate}
+                  onChange={(e) => { setSelectedDate(e.value as Date); }}
+                  dateFormat="dd MMM yyyy"
+                  showIcon
+                  icon={<PrimeReactIcon name="calendar_month" size={16} className="text-gold-dark dark:text-gold-icon-dark" />}
+                  className="w-[194px]"
+                  inputClassName="w-full h-[38px] border border-border-default dark:border-secondary-700 rounded-lg px-3 text-text-muted dark:text-secondary-400 bg-white dark:bg-secondary-800"
+                />
+              </div>
+            </div>
+
+            {/* Metal Rates Cards Row - 5 cards horizontally, gap ~16px */}
+            <div className="flex flex-wrap gap-4 px-3 pb-4">
+              {metalRates.map((metal) => (
+                <div
+                  key={metal.label}
+                  className="bg-white dark:bg-secondary-800 border border-border-default dark:border-secondary-700 rounded-lg"
+                  style={{ 
+                    width: '214.2px',
+                    height: '72px',
+                    padding: '12px'
+                  }}
+                >
+                  <div className="flex items-center h-full">
+                    {/* Metal Image/Icon - 48x48px, corner radius 8px */}
+                    <div className="w-12 h-12 rounded-lg bg-gold-100 dark:bg-gold-900/30 flex items-center justify-center shrink-0">
+                      <Icon name={metal.icon} size={24} className="text-gold-600 dark:text-gold-400" />
+                    </div>
+                    
+                    {/* Price and Label */}
+                    <div className="flex-1 min-w-0 ml-3">
+                      {/* Price - Uses global .metal-rate-price class */}
+                      <p className="metal-rate-price leading-tight">
+                        {formatCurrency(metal.price)}
+                      </p>
+                      {/* Label - Uses global .metal-rate-label class */}
+                      <p className="metal-rate-label leading-tight">
+                        {metal.label}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Stats Grid */}
+          <div className="space-y-6 p-4 md:p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {mockStats.map((stat) => (
           <Card key={stat.title} className="shadow-sm">
             <div className="flex items-start justify-between">
@@ -84,41 +182,41 @@ export function DashboardPage() {
             </div>
           </Card>
         ))}
-      </div>
+          </div>
 
-      {/* Quick Actions */}
-      <Card title="Quick Actions" className="shadow-sm">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <Button
-            label="New Sale"
-            icon={<PrimeReactIcon name="add" size={20} />}
-            severity="success"
-            className="w-full"
-          />
-          <Button
-            label="Add Stock"
-            icon={<PrimeReactIcon name="package_2" size={20} />}
-            severity="info"
-            className="w-full"
-          />
-          <Button
-            label="View Orders"
-            icon={<PrimeReactIcon name="list" size={20} />}
-            severity="warning"
-            className="w-full"
-          />
-          <Button
-            label="Reports"
-            icon={<PrimeReactIcon name="bar_chart" size={20} />}
-            severity="help"
-            className="w-full"
-          />
-        </div>
-      </Card>
+          {/* Quick Actions */}
+          <Card title="Quick Actions" className="shadow-sm">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Button
+                label="New Sale"
+                icon={<PrimeReactIcon name="add" size={20} />}
+                severity="success"
+                className="w-full"
+              />
+              <Button
+                label="Add Stock"
+                icon={<PrimeReactIcon name="package_2" size={20} />}
+                severity="info"
+                className="w-full"
+              />
+              <Button
+                label="View Orders"
+                icon={<PrimeReactIcon name="list" size={20} />}
+                severity="warning"
+                className="w-full"
+              />
+              <Button
+                label="Reports"
+                icon={<PrimeReactIcon name="bar_chart" size={20} />}
+                severity="help"
+                className="w-full"
+              />
+            </div>
+          </Card>
 
-      {/* Recent Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card title="Recent Transactions" className="shadow-sm">
+          {/* Recent Activity */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <Card title="Recent Transactions" className="shadow-sm">
           <div className="space-y-4">
             {[1, 2, 3, 4, 5].map((i) => (
               <div
@@ -146,15 +244,15 @@ export function DashboardPage() {
                 </div>
               </div>
             ))}
-          </div>
-          <Button
-            label="View All Transactions"
-            link
-            className="mt-4 p-0"
-          />
-        </Card>
+              </div>
+              <Button
+                label="View All Transactions"
+                link
+                className="mt-4 p-0"
+              />
+            </Card>
 
-        <Card title="Gold Rate Today" className="shadow-sm">
+            <Card title="Gold Rate Today" className="shadow-sm">
           <div className="space-y-4">
             <div className="p-4 bg-gold-50 dark:bg-gold-900/20 rounded-xl">
               <div className="flex items-center justify-between">
@@ -212,8 +310,11 @@ export function DashboardPage() {
                 </div>
               </div>
             </div>
+            </div>
+            </Card>
           </div>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );

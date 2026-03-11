@@ -123,9 +123,10 @@ export function BaseLayout({
         )}
       >
         {/* Content container - Pure white background with border, margin outside border, top border radius */}
-        <div className="flex-1 min-h-0 overflow-y-auto bg-white dark:bg-secondary-800 border border-[#cccccc] dark:border-secondary-700 rounded-t-xl mx-4 md:mx-12">
+        {/* Remove overflow-y-auto from here - let page content handle its own scrolling */}
+        <div className="flex-1 min-h-0 overflow-hidden bg-white dark:bg-secondary-800 border border-border-default dark:border-secondary-700 rounded-t-3xl mx-4 md:mx-12">
           {/* Page content - Inner padding for content spacing */}
-          <main className="p-4 md:p-6">{children}</main>
+          <main className="h-full">{children}</main>
         </div>
       </div>
     </div>

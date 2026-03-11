@@ -1,0 +1,8 @@
+/**
+ * Design Tokens - Gold Smith Design System
+ * Re-exports all primitive token definitions.
+ * Import order matters: colors before typography.
+ */
+
+@import './colors.css';
+@import './typography.css';

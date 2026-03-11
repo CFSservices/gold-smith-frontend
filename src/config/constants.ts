@@ -81,6 +81,12 @@ export const DEBOUNCE = {
   resize: 100,
 } as const;
 
+// Theme meta colors (matches design tokens - single source for meta theme-color)
+export const THEME_META_COLORS = {
+  light: '#ffffff', // --color-white
+  dark: '#1c1917', // --color-secondary-900
+} as const;
+
 // Breakpoints (matching Tailwind)
 export const BREAKPOINTS = {
   sm: 640,

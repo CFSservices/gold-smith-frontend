@@ -30,6 +30,7 @@ const CategoriesPage = lazy(() => import('@/features/dashboard/pages/categoriesP
 const ContentPage = lazy(() => import('@/features/dashboard/pages/ContentPage'));
 const CustomersPage = lazy(() => import('@/features/dashboard/pages/CustomersPage'));
 const ProfilePage = lazy(() => import('@/features/dashboard/pages/ProfilePage'));
+
 const SettingsPage = lazy(() => import('@/features/dashboard/pages/SettingsPage'));
 
 const NotFoundPage = lazy(() => import('@/features/auth/pages/NotFoundPage'));
@@ -128,6 +129,7 @@ export const router = createBrowserRouter([
         path: '/settings',
         element: <SettingsPage />,
       },
+
     ],
   },
 

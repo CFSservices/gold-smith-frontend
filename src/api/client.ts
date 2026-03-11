@@ -7,6 +7,7 @@ import type { ApiError, ApiResponse } from '@/types';
 import { env, AUTH_KEYS, debugLog } from '@/config/env';
 import { getStorageItem, setStorageItem, removeStorageItem } from '@/utils/storage';
 import { useAuthStore } from '@/store/authStore';
+import { API_ENDPOINTS } from './endpoints';
 
 // Create axios instance
 export const apiClient: AxiosInstance = axios.create({
@@ -73,7 +74,7 @@ apiClient.interceptors.response.use(
         if (refreshToken) {
           // Attempt to refresh token
           const response = await axios.post<ApiResponse<{ accessToken: string; refreshToken: string }>>(
-            `${env.apiBaseUrl}/auth/refresh-token`,
+            `${env.apiBaseUrl}${API_ENDPOINTS.auth.refresh}`,
             { refreshToken }
           );
           // console.log('response from backend(in response interceptor):', response);

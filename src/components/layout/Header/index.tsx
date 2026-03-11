@@ -7,7 +7,7 @@
 import AppIcon from '@/assets/AppIcon.svg';
 import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
-import { APP_CONFIG } from '@/config/constants';
+import { APP_CONFIG, THEME_META_COLORS } from '@/config/constants';
 import { useAuthStore } from '@/store/authStore';
 import { formatUserRole, getInitials } from '@/utils/format';
 import { Avatar } from 'primereact/avatar';
@@ -59,10 +59,9 @@ export function Header({
             className="w-12 h-12 md:w-16 md:h-16 shrink-0"
           />
 
-          {/* Toggle Button - Figma: 32x32px, icon 28px, color #675122 */}
-          {/* Property 1=1: left_panel_close (when sidebar is open), Property 1=2: left_panel_open (when sidebar is closed) */}
+          {/* Toggle Button - Figma: 32x32px, icon 28px */}
           <Button
-            icon={<PrimeReactIcon name={sidebarCollapsed ? 'left_panel_open' : 'left_panel_close'} size={28} className="text-[#675122] dark:text-[#d4a574]" />}
+            icon={<PrimeReactIcon name={sidebarCollapsed ? 'left_panel_open' : 'left_panel_close'} size={28} className="text-gold-dark dark:text-gold-icon-dark" />}
             text
             onClick={onToggleSidebar}
             className="w-7 h-7 md:w-8 md:h-8 p-0 flex items-center justify-center hover:bg-transparent"
@@ -98,7 +97,7 @@ export function Header({
           {/* Notifications - Always visible, Figma: 32x32px button, icon 28px, badge with count */}
           <div className="relative">
             <Button
-              icon={<PrimeReactIcon name="notifications" size={28} className="text-[#675122] dark:text-[#d4a574]" />}
+              icon={<PrimeReactIcon name="notifications" size={28} className="text-gold-dark dark:text-gold-icon-dark" />}
               text
               className="w-7 h-7 md:w-8 md:h-8 p-0 flex items-center justify-center hover:bg-transparent"
             />
@@ -110,7 +109,7 @@ export function Header({
                 className="absolute -top-1 -right-1 min-w-[26px] h-[15px] text-[11px] px-1 flex items-center justify-center"
                 style={{
                   backgroundColor: '#a90000',
-                  color: '#ffffff',
+                  color: THEME_META_COLORS.light,
                   fontFamily: "'Noto Sans', 'Inter', sans-serif",
                   fontSize: '11px',
                   lineHeight: '14.98px',
@@ -165,7 +164,7 @@ export function Header({
 
             {/* Logout Button */}
             <Button
-              icon={<PrimeReactIcon name="logout" size={28} className="text-[#675122] dark:text-[#d4a574]" />}
+              icon={<PrimeReactIcon name="logout" size={28} className="text-gold-dark dark:text-gold-icon-dark" />}
               text
               onClick={onLogout}
               tooltip="Logout"
