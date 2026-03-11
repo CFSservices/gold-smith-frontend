@@ -4,13 +4,15 @@
  * Reference: https://primereact.org/theming/
  */
 
+import { THEME_META_COLORS } from '@/config/constants';
 import type { Theme } from '@/types';
 
 // Theme options for UI
+// Icons are Material Symbols names directly
 export const THEMES: { value: Theme; label: string; icon: string }[] = [
-  { value: 'light', label: 'Light', icon: 'pi pi-sun' },
-  { value: 'dark', label: 'Dark', icon: 'pi pi-moon' },
-  { value: 'system', label: 'System', icon: 'pi pi-desktop' },
+  { value: 'light', label: 'Light', icon: 'light_mode' }, // Material Symbols
+  { value: 'dark', label: 'Dark', icon: 'dark_mode' }, // Material Symbols
+  { value: 'system', label: 'System', icon: 'computer' }, // Material Symbols
 ];
 
 // PrimeReact theme names (lara-*-amber for gold brand)
@@ -111,7 +113,7 @@ export const applyTheme = (theme: Theme): void => {
   if (metaThemeColor) {
     metaThemeColor.setAttribute(
       'content',
-      resolvedTheme === 'dark' ? '#1c1917' : '#ffffff'
+      resolvedTheme === 'dark' ? THEME_META_COLORS.dark : THEME_META_COLORS.light
     );
   }
 };

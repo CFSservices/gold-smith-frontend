@@ -66,6 +66,7 @@ export interface NavItem {
   badge?: string | number;
   children?: NavItem[];
   roles?: UserRole[];
+  hasDropdown?: boolean; // Indicates if item has dropdown menu (for UI display)
 }
 
 // Toast/Notification types

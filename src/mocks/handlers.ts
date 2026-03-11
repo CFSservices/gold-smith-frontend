@@ -9,8 +9,8 @@
  * 2. Import and use the mock functions in your API services
  */
 
-import type { LoginResponse, RegisterResponse, User, AuthTokens, ApiResponse } from '@/types';
-import { mockUsers, validateCredentials, findUserByEmail } from './data/users';
+import type { ApiResponse, AuthTokens, LoginResponse, User } from '@/types';
+import { findUserByEmail, mockUsers, validateCredentials } from './data/users';
 
 // Helper to create API response wrapper
 function createResponse<T>(data: T, message?: string): ApiResponse<T> {
@@ -52,6 +52,7 @@ function delay(ms: number = 500): Promise<void> {
 
 /**
  * Mock Login Handler
+ * Note: Web app is admin-only. Non-admin users will be blocked by frontend validation.
  */
 export async function mockLogin(
   email: string,
@@ -76,50 +77,6 @@ export async function mockLogin(
   };
 
   return createResponse(response, 'Login successful');
-}
-
-/**
- * Mock Register Handler
- */
-export async function mockRegister(
-  data: {
-    email: string;
-    firstName: string;
-    lastName: string;
-    phone?: string;
-  }
-): Promise<ApiResponse<RegisterResponse>> {
-  await delay(1000);
-
-  // Check if email already exists
-  const existingUser = findUserByEmail(data.email);
-  if (existingUser) {
-    throw createErrorResponse('Email address is already registered', 409);
-  }
-
-  // Create new user
-  const newUser: User = {
-    id: String(mockUsers.length + 1),
-    email: data.email,
-    firstName: data.firstName,
-    lastName: data.lastName,
-    phone: data.phone,
-    role: 'user',
-    status: 'pending',
-    emailVerified: false,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
-
-  // Add to mock users (in real app, this would be saved to database)
-  mockUsers.push(newUser);
-
-  const response: RegisterResponse = {
-    user: newUser,
-    message: 'Registration successful. Please verify your email.',
-  };
-
-  return createResponse(response, 'Registration successful');
 }
 
 /**
@@ -176,14 +133,86 @@ export async function mockLogout(): Promise<ApiResponse<void>> {
   return createResponse(undefined, 'Logged out successfully');
 }
 
+/**
+ * Mock Send OTP Handler
+ */
+export async function mockSendOtp(
+  orderId: string | number
+): Promise<ApiResponse<{ message: string; expiresIn: number }>> {
+  await delay(600);
+  
+  // In a real app, this would send OTP to customer's phone
+  return createResponse(
+    {
+      message: 'OTP sent successfully to customer mobile number',
+      expiresIn: 30, // seconds
+    },
+    'OTP sent successfully'
+  );
+}
+
+/**
+ * Mock Verify OTP Handler
+ */
+export async function mockVerifyOtp(
+  orderId: string | number,
+  otp: string
+): Promise<ApiResponse<{ verified: boolean; message: string }>> {
+  await delay(500);
+  
+  // Mock validation: accept any 6-digit OTP
+  if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
+    throw createErrorResponse('Invalid OTP format. Please enter a 6-digit code.', 400);
+  }
+  
+  // Mock: accept any OTP starting with 1-9 (reject 000000)
+  if (otp === '000000') {
+    throw createErrorResponse('Invalid OTP. Please try again.', 400);
+  }
+  
+  return createResponse(
+    {
+      verified: true,
+      message: 'OTP verified successfully',
+    },
+    'OTP verified successfully'
+  );
+}
+
+/**
+ * Mock Confirm Delivery Handler
+ */
+export async function mockConfirmDelivery(
+  orderId: string | number,
+  data: {
+    otp: string;
+    deliveryMode: string;
+    comments?: string;
+  }
+): Promise<ApiResponse<{ orderId: string | number; deliveredAt: string; message: string }>> {
+  await delay(800);
+  
+  // In a real app, this would update the order status in the database
+  return createResponse(
+    {
+      orderId,
+      deliveredAt: new Date().toISOString(),
+      message: 'Order delivered successfully',
+    },
+    'Order delivered successfully'
+  );
+}
+
 // Export all handlers
 export const mockHandlers = {
   login: mockLogin,
-  register: mockRegister,
   getCurrentUser: mockGetCurrentUser,
   forgotPassword: mockForgotPassword,
   refreshToken: mockRefreshToken,
   logout: mockLogout,
+  sendOtp: mockSendOtp,
+  verifyOtp: mockVerifyOtp,
+  confirmDelivery: mockConfirmDelivery,
 };
 
 export default mockHandlers;

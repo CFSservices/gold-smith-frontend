@@ -6,16 +6,13 @@ import { Link } from 'react-router-dom';
 import { Button } from 'primereact/button';
 import { ROUTES } from '@/config/routes';
 import { useAuthStore } from '@/store/authStore';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 
 export function NotFoundPage() {
   const { isAuthenticated, user } = useAuthStore();
 
-  // Determine where to redirect
-  const homeRoute = isAuthenticated
-    ? user?.role === 'admin'
-      ? ROUTES.admin.dashboard
-      : ROUTES.dashboard
-    : ROUTES.login;
+  // Determine where to redirect (admin-only app)
+  const homeRoute = isAuthenticated ? ROUTES.dashboard : ROUTES.login;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary-50 dark:bg-secondary-900 px-4">
@@ -38,13 +35,13 @@ export function NotFoundPage() {
           <Link to={homeRoute}>
             <Button
               label="Go Home"
-              icon="pi pi-home"
+              icon={<PrimeReactIcon name="home" size={20} />}
               className="w-full sm:w-auto"
             />
           </Link>
           <Button
             label="Go Back"
-            icon="pi pi-arrow-left"
+            icon={<PrimeReactIcon name="arrow_back" size={20} />}
             severity="secondary"
             outlined
             onClick={() => window.history.back()}

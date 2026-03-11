@@ -1,81 +1,89 @@
 /**
- * Global Styles for Gold Smith Application
- * CSS Layer configuration for Tailwind v4 + PrimeReact compatibility
- * Reference: https://primereact.org/tailwind/
+ * Global Styles - Gold Smith Application
+ * Orchestrator for Tailwind v4, PrimeReact, and design system.
+ * Reference: https://primereact.org/tailwind/ and https://primereact.org/guides/csslayer/
+ *
+ * Skip Tailwind's preflight to preserve PrimeReact styles.
+ * Layer order (later = higher precedence): theme < primereact < base < utilities
  */
 
-/*
- * Skip Tailwind's preflight (CSS reset) to preserve PrimeReact styles
- * 
- * Instead of: @import 'tailwindcss' (includes preflight)
- * We import: theme + utilities only (no preflight)
- */
+@layer theme, primereact, base, utilities;
 
-/* Tailwind Theme (CSS variables, no resets) */
+/* 1. Tailwind theme layer (includes default tokens) */
 @import 'tailwindcss/theme' layer(theme);
 
-/* PrimeReact Core Styles */
-@import 'primereact/resources/primereact.min.css';
-@import 'primeicons/primeicons.css';
+/* 2. Gold Smith tokens (single source of truth) */
+@import './assets/design-system/tokens/index.css';
 
-/* Tailwind Utilities (the classes you use in HTML) */
+/* 3. Tailwind @theme inline - references tokens, no duplication */
+@theme inline {
+  --color-gold-50: var(--color-gold-50);
+  --color-gold-100: var(--color-gold-100);
+  --color-gold-200: var(--color-gold-200);
+  --color-gold-300: var(--color-gold-300);
+  --color-gold-400: var(--color-gold-400);
+  --color-gold-500: var(--color-gold-500);
+  --color-gold-600: var(--color-gold-600);
+  --color-gold-700: var(--color-gold-700);
+  --color-gold-800: var(--color-gold-800);
+  --color-gold-900: var(--color-gold-900);
+  --color-gold-950: var(--color-gold-950);
+  --color-gold-dark: var(--color-gold-dark);
+  --color-gold-medium: var(--color-gold-medium);
+  --color-gold-icon-dark: var(--color-gold-icon-dark);
+  --color-gold-light: var(--color-gold-light);
+  --color-gold-light-alt: var(--color-gold-light-alt);
+  --color-gold-gradient-start: var(--color-gold-gradient-start);
+  --color-gold-gradient-end: var(--color-gold-gradient-end);
+  --color-secondary-50: var(--color-secondary-50);
+  --color-secondary-100: var(--color-secondary-100);
+  --color-base-bg: var(--color-base-bg);
+  --color-secondary-200: var(--color-secondary-200);
+  --color-secondary-300: var(--color-secondary-300);
+  --color-secondary-400: var(--color-secondary-400);
+  --color-secondary-500: var(--color-secondary-500);
+  --color-secondary-600: var(--color-secondary-600);
+  --color-secondary-700: var(--color-secondary-700);
+  --color-secondary-800: var(--color-secondary-800);
+  --color-secondary-900: var(--color-secondary-900);
+  --color-secondary-950: var(--color-secondary-950);
+  --color-white: var(--color-white);
+  --color-black: var(--color-black);
+  --color-border-default: var(--color-border-default);
+  --color-text-muted: var(--color-text-muted);
+  --color-success: var(--color-success);
+  --font-sans: var(--font-sans);
+  --font-size-xs: var(--font-size-xs);
+  --font-size-sm: var(--font-size-sm);
+  --font-size-base: var(--font-size-base);
+  --font-size-md: var(--font-size-md);
+  --font-size-lg: var(--font-size-lg);
+  --font-size-xl: var(--font-size-xl);
+  --font-size-2xl: var(--font-size-2xl);
+  --line-height-xs: var(--line-height-xs);
+  --line-height-sm: var(--line-height-sm);
+  --line-height-base: var(--line-height-base);
+  --line-height-md: var(--line-height-md);
+  --line-height-lg: var(--line-height-lg);
+  --line-height-xl: var(--line-height-xl);
+  --line-height-2xl: var(--line-height-2xl);
+  --font-weight-normal: var(--font-weight-normal);
+  --font-weight-medium: var(--font-weight-medium);
+  --font-weight-semibold: var(--font-weight-semibold);
+  --font-weight-bold: var(--font-weight-bold);
+}
+
+/* 4. PrimeReact core styles (loaded before our overrides) */
+@import 'primereact/resources/primereact.min.css' layer(primereact);
+
+/* 5. Gold Smith PrimeReact vars - UNLAYERED so they override the theme link in index.html */
+@import './assets/design-system/theme/primereact-vars.css';
+
+/* 6. Design system base styles */
+@import './assets/design-system/design-system.css' layer(base);
+
+/* 7. Tailwind utilities (generated from theme) */
 @import 'tailwindcss/utilities' layer(utilities);
 
-/* Configure Tailwind dark mode to use class strategy */
+/* Dark mode: class strategy */
 @custom-variant dark (&:where(.dark, .dark *));
-
-/* 
- * Theme Color Variables for Tailwind utilities
- * Gold brand colors based on amber palette
- */
-@theme {
-  /* Gold Brand Colors */
-  --color-gold-50: #fffbeb;
-  --color-gold-100: #fef3c7;
-  --color-gold-200: #fde68a;
-  --color-gold-300: #fcd34d;
-  --color-gold-400: #fbbf24;
-  --color-gold-500: #f59e0b;
-  --color-gold-600: #d97706;
-  --color-gold-700: #b45309;
-  --color-gold-800: #92400e;
-  --color-gold-900: #78350f;
-  --color-gold-950: #451a03;
-
-  /* Secondary Colors (Warm Stone Gray) */
-  --color-secondary-50: #fafaf9;
-  --color-secondary-100: #f5f5f4;
-  --color-secondary-200: #e7e5e4;
-  --color-secondary-300: #d6d3d1;
-  --color-secondary-400: #a8a29e;
-  --color-secondary-500: #78716c;
-  --color-secondary-600: #57534e;
-  --color-secondary-700: #44403c;
-  --color-secondary-800: #292524;
-  --color-secondary-900: #1c1917;
-  --color-secondary-950: #0c0a09;
-
-  /* Font Family */
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, sans-serif;
-}
-
-/* Base Styles */
-@layer base {
-  html {
-    font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  body {
-    margin: 0; /* Reset browser default 8px margin */
-    min-height: 100vh;
-  }
-
-  #root {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-}

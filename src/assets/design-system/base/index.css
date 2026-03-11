@@ -1,0 +1,8 @@
+/**
+ * Base Styles - Gold Smith Design System
+ * Reset, typography, and component overrides.
+ */
+
+@import './reset.css';
+@import './typography.css';
+@import './components.css';

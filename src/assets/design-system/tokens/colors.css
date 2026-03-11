@@ -1,0 +1,50 @@
+/**
+ * Color Tokens - Gold Smith Design System
+ * Primitive color values for Tailwind utilities and semantic mappings.
+ * Source: Figma design system
+ */
+
+:root {
+  /* Gold Brand Colors - Amber palette */
+  --color-gold-50: #fffbeb;
+  --color-gold-100: #fef3c7;
+  --color-gold-200: #fde68a;
+  --color-gold-300: #fcd34d;
+  --color-gold-400: #fbbf24;
+  --color-gold-500: #f59e0b;
+  --color-gold-600: #d97706;
+  --color-gold-700: #b45309;
+  --color-gold-800: #92400e;
+  --color-gold-900: #78350f;
+  --color-gold-950: #451a03;
+
+  /* Figma Gold Colors */
+  --color-gold-dark: #675122;
+  --color-gold-medium: #a97f00;
+  --color-gold-icon-dark: #d4a574; /* Dark mode icon accent */
+  --color-gold-light: #fff9e5;
+  --color-gold-light-alt: #ece0c5;
+  --color-gold-gradient-start: #54421c;
+  --color-gold-gradient-end: #2e240f;
+
+  /* Secondary Colors (Warm Stone Gray) */
+  --color-secondary-50: #fafaf9;
+  --color-secondary-100: #f5f5f4;
+  --color-base-bg: #f2f2f2;
+  --color-secondary-200: #e7e5e4;
+  --color-secondary-300: #d6d3d1;
+  --color-secondary-400: #a8a29e;
+  --color-secondary-500: #78716c;
+  --color-secondary-600: #57534e;
+  --color-secondary-700: #44403c;
+  --color-secondary-800: #292524;
+  --color-secondary-900: #1c1917;
+  --color-secondary-950: #0c0a09;
+
+  /* Semantic primitives - used across themes */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-border-default: #cccccc;
+  --color-text-muted: #555555;
+  --color-success: #00a91c; /* Status/success indicator */
+}
