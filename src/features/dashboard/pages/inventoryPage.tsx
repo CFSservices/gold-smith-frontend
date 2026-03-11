@@ -20,7 +20,7 @@ import { normalizeProductImages } from '@/utils/jewelProductUtils';
 import {
   validateJewelForm,
 } from '@/utils/jewelValidation';
-import { JewelProductModal, NameWeightPriceCell, ActionCell } from '@/features/dashboard/components/inventory';
+import { JewelProductModal, NameWeightPriceCell, ActionCell } from '@/components/jewels/inventoryUI';
 import { formatDateTime } from '@/utils/dateUtils';
 import type { FileUpload, FileUploadFile } from 'primereact/fileupload';
 import { BUTTON_STYLES, DATA_TABLE_DARK_PT } from '@/config/inventoryStyles';
@@ -485,18 +485,18 @@ export function InventoryPage() {
   const serialNumberBodyTemplate = (_rowData: InventoryJewelProduct, options: { rowIndex?: number }): number => (options.rowIndex ?? 0) + 1;
   
   return (
-    <div>
+    <div className="body dark:body h-full">
       <Toast ref={toastRef} />
-      <section className="flex items-center justify-between mb-4">
+      <section className="flex items-center justify-between py-2 px-3">
         <div className="flex items-center">
           <div>
             <Button
               text
-              style={{ ...BUTTON_STYLES.iconButton, height: '32px', width: '32px' }}
+              style={{ ...BUTTON_STYLES.iconButton, height: '32px', width: '32px', alignItems: 'center', justifyContent: 'center' }}
               onClick={() => navigate('/jewels')}
             >
               <span
-                className="material-symbols-rounded flex items-center justify-center-safe text-[#704F01] dark:text-white h-8 w-7 font-light text-2xl"
+                className="material-symbols-rounded text-[#704F01] dark:text-white font-light text-2xl"
               >
                 chevron_left
               </span>
@@ -521,6 +521,7 @@ export function InventoryPage() {
           </Button>
         </div>
       </section>
+      <hr className="m-0"/>
 
       {modalOpen && (
         <JewelProductModal
@@ -545,7 +546,6 @@ export function InventoryPage() {
         />
       )}
 
-      <hr className="mb-0" />
       <section className="flex items-center justify-between px-4 py-3 h-19.5">
         <div className="text-[#545455]">
           <SelectButton
@@ -612,7 +612,10 @@ export function InventoryPage() {
           paginator
           rows={5}
           rowsPerPageOptions={[5, 10, 15, 20]}
-          pt={DATA_TABLE_DARK_PT}
+          pt={{
+            root: { className: 'datatable dark:datatable' },
+            header: { className: 'p-datatable-thead dark:p-datatable-thead' },
+          }}
         >
           <Column header="S.No" style={{ width: '3rem' }} body={serialNumberBodyTemplate} />
           <Column

@@ -11,20 +11,20 @@ export function JewelsPage() {
 
   const isParentRoute = location.pathname === '/jewels' || location.pathname === '/jewels/';
   return (
-    <div>
+    <div className="body dark:body">
       { isParentRoute ? (
         <>
           <div>
-            <section>
+            <section className="page-header dark:page-header px-3 py-2">
               <h1 className="text-2xl font-bold text-secondary-900 dark:text-white m-0">Jewels</h1>
               <p className="m-0 text-secondary-900 dark:text-white">Jewels</p>
             </section>
-            <hr className="mb-0"/>
-            <section>
+            <hr className="m-0"/>
+            <section className="py-4 h-full">
               <div>
-                <h1 className="text-xl font-semibold text-secondary-900 dark:text-white">Purpose</h1>
+                <h1 className="text-xl font-semibold text-secondary-900 dark:text-white px-4 mt-0 mb-4">Purpose</h1>
               </div>
-              <div className="grid grid-cols-1 lg:flex gap-6">
+              <div className="grid grid-cols-1 lg:flex gap-6 px-6">
                 <div onClick={() => navigate('/jewels/inventory')} className="cursor-pointer">
                   <Card className="bg-base-bg w-104.5 h-auto">
                     <div className="p-card-body p-0">

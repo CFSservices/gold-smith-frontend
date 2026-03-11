@@ -84,7 +84,7 @@ export const FILE_UPLOAD_CLASSES = {
 /** Dark mode table colors: bluish-gray background, white text, gold accent for active states */
 export const DATA_TABLE_DARK_PT = {
   root: {
-    className: 'dark:!bg-[#2A2D3B] dark:!text-white dark:border dark:border-[#3d4150] dark:rounded-lg overflow-hidden',
+    className: 'dark:!bg-[#2A2D3B] dark:!text-white dark:border dark:border-[#3d4150] rounded-lg overflow-hidden',
   },
   header: {
     className: 'dark:!bg-[#2A2D3B] dark:!text-white dark:border-b dark:border-[#3d4150]',

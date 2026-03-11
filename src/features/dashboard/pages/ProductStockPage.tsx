@@ -436,16 +436,16 @@ export function ProductStockPage() {
   }, [editingItem, setStockItems]);
 
   return (
-    <div>
+    <div className="body dark:body h-full">
       <Toast ref={toastRef} />
-      <section className="flex items-center justify-between mb-4">
+      <section className="flex items-center justify-between py-2 px-3">
         <div className="flex items-center gap-2">
           <Button
             text
             style={{ ...BUTTON_STYLES.iconButton, height: '32px', width: '32px' }}
             onClick={() => navigate('/jewels/inventory')}
           >
-            <span className="material-symbols-rounded flex items-center justify-center text-[#704F01] dark:text-white h-8 w-7 font-light text-2xl">
+            <span className="material-symbols-rounded flex items-center justify-center text-[#704F01] dark:text-white font-light text-2xl">
               chevron_left
             </span>
           </Button>
@@ -520,7 +520,10 @@ export function ProductStockPage() {
           paginator
           rows={10}
           rowsPerPageOptions={[5, 10, 15, 20]}
-          pt={DATA_TABLE_DARK_PT}
+          pt={{
+            root: { className: 'datatable dark:datatable' },
+            header: { className: 'p-datatable-thead dark:p-datatable-thead' }
+          }}
           onRowClick={(e) => {
             const item = e.data as ProductStockItem;
             setEditingItem(item);

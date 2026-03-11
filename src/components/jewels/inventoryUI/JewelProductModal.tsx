@@ -3,7 +3,7 @@ import { Button } from 'primereact/button';
 import { Carousel } from 'primereact/carousel';
 import type { JewelFormState, JewelModalView, JewelModalType, InventoryJewelProduct } from '@/types/jewelProduct.types';
 import { METAL_OPTIONS } from '@/types/jewelProduct.types';
-import { JewelProductForm } from './JewelProductForm';
+import { JewelProductForm } from '../../../../components/jewels/inventoryUI/JewelProductForm';
 import type { FileUpload } from 'primereact/fileupload';
 import { BUTTON_STYLES, INVENTORY_THEME } from '@/config/inventoryStyles';
 
