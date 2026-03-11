@@ -7,6 +7,8 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import { AutoComplete } from 'primereact/autocomplete';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
+import { Icon } from '@/components/ui/Icon';
 import { formatCurrency } from '@/utils/format';
 import { PaymentMethodModal } from './PaymentMethodModal';
 
@@ -274,7 +276,7 @@ export function NewOrderModal({
                 </div>
               </div>
               <Button
-                icon="pi pi-times"
+                icon={<PrimeReactIcon name="close" size={20} />}
                 text
                 rounded
                 onClick={() => {
@@ -365,7 +367,7 @@ export function NewOrderModal({
         {/* Scan Now Section */}
         <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
           <div className="flex items-center gap-3">
-            <i className="pi pi-qrcode text-2xl text-green-600 dark:text-green-400" />
+            <Icon name="qr_code_scanner" size={24} className="text-green-600 dark:text-green-400" />
             <div>
               <div className="font-semibold text-green-700 dark:text-green-300">
                 Scan Now
@@ -416,7 +418,7 @@ export function NewOrderModal({
                     />
                     {item.barcode && (
                       <Button
-                        icon="pi pi-times"
+                        icon={<PrimeReactIcon name="close" size={20} />}
                         text
                         rounded
                         className="absolute right-1 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
@@ -428,7 +430,7 @@ export function NewOrderModal({
 
                 {/* Remove Button */}
                 <Button
-                  icon="pi pi-minus"
+                  icon={<PrimeReactIcon name="remove" size={20} />}
                   rounded
                   severity="danger"
                   className="flex-shrink-0"
@@ -446,7 +448,7 @@ export function NewOrderModal({
         <div className="pt-4 border-t border-gray-200 dark:border-secondary-700">
           <Button
             label="Choose Payment Method"
-            icon="pi pi-wallet"
+            icon={<PrimeReactIcon name="account_balance_wallet" size={20} />}
             severity="warning"
             className="w-full"
             onClick={handleChoosePayment}

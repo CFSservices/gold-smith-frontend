@@ -31,7 +31,6 @@ interface AuthState {
 
   // Computed helpers
   hasRole: (role: UserRole) => boolean;
-  isAdmin: () => boolean;
 }
 
 // Initial state
@@ -133,12 +132,6 @@ export const useAuthStore = create<AuthState>()(
       hasRole: (role) => {
         const { user } = get();
         return user?.role === role;
-      },
-
-      // Check if user is admin
-      isAdmin: () => {
-        const { user } = get();
-        return user?.role === 'admin';
       },
     })),
     {

@@ -1,0 +1,35 @@
+/**
+ * PrimeReact Theme Variables - Gold Smith Design System
+ * Maps design tokens to PrimeReact semantic variables.
+ * Requires tokens to be loaded first.
+ * Reference: https://primereact.org/theming/
+ */
+
+:root {
+  --primary-color: var(--color-gold-dark);
+  --primary-color-text: var(--color-white);
+  --font-family: var(--font-sans);
+  --surface-ground: var(--color-base-bg);
+  --surface-section: var(--color-white);
+  --surface-border: var(--color-border-default);
+  --surface-hover: var(--color-secondary-200);
+  --text-color: var(--color-black);
+  --text-color-secondary: var(--color-text-muted);
+  --highlight-bg: var(--color-gold-light);
+  --highlight-text-color: var(--color-gold-dark);
+  --focus-ring: 0 0 0 0.2rem rgba(103, 81, 34, 0.3);
+}
+
+.dark {
+  --primary-color: var(--color-gold-medium);
+  --primary-color-text: var(--color-white);
+  --surface-ground: var(--color-secondary-900);
+  --surface-section: var(--color-secondary-800);
+  --surface-border: var(--color-secondary-700);
+  --surface-hover: var(--color-secondary-700);
+  --text-color: var(--color-white);
+  --text-color-secondary: var(--color-secondary-400);
+  --highlight-bg: rgba(169, 127, 0, 0.2);
+  --highlight-text-color: var(--color-gold-400);
+  --focus-ring: 0 0 0 0.2rem rgba(169, 127, 0, 0.3);
+}

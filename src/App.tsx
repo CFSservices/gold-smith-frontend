@@ -3,12 +3,12 @@
  * Reference: https://primereact.org/configuration/
  */
 
-import { RouterProvider } from 'react-router-dom';
-import { PrimeReactProvider } from 'primereact/api';
 import { QueryProvider } from '@/lib/queryClient';
 import { router } from '@/routes';
 import { useThemeStore } from '@/store/themeStore';
+import { PrimeReactProvider } from 'primereact/api';
 import { useEffect } from 'react';
+import { RouterProvider } from 'react-router-dom';
 
 /**
  * PrimeReact configuration options
@@ -27,7 +27,7 @@ const primeReactConfig = {
   // Z-index configuration for layered components
   zIndex: {
     modal: 1100,    // dialog, sidebar
-    overlay: 1000,  // dropdown, overlaypanel
+    overlay: 1000,  // dropdown, overlay panel
     menu: 1000,     // overlay menus
     tooltip: 1100,  // tooltip
     toast: 1200,    // toast

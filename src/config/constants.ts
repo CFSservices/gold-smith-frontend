@@ -81,6 +81,12 @@ export const DEBOUNCE = {
   resize: 100,
 } as const;
 
+// Theme meta colors (matches design tokens - single source for meta theme-color)
+export const THEME_META_COLORS = {
+  light: '#ffffff', // --color-white
+  dark: '#1c1917', // --color-secondary-900
+} as const;
+
 // Breakpoints (matching Tailwind)
 export const BREAKPOINTS = {
   sm: 640,
@@ -118,4 +124,11 @@ export const VALIDATION = {
     pattern: /^[6-9]\d{9}$/,
     length: 10,
   },
+} as const;
+
+// Authentication error messages
+export const AUTH_ERRORS = {
+  ACCESS_DENIED: 'Access denied. This application is for administrators only.',
+  INVALID_CREDENTIALS: 'Invalid email or password',
+  ACCOUNT_INACTIVE: 'Your account is not active. Please contact support.',
 } as const;

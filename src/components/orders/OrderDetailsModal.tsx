@@ -7,6 +7,8 @@ import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
+import { Icon } from '@/components/ui/Icon';
+import { PrimeReactIcon } from '@/components/ui/Icon/PrimeReactIcon';
 import { type Order } from '@/mocks/data/orders';
 import { formatCurrency, formatDate } from '@/utils/format';
 import { DeliverOrderModal } from './DeliverOrderModal';
@@ -154,7 +156,7 @@ export function OrderDetailsModal({
         {order.status === 'pending' ? (
           <>
             <div className="flex items-center gap-2 text-sm text-gray-600">
-              <i className="pi pi-map-marker text-amber-600" />
+              <Icon name="location_on" size={20} className="text-gold-600 dark:text-gold-400" />
               <span>Delivery Pending</span>
             </div>
             <Button 
@@ -166,7 +168,7 @@ export function OrderDetailsModal({
         ) : order.status === 'delivered' ? (
           <>
             <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
-              <i className="pi pi-check-circle text-green-600 dark:text-green-400" />
+              <Icon name="check_circle" size={20} className="text-green-600 dark:text-green-400" />
               <span className="font-semibold">Delivered</span>
             </div>
             <div className="px-4 py-2 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
@@ -178,7 +180,7 @@ export function OrderDetailsModal({
         ) : order.status === 'cancelled' ? (
           <>
             <div className="flex items-center gap-2 text-sm text-red-600 dark:text-red-400">
-              <i className="pi pi-times-circle text-red-600 dark:text-red-400" />
+              <Icon name="error" size={20} className="text-red-600 dark:text-red-400" />
               <span className="font-semibold">Cancelled</span>
             </div>
             <div className="px-4 py-2 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
@@ -201,7 +203,7 @@ export function OrderDetailsModal({
     <div className="flex items-center justify-between gap-4">
       {/* Left */}
       <div className="flex items-center gap-3 flex-shrink-0">
-        <i className="pi pi-gift text-xl text-gray-700" />
+        <Icon name="featured_seasonal_and_gifts" size={24} className="text-secondary-500 dark:text-secondary-400" />
 
         <div className="leading-tight">
           <div className="font-semibold text-secondary-900 dark:text-white">
@@ -263,7 +265,7 @@ export function OrderDetailsModal({
             </div>
             {/* Tick icon outside OTP field - shown by default, enabled only when OTP is 6 digits and Gift Name is entered */}
             <Button
-              icon="pi pi-check"
+              icon={<PrimeReactIcon name="check" size={20} />}
               className={giftOtp.length === 6 && giftName ? "text-green-600" : "text-gray-400"}
               text
               rounded
@@ -297,7 +299,7 @@ export function OrderDetailsModal({
       {giftCollectionCompleted && (
         <div className="flex flex-col gap-2 items-end text-right">
           <div className="flex items-center gap-2 text-sm text-secondary-900 dark:text-white">
-            <i className="pi pi-map-marker text-gray-600" />
+            <Icon name="location_on" size={20} className="text-secondary-500 dark:text-secondary-400" />
             <span>Self Collected At Store</span>
           </div>
           <div className="text-sm text-secondary-700 dark:text-secondary-300">
@@ -361,21 +363,21 @@ export function OrderDetailsModal({
         <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-secondary-700">
           <div className="flex items-center gap-4">
             <Button
-              icon="pi pi-history"
+              icon={<PrimeReactIcon name="history" size={20} />}
               text
               rounded
               tooltip="History"
               tooltipOptions={{ position: 'top' }}
             />
             <Button
-              icon="pi pi-download"
+              icon={<PrimeReactIcon name="download" size={20} />}
               text
               rounded
               tooltip="Download"
               tooltipOptions={{ position: 'top' }}
             />
             <Button
-              icon="pi pi-print"
+              icon={<PrimeReactIcon name="print" size={20} />}
               text
               rounded
               tooltip="Print"

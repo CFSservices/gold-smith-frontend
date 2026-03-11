@@ -15,21 +15,17 @@ export function PublicRoute({ children }: PublicRouteProps) {
   const location = useLocation();
   const { isAuthenticated, user } = useAuthStore();
 
-  // Get the redirect path from location state or default based on role
+  // Get the redirect path from location state or default dashboard
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname;
 
-  // If already authenticated, redirect to appropriate dashboard
+  // If already authenticated, redirect to dashboard (admin-only app)
   if (isAuthenticated) {
     // Redirect to the page they tried to visit or default dashboard
     if (from) {
       return <Navigate to={from} replace />;
     }
-
-    // Redirect based on role
-    if (user?.role === 'admin') {
-      return <Navigate to={ROUTES.admin.dashboard} replace />;
-    }
     
+    // Always redirect to dashboard (admin-only app)
     return <Navigate to={ROUTES.dashboard} replace />;
   }
 

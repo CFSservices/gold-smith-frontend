@@ -6,7 +6,6 @@ export const API_ENDPOINTS = {
   // Authentication
   auth: {
     login: '/auth/login',
-    register: '/auth/register',
     logout: '/auth/logout',
     refresh: '/auth/refresh',
     forgotPassword: '/auth/forgot-password',
@@ -41,26 +40,6 @@ export const API_ENDPOINTS = {
     stats: '/dashboard/stats',
     recentActivity: '/dashboard/recent-activity',
     charts: '/dashboard/charts',
-  },
-
-  // Admin
-  admin: {
-    dashboard: '/admin/dashboard',
-    users: '/admin/users',
-    settings: '/admin/settings',
-    reports: '/admin/reports',
-  },
-
-  // Orders & Delivery
-  orders: {
-    list: '/orders',
-    detail: (id: string | number) => `/orders/${id}`,
-    deliver: (id: string | number) => `/orders/${id}/deliver`,
-    sendOtp: (id: string | number) => `/orders/${id}/deliver/send-otp`,
-    verifyOtp: (id: string | number) => `/orders/${id}/deliver/verify-otp`,
-    cancel: (id: string | number) => `/orders/${id}/cancel`,
-    sendCancelOtp: (id: string | number) => `/orders/${id}/cancel/send-otp`,
-    verifyCancelOtp: (id: string | number) => `/orders/${id}/cancel/verify-otp`,
   },
 } as const;
 
