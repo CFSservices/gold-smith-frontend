@@ -1,0 +1,73 @@
+/**
+ * Component Overrides - Gold Smith Design System
+ * PrimeReact component customizations and layout utilities.
+ */
+
+/* Page Header - Fixed height 80px with border, sticky positioning */
+.page-header {
+  height: 80px;
+  background-color: var(--surface-section);
+  border-bottom: 1px solid var(--surface-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.dark .page-header {
+  background-color: var(--color-secondary-800);
+  border-bottom-color: var(--color-secondary-700);
+}
+
+/* Tab bar - SelectButton used as tabs */
+.tab-bar .p-selectbutton {
+  background-color: var(--color-base-bg);
+  padding: 8px;
+  border-radius: 12px;
+  gap: 4px;
+}
+
+.tab-bar .p-selectbutton .p-button {
+  background-color: var(--color-base-bg);
+  color: var(--text-color-secondary);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.tab-bar .p-selectbutton .p-button.p-highlight {
+  background-color: var(--text-color-secondary);
+  color: var(--primary-color-text);
+}
+
+.dark .tab-bar .p-selectbutton {
+  background-color: var(--color-secondary-800);
+}
+
+.dark .tab-bar .p-selectbutton .p-button {
+  background-color: var(--color-secondary-800);
+  color: var(--color-secondary-400);
+}
+
+.dark .tab-bar .p-selectbutton .p-button.p-highlight {
+  background-color: var(--color-secondary-600);
+  color: var(--primary-color-text);
+}
+
+/* DataTable header - section background (base layer overrides primereact) */
+.datatable .p-datatable-thead > tr > th {
+  background-color: var(--color-base-bg);
+  border-color: var(--surface-border);
+  color: var(--text-color);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  padding: 8px 16px;
+  height: 32px;
+}
+
+.dark .datatable .p-datatable-thead > tr > th {
+  background-color: var(--color-secondary-800);
+  border-color: var(--color-secondary-700);
+  color: var(--text-color);
+}

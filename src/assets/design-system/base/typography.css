@@ -1,0 +1,190 @@
+/**
+ * Typography Classes - Gold Smith Design System
+ * Semantic typography classes for consistent text styling.
+ * Source: Figma design system
+ */
+
+/**
+ * Typography classes use --text-color for light/dark mode.
+ * --text-color is set in theme/primereact-vars.css (:root and .dark).
+ */
+
+/* Base typography properties */
+.text-base-font {
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+  margin: 0;
+  color: var(--text-color);
+}
+
+/* Page Title - 32px, Bold (700) */
+.text-xl-bold {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-2xl);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Section Title / Large Value - 18px, SemiBold (600) */
+.text-lg-semibold {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-lg);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Body Text / Label - 16px, Medium (500) */
+.text-md-medium {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Small Text / Breadcrumb - 12px, SemiBold (600) */
+.text-sm-semibold {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Extra Small Text - 10px, Normal (400) */
+.text-xs-normal {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-xs);
+  line-height: var(--line-height-xs);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Small Text - 12px, Normal (400) */
+.text-sm-normal {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Base Text - 14px, Normal (400) */
+.text-base-normal {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Medium Text - 16px, Normal (400) */
+.text-md-normal {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Large Text - 18px, Normal (400) */
+.text-lg-normal {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-normal);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-lg);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Extra Large Text - 24px, SemiBold (600) */
+.text-xl-semibold {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-xl);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Extra Large Text - 24px, Bold (700) */
+.text-xl-bold-alt {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+  line-height: var(--line-height-xl);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+/* Legacy / Semantic typography - Page components */
+.page-title {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-2xl);
+  line-height: var(--line-height-2xl);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.page-breadcrumb {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.section-title {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-lg);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.metal-rate-price {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-lg);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.metal-rate-label {
+  font-family: var(--font-sans);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  letter-spacing: 0;
+  color: var(--text-color);
+  margin: 0;
+}

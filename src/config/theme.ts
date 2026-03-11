@@ -4,6 +4,7 @@
  * Reference: https://primereact.org/theming/
  */
 
+import { THEME_META_COLORS } from '@/config/constants';
 import type { Theme } from '@/types';
 
 // Theme options for UI
@@ -112,7 +113,7 @@ export const applyTheme = (theme: Theme): void => {
   if (metaThemeColor) {
     metaThemeColor.setAttribute(
       'content',
-      resolvedTheme === 'dark' ? '#1c1917' : '#ffffff'
+      resolvedTheme === 'dark' ? THEME_META_COLORS.dark : THEME_META_COLORS.light
     );
   }
 };

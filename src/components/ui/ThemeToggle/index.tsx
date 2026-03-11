@@ -20,8 +20,7 @@ export function ThemeToggle({ showLabel = false, className, iconSize = 20 }: The
   const { isDarkMode, toggleTheme, theme } = useTheme();
 
   const getIcon = () => {
-    // Consistent icon color: #675122 (light mode), #d4a574 (dark mode)
-    const iconClassName = 'text-[#675122] dark:text-[#d4a574]';
+    const iconClassName = 'text-gold-dark dark:text-gold-icon-dark';
     if (theme === 'system') {
       return <PrimeReactIcon name="computer" size={iconSize} className={iconClassName} />;
     }

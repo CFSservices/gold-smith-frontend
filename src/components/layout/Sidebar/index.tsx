@@ -94,7 +94,7 @@ export function Sidebar({
                     'active:bg-white/25', // Figma: Pressed - white overlay 25% opacity
                   ],
                   // Figma: Active state - white bg (#ffffff), dark text (#2e240f)
-                  isActive && 'bg-white text-[#2e240f] font-medium'
+                  isActive && 'bg-white text-gold-gradient-end font-medium'
                 )
               }
               onClick={onMobileMenuClose}

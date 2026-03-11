@@ -86,7 +86,7 @@ export function DashboardPage() {
         <div className="space-y-6">
           {/* Metal Rates Section - Figma Frame 3 */}
           {/* No outer border/spacing - spans full width */}
-          <div className="bg-[#f2f2f2] dark:bg-secondary-800" style={{ minHeight: '174px' }}>
+          <div className="bg-base-bg dark:bg-secondary-800" style={{ minHeight: '174px' }}>
             {/* Header Row - Padding: 16px left, 24px top */}
             <div className="flex items-center justify-between px-4 pt-6 pb-4">
               {/* Metal Rates Title - Figma: Noto Sans SemiCondensed ExtraBold, 600 weight, 18px */}
@@ -111,9 +111,9 @@ export function DashboardPage() {
                   onChange={(e) => { setSelectedDate(e.value as Date); }}
                   dateFormat="dd MMM yyyy"
                   showIcon
-                  icon={<PrimeReactIcon name="calendar_month" size={16} className="text-[#675122] dark:text-[#d4a574]" />}
+                  icon={<PrimeReactIcon name="calendar_month" size={16} className="text-gold-dark dark:text-gold-icon-dark" />}
                   className="w-[194px]"
-                  inputClassName="w-full h-[38px] border border-[#cccccc] dark:border-secondary-700 rounded-lg px-3 text-[#555555] dark:text-secondary-400 bg-white dark:bg-secondary-800"
+                  inputClassName="w-full h-[38px] border border-border-default dark:border-secondary-700 rounded-lg px-3 text-text-muted dark:text-secondary-400 bg-white dark:bg-secondary-800"
                 />
               </div>
             </div>
@@ -123,7 +123,7 @@ export function DashboardPage() {
               {metalRates.map((metal) => (
                 <div
                   key={metal.label}
-                  className="bg-white dark:bg-secondary-800 border border-[#cccccc] dark:border-secondary-700 rounded-lg"
+                  className="bg-white dark:bg-secondary-800 border border-border-default dark:border-secondary-700 rounded-lg"
                   style={{ 
                     width: '214.2px',
                     height: '72px',

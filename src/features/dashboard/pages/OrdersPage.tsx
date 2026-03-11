@@ -241,7 +241,7 @@ const imagesTemplate = (row: any) => (
         <img
           key={img}
           src={img}
-          className="w-8 h-8 rounded-lg object-cover border border-[#ccc] dark:border-secondary-700"
+          className="w-8 h-8 rounded-lg object-cover border border-border-default dark:border-secondary-700"
           alt=""
         />
       ))}
@@ -255,7 +255,7 @@ const imagesTemplate = (row: any) => (
     <div className="py-4">
       <div className="font-medium text-base text-secondary-900 dark:text-white">{row.orderId}</div>
       <div className="font-medium text-base text-secondary-700 dark:text-secondary-300">₹{row.amount.toLocaleString()}</div>
-      <div className="text-sm text-[#555] dark:text-secondary-400">{row.itemCount} Items</div>
+      <div className="text-sm text-text-muted dark:text-secondary-400">{row.itemCount} Items</div>
     </div>
   );
 
@@ -266,19 +266,19 @@ const imagesTemplate = (row: any) => (
         <img
           src={row.staff.avatar}
           alt=""
-          className="w-12 h-12 rounded-lg border-2 border-[#555] dark:border-secondary-500 object-cover"
+          className="w-12 h-12 rounded-lg border-2 border-text-muted dark:border-secondary-500 object-cover"
         />
         <img
           src={row.customer.avatar}
           alt=""
-          className="w-12 h-12 rounded-lg border-2 border-[#00a91c] object-cover"
+          className="w-12 h-12 rounded-lg border-2 border-success object-cover"
         />
       </div>
       <div>
         <div className="font-medium text-base text-secondary-700 dark:text-secondary-300">{row.staff.name}</div>
-        <div className="text-sm text-[#555] dark:text-secondary-400">{row.staff.phone}</div>
+        <div className="text-sm text-text-muted dark:text-secondary-400">{row.staff.phone}</div>
         <div className="font-medium text-base text-secondary-700 dark:text-secondary-300 mt-2">{row.customer.name}</div>
-        <div className="text-sm text-[#555] dark:text-secondary-400">{row.customer.phone}</div>
+        <div className="text-sm text-text-muted dark:text-secondary-400">{row.customer.phone}</div>
       </div>
     </div>
   );
