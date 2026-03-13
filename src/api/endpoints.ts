@@ -41,6 +41,16 @@ export const API_ENDPOINTS = {
     recentActivity: '/dashboard/recent-activity',
     charts: '/dashboard/charts',
   },
+
+  // Scheme Rules
+  schemeRules: {
+    list: '/scheme/getAllExistingSchemes',
+    detail: (id: string) => `/scheme/getSchemeById/${id}`,
+    create: '/scheme/createNewScheme',
+    update: (id: string) => `/scheme/updateExistingScheme/${id}`,
+    updateStatus: (id: string) => `/scheme/updateExistingSchemeStatus/${id}`,
+    delete: (id: string) => `/scheme/deleteExistingScheme/${id}`,
+  },
 } as const;
 
 // Type for endpoints

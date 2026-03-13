@@ -22,15 +22,13 @@ const ForgotPasswordPage = lazy(() => import('@/features/auth/pages/ForgotPasswo
 
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
 const OrdersPage = lazy(() => import('@/features/dashboard/pages/OrdersPage'));
-const SchemesPage = lazy(() => import('@/features/dashboard/pages/SchemesPage'));
+const CustomerSchemesPage = lazy(() => import('@/features/dashboard/pages/customerSchemesPage'));
+const SchemeRulesPage = lazy(() => import('@/features/dashboard/pages/SchemeRulesPage'));
 const JewelsPage = lazy(() => import('@/features/dashboard/pages/JewelsPage'));
 const ContentPage = lazy(() => import('@/features/dashboard/pages/ContentPage'));
 const CustomersPage = lazy(() => import('@/features/dashboard/pages/CustomersPage'));
 const ProfilePage = lazy(() => import('@/features/dashboard/pages/ProfilePage'));
-const SchemesPage = lazy(() => import('@/features/dashboard/pages/SchemesPage'));
-
 const SettingsPage = lazy(() => import('@/features/dashboard/pages/SettingsPage'));
-
 const NotFoundPage = lazy(() => import('@/features/auth/pages/NotFoundPage'));
 
 // Suspense wrapper for lazy loaded components
@@ -85,7 +83,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/schemes',
-        element: <SchemesPage />,
+        element: <CustomerSchemesPage />,
       },
       {
         path: '/jewels',
@@ -94,6 +92,12 @@ export const router = createBrowserRouter([
       {
         path: '/content',
         element: <ContentPage />,
+        children: [
+          {
+            path: 'scheme-rules',
+            element: <SchemeRulesPage />,
+          }
+        ]
       },
       {
         path: '/customers',

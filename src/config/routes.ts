@@ -16,7 +16,10 @@ export const ROUTES = {
   // Protected routes - Dashboard (admin-only app)
   dashboard: '/dashboard',
   orders:'/orders',
-  schemes:'/schemes',
+  customerSchemes:'/schemes',
+  jewels:'/jewels',
+  content:'/content',
+  customers:'/customers',
   profile: '/profile',
   settings: '/settings',
 
@@ -38,21 +41,12 @@ export const DASHBOARD_NAV_ITEMS: NavItem[] = [
   {
     label: 'Orders',
     path: ROUTES.orders,
-    icon: 'pi pi-box',
+    icon: 'package_2',
+    hasDropdown: true,
   },
   {
     label: 'Schemes',
-    path: ROUTES.schemes,
-    icon: 'pi pi-book',
-  },
-  {
-    label: 'Profile',
-    path: ROUTES.profile,
-    icon: 'pi pi-user',
-  },
-  {
-    label: 'Schemes',
-    path: ROUTES.schemes,
+    path: ROUTES.customerSchemes,
     icon: 'book_5', // Material Symbols - matches Figma
     hasDropdown: true,
   },
@@ -92,13 +86,11 @@ export const getRouteTitle = (pathname: string): string => {
     [ROUTES.forgotPassword]: 'Forgot Password',
     [ROUTES.dashboard]: 'Dashboard',
     [ROUTES.orders]: 'Orders',
-    [ROUTES.schemes]: 'Schemes',
+    [ROUTES.customerSchemes]: 'Customer Schemes',
     [ROUTES.jewels]: 'Jewels',
     [ROUTES.content]: 'Content',
     [ROUTES.customers]: 'Customers',
     [ROUTES.profile]: 'Profile',
-    [ROUTES.schemes]:'Schemes',
-    [ROUTES.orders]: 'Orders',
     [ROUTES.settings]: 'Settings',
   };
 
