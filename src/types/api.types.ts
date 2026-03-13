@@ -63,12 +63,22 @@ export const QueryKeys = {
   users: ['users'] as const,
   user: (id: string) => ['users', id] as const,
   
-  // Add more query keys as needed
+  // Orders
+  orders: ['orders'] as const,
+  ordersByStatus: (status: string) => ['orders', status] as const,
+  ordersSearch: (status: string, search: string) => ['orders', status, search] as const,
+  order: (id: string | number) => ['orders', 'detail', String(id)] as const,
 } as const;
 
 // Mutation keys
 export const MutationKeys = {
   login: ['auth', 'login'] as const,
   logout: ['auth', 'logout'] as const,
-  // Add more mutation keys as needed
+
+  // Orders
+  createOrder: ['orders', 'create'] as const,
+  deliverOrder: ['orders', 'deliver'] as const,
+  cancelOrder: ['orders', 'cancel'] as const,
+  updateExpectedDelivery: ['orders', 'updateExpectedDelivery'] as const,
+  scanStock: ['orders', 'scanStock'] as const,
 } as const;

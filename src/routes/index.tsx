@@ -21,7 +21,7 @@ const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
 const ForgotPasswordPage = lazy(() => import('@/features/auth/pages/ForgotPasswordPage'));
 
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
-const OrdersPage = lazy(() => import('@/features/dashboard/pages/OrdersPage'));
+const OrdersPage = lazy(() => import('@/features/orders/pages/OrdersPage'));
 const SchemesPage = lazy(() => import('@/features/dashboard/pages/SchemesPage'));
 const JewelsPage = lazy(() => import('@/features/dashboard/pages/JewelsPage'));
 const ContentPage = lazy(() => import('@/features/dashboard/pages/ContentPage'));
