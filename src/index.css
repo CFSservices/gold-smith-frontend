@@ -12,7 +12,7 @@
 /* 1. Tailwind theme layer (includes default tokens) */
 @import 'tailwindcss/theme' layer(theme);
 
-/* 2. Gold Smith tokens (single source of truth) */
+/* 2. Gold Smith tokens (single source of truth, unlayered :root vars) */
 @import './assets/design-system/tokens/index.css';
 
 /* 3. Tailwind @theme inline - references tokens, no duplication */
@@ -52,6 +52,24 @@
   --color-border-default: var(--color-border-default);
   --color-text-muted: var(--color-text-muted);
   --color-success: var(--color-success);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-primary-pressed: var(--color-primary-pressed);
+  --color-primary-tint: var(--color-primary-tint);
+  --color-primary-tint-hover: var(--color-primary-tint-hover);
+  --color-primary-tint-pressed: var(--color-primary-tint-pressed);
+  --color-error: var(--color-error);
+  --color-error-hover: var(--color-error-hover);
+  --color-error-pressed: var(--color-error-pressed);
+  --color-error-tint: var(--color-error-tint);
+  --color-warning: var(--color-warning);
+  --color-warning-hover: var(--color-warning-hover);
+  --color-warning-pressed: var(--color-warning-pressed);
+  --color-warning-tint: var(--color-warning-tint);
+  --color-success-hover: var(--color-success-hover);
+  --color-success-pressed: var(--color-success-pressed);
+  --color-success-tint: var(--color-success-tint);
+  --color-disabled-bg: var(--color-disabled-bg);
+  --color-disabled-text: var(--color-disabled-text);
   --font-sans: var(--font-sans);
   --font-size-xs: var(--font-size-xs);
   --font-size-sm: var(--font-size-sm);
@@ -60,6 +78,16 @@
   --font-size-lg: var(--font-size-lg);
   --font-size-xl: var(--font-size-xl);
   --font-size-2xl: var(--font-size-2xl);
+  --font-size-caption1: var(--font-size-caption1);
+  --font-size-caption2: var(--font-size-caption2);
+  --font-size-footnote: var(--font-size-footnote);
+  --font-size-body: var(--font-size-body);
+  --font-size-callout: var(--font-size-callout);
+  --font-size-title1: var(--font-size-title1);
+  --font-size-title2: var(--font-size-title2);
+  --font-size-title3: var(--font-size-title3);
+  --font-size-large-title: var(--font-size-large-title);
+  --font-size-huge-title: var(--font-size-huge-title);
   --line-height-xs: var(--line-height-xs);
   --line-height-sm: var(--line-height-sm);
   --line-height-base: var(--line-height-base);
@@ -71,18 +99,31 @@
   --font-weight-medium: var(--font-weight-medium);
   --font-weight-semibold: var(--font-weight-semibold);
   --font-weight-bold: var(--font-weight-bold);
+  --spacing-nil: var(--spacing-nil);
+  --spacing-xxs: var(--spacing-xxs);
+  --spacing-xs: var(--spacing-xs);
+  --spacing-sm: var(--spacing-sm);
+  --spacing-base: var(--spacing-base);
+  --spacing-lg: var(--spacing-lg);
+  --spacing-xl: var(--spacing-xl);
+  --spacing-2xl: var(--spacing-2xl);
+  --spacing-3xl: var(--spacing-3xl);
+  --spacing-4xl: var(--spacing-4xl);
+  --spacing-5xl: var(--spacing-5xl);
+  --spacing-6xl: var(--spacing-6xl);
+  --spacing-7xl: var(--spacing-7xl);
+  --spacing-8xl: var(--spacing-8xl);
+  --spacing-9xl: var(--spacing-9xl);
+  --spacing-10xl: var(--spacing-10xl);
 }
 
-/* 4. PrimeReact core styles (loaded before our overrides) */
+/* 4. PrimeReact core styles (components only, theme loaded via <link id="app-theme">) */
 @import 'primereact/resources/primereact.min.css' layer(primereact);
 
-/* 5. Gold Smith PrimeReact vars - UNLAYERED so they override the theme link in index.html */
-@import './assets/design-system/theme/primereact-vars.css';
-
-/* 6. Design system base styles */
+/* 5. Design system base styles (includes primereact-vars.css in base layer - overrides primereact) */
 @import './assets/design-system/design-system.css' layer(base);
 
-/* 7. Tailwind utilities (generated from theme) */
+/* 6. Tailwind utilities (generated from theme) */
 @import 'tailwindcss/utilities' layer(utilities);
 
 /* Dark mode: class strategy */

@@ -1,35 +1,84 @@
 /**
  * PrimeReact Theme Variables - Gold Smith Design System
  * Maps design tokens to PrimeReact semantic variables.
- * Requires tokens to be loaded first.
- * Reference: https://primereact.org/theming/
+ * Loaded in the `base` CSS layer, which comes after `primereact`,
+ * ensuring these overrides always win regardless of CDN or local import order.
+ * Source: Figma design system tokens
  */
 
 :root {
+  /* Core brand */
   --primary-color: var(--color-gold-dark);
   --primary-color-text: var(--color-white);
-  --font-family: var(--font-sans);
+  --font-family: var(--font-sans) !important;
+
+  /* Surfaces */
   --surface-ground: var(--color-base-bg);
   --surface-section: var(--color-white);
+  --surface-card: var(--color-white);
+  --surface-overlay: var(--color-white);
   --surface-border: var(--color-border-default);
   --surface-hover: var(--color-secondary-200);
+
+  /* Text */
   --text-color: var(--color-black);
   --text-color-secondary: var(--color-text-muted);
+
+  /* Highlight (selected items, active states) */
   --highlight-bg: var(--color-gold-light);
   --highlight-text-color: var(--color-gold-dark);
+
+  /* Focus ring */
   --focus-ring: 0 0 0 0.2rem rgba(103, 81, 34, 0.3);
+
+  /* Border radius (r_8 as default per Figma) */
+  --border-radius: 8px;
+
+  /* Figma Primary semantic tokens */
+  --color-primary: var(--color-gold-dark);
+  --color-primary-default: var(--color-gold-dark);
+
+  /* Figma Secondary semantic tokens */
+  --color-secondary-default: var(--color-text-muted);
+
+  /* Mask */
+  --maskbg: rgba(0, 0, 0, 0.4);
 }
 
 .dark {
+  /* Core brand - dark mode uses warm gold */
   --primary-color: var(--color-gold-medium);
   --primary-color-text: var(--color-white);
+
+  /* Surfaces - dark mode uses deep stone grays */
   --surface-ground: var(--color-secondary-900);
-  --surface-section: var(--color-secondary-800);
+  --surface-section: var(--color-secondary-900);
+  --surface-card: var(--color-secondary-800);
+  --surface-overlay: var(--color-secondary-800);
   --surface-border: var(--color-secondary-700);
   --surface-hover: var(--color-secondary-700);
+
+  /* Text */
   --text-color: var(--color-white);
   --text-color-secondary: var(--color-secondary-400);
+
+  /* Highlight */
   --highlight-bg: rgba(169, 127, 0, 0.2);
   --highlight-text-color: var(--color-gold-400);
+
+  /* Focus ring */
   --focus-ring: 0 0 0 0.2rem rgba(169, 127, 0, 0.3);
+
+  /* Figma dark semantic overrides */
+  --color-primary: var(--color-gold-medium);
+  --color-primary-default: var(--color-gold-medium);
+  --color-primary-hover: #8f6b00;
+  --color-primary-pressed: #5c4500;
+  --color-primary-tint: rgba(169, 127, 0, 0.2);
+  --color-error-tint: rgba(169, 0, 0, 0.2);
+  --color-success-tint: rgba(0, 169, 28, 0.2);
+  --color-warning-tint: rgba(169, 127, 0, 0.2);
+  --color-disabled-bg: #374151;
+  --color-disabled-text: #6b7280;
+  --color-border-default: #4b5563;
 }
