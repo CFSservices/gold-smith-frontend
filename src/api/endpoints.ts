@@ -36,6 +36,21 @@ export const API_ENDPOINTS = {
     delete: (id: string) => `/merchants/${id}`,
   },
 
+  // Orders
+  orders: {
+    list: '/orders',
+    detail: (id: string | number) => `/orders/${id}`,
+    create: '/orders',
+    cancel: (id: string | number) => `/orders/${id}/cancel`,
+    deliver: (id: string | number) => `/orders/${id}/deliver`,
+    updateExpectedDelivery: (id: string | number) => `/orders/${id}/expected-delivery`,
+    sendDeliveryOtp: (id: string | number) => `/orders/${id}/delivery/send-otp`,
+    verifyDeliveryOtp: (id: string | number) => `/orders/${id}/delivery/verify-otp`,
+    sendCancelOtp: (id: string | number) => `/orders/${id}/cancel/send-otp`,
+    verifyCancelOtp: (id: string | number) => `/orders/${id}/cancel/verify-otp`,
+    scanStock: (id: string | number) => `/orders/${id}/scan-stock`,
+  },
+
   // Dashboard
   dashboard: {
     stats: '/dashboard/stats',

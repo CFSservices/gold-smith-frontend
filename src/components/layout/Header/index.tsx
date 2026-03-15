@@ -46,7 +46,7 @@ export function Header({
   }
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-24 bg-transparent dark:bg-secondary-800">
+    <header className="fixed top-0 left-0 right-0 z-20 h-24 bg-transparent">
       {/* Mobile-first: smaller padding, then desktop padding matching content margins */}
       <div className="h-full px-4 md:px-12 flex items-center justify-between">
         {/* Left side - App icon, Toggle, App heading */}
