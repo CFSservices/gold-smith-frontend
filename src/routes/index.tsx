@@ -21,10 +21,13 @@ const LoginPage = lazy(() => import('@/features/auth/pages/LoginPage'));
 const ForgotPasswordPage = lazy(() => import('@/features/auth/pages/ForgotPasswordPage'));
 
 const DashboardPage = lazy(() => import('@/features/dashboard/pages/DashboardPage'));
-const OrdersPage = lazy(() => import('@/features/dashboard/pages/OrdersPage'));
+const OrdersPage = lazy(() => import('@/features/orders/pages/OrdersPage'));
 const CustomerSchemesPage = lazy(() => import('@/features/dashboard/pages/customerSchemesPage'));
 const SchemeRulesPage = lazy(() => import('@/features/dashboard/pages/SchemeRulesPage'));
 const JewelsPage = lazy(() => import('@/features/dashboard/pages/JewelsPage'));
+const InventoryPage = lazy(() => import('@/features/dashboard/pages/inventoryPage'));
+const ProductStockPage = lazy(() => import('@/features/dashboard/pages/ProductStockPage'));
+const CategoriesPage = lazy(() => import('@/features/dashboard/pages/categoriesPage'));
 const ContentPage = lazy(() => import('@/features/dashboard/pages/ContentPage'));
 const CustomersPage = lazy(() => import('@/features/dashboard/pages/CustomersPage'));
 const ProfilePage = lazy(() => import('@/features/dashboard/pages/ProfilePage'));
@@ -88,6 +91,26 @@ export const router = createBrowserRouter([
       {
         path: '/jewels',
         element: <JewelsPage />,
+        children: [
+          {
+            path: 'inventory',
+            element: <Outlet />,
+            children: [
+              {
+                index: true,
+                element: <InventoryPage />,
+              },
+              {
+                path: ':productId',
+                element: <ProductStockPage />,
+              },
+            ],
+          },
+          {
+            path: 'categories',
+            element: <CategoriesPage/>
+          }
+        ]
       },
       {
         path: '/content',

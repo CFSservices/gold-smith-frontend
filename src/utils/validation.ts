@@ -55,16 +55,34 @@ export const loginSchema = z.object({
   rememberMe: z.boolean().optional().default(false),
 });
 
-// Forgot password schema
+// OTP schema (e.g. 6 digits)
+export const otpSchema = z
+  .string()
+  .min(1, 'OTP is required')
+  .regex(/^\d{4,8}$/, 'OTP should be 4–8 digits');
+
+// Forgot password schema (step 1: email only)
 export const forgotPasswordSchema = z.object({
   email: emailSchema,
+});
+
+// Forgot password with OTP (step 2: email + otp)
+export const forgotPasswordOtpSchema = z.object({
+  email: emailSchema,
+  otp: otpSchema,
+});
+
+// First step form: email required, otp optional (shown after send OTP)
+export const forgotPasswordFirstStepSchema = z.object({
+  email: emailSchema,
+  otp: z.string().optional(),
 });
 
 // Reset password schema
 export const resetPasswordSchema = z
   .object({
-    password: passwordSchema,
-    confirmPassword: z.string().min(1, 'Please confirm your password'),
+    password: z.string().min(1, 'Password is required'),
+    confirmPassword: z.string().min(1, 'Confirm password is required'),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords do not match',
@@ -97,6 +115,8 @@ export const updateProfileSchema = z.object({
 // Export types
 export type LoginFormData = z.infer<typeof loginSchema>;
 export type ForgotPasswordFormData = z.infer<typeof forgotPasswordSchema>;
+export type ForgotPasswordOtpFormData = z.infer<typeof forgotPasswordOtpSchema>;
+export type ForgotPasswordFirstStepFormData = z.infer<typeof forgotPasswordFirstStepSchema>;
 export type ResetPasswordFormData = z.infer<typeof resetPasswordSchema>;
 export type ChangePasswordFormData = z.infer<typeof changePasswordSchema>;
 export type UpdateProfileFormData = z.infer<typeof updateProfileSchema>;

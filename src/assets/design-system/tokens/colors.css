@@ -21,7 +21,7 @@
   /* Figma Gold Colors */
   --color-gold-dark: #675122;
   --color-gold-medium: #a97f00;
-  --color-gold-icon-dark: #d4a574; /* Dark mode icon accent */
+  --color-gold-icon-dark: #d4a574;
   --color-gold-light: #fff9e5;
   --color-gold-light-alt: #ece0c5;
   --color-gold-gradient-start: #54421c;
@@ -41,10 +41,44 @@
   --color-secondary-900: #1c1917;
   --color-secondary-950: #0c0a09;
 
-  /* Semantic primitives - used across themes */
+  /* Semantic primitives */
   --color-white: #ffffff;
   --color-black: #000000;
   --color-border-default: #cccccc;
   --color-text-muted: #555555;
-  --color-success: #00a91c; /* Status/success indicator */
+
+  /* Figma Primary (Gold) semantic tokens */
+  --color-primary-hover: #54421c;
+  --color-primary-pressed: #2e240f;
+  --color-primary-tint: #ece0c5;
+  --color-primary-tint-hover: #f2ead9;
+  --color-primary-tint-pressed: #e6d6b2;
+
+  /* Figma Error tokens */
+  --color-error: #a90000;
+  --color-error-hover: #8f0000;
+  --color-error-pressed: #5c0000;
+  --color-error-tint: #ffe5e5;
+  --color-error-tint-hover: #ffcccc;
+  --color-error-tint-pressed: #ff9999;
+
+  /* Figma Success tokens */
+  --color-success: #00a91c;
+  --color-success-hover: #008f18;
+  --color-success-pressed: #005c0f;
+  --color-success-tint: #e5ffea;
+  --color-success-tint-hover: #ccffd4;
+  --color-success-tint-pressed: #99ffaa;
+
+  /* Figma Warning tokens */
+  --color-warning: #a97f00;
+  --color-warning-hover: #8f6b00;
+  --color-warning-pressed: #5c4500;
+  --color-warning-tint: #fff9e5;
+  --color-warning-tint-hover: #fff2cc;
+  --color-warning-tint-pressed: #ffe599;
+
+  /* Figma Grays */
+  --color-disabled-bg: #e5e5e5;
+  --color-disabled-text: #808080;
 }

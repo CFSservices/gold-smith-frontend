@@ -7,7 +7,7 @@ import { authService } from '@/api/services/auth.service';
 import { AUTH_ERRORS } from '@/config/constants';
 import { ROUTES } from '@/config/routes';
 import { useAuthStore } from '@/store/authStore';
-import type { LoginRequest } from '@/types';
+import type { LoginRequest, ResetPasswordRequest, VerifyResetOtpRequest } from '@/types';
 import { MutationKeys, QueryKeys } from '@/types/api.types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -49,8 +49,9 @@ export function useAuth() {
       clearError();
     },
     onSuccess: (response) => {
+      // console.log('response for login mutation(in useAuth hook):', response);
       const { user: userData, tokens } = response.data;
-      
+
       // Verify user is admin (web app is admin-only)
       if (userData.role !== 'admin') {
         setError(AUTH_ERRORS.ACCESS_DENIED);
@@ -71,6 +72,7 @@ export function useAuth() {
       navigate(ROUTES.dashboard);
     },
     onError: (error: { message: string }) => {
+      // console.log('error for login mutation(in useAuth hook):', error);
       setError(error.message);
       setLoading(false);
     },
@@ -101,9 +103,39 @@ export function useAuth() {
     },
   });
 
-  // Forgot password mutation
+  // Forgot password (send OTP) mutation
   const forgotPasswordMutation = useMutation({
     mutationFn: (email: string) => authService.forgotPassword({ email }),
+    onMutate: () => {
+      setLoading(true);
+      clearError();
+    },
+    onError: (error: { message: string }) => {
+      setError(error.message);
+    },
+    onSettled: () => {
+      setLoading(false);
+    },
+  });
+
+  // Verify reset OTP mutation (returns reset_token)
+  const verifyResetOtpMutation = useMutation({
+    mutationFn: (data: VerifyResetOtpRequest) => authService.verifyResetOtp(data),
+    onMutate: () => {
+      setLoading(true);
+      clearError();
+    },
+    onError: (error: { message: string }) => {
+      setError(error.message);
+    },
+    onSettled: () => {
+      setLoading(false);
+    },
+  });
+
+  // Reset password mutation (payload: email, new_password, reset_token)
+  const resetPasswordMutation = useMutation({
+    mutationFn: (data: ResetPasswordRequest) => authService.resetPassword(data),
     onMutate: () => {
       setLoading(true);
       clearError();
@@ -120,13 +152,21 @@ export function useAuth() {
     // State
     user: (currentUserQuery.data) ?? user,
     isAuthenticated,
-    isLoading: storeLoading || loginMutation.isPending,
+    isLoading:
+      storeLoading ||
+      loginMutation.isPending ||
+      forgotPasswordMutation.isPending ||
+      verifyResetOtpMutation.isPending ||
+      resetPasswordMutation.isPending,
     error: storeError,
 
     // Actions
     login: loginMutation.mutate,
     logout: logoutMutation.mutate,
     forgotPassword: forgotPasswordMutation.mutate,
+    forgotPasswordAsync: forgotPasswordMutation.mutateAsync,
+    verifyResetOtpAsync: verifyResetOtpMutation.mutateAsync,
+    resetPassword: resetPasswordMutation.mutate,
     clearError,
 
     // Role helpers
@@ -135,5 +175,6 @@ export function useAuth() {
     // Mutation states
     loginStatus: loginMutation.status,
     forgotPasswordStatus: forgotPasswordMutation.status,
+    resetPasswordStatus: resetPasswordMutation.status,
   };
 }

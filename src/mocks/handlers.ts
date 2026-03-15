@@ -9,8 +9,16 @@
  * 2. Import and use the mock functions in your API services
  */
 
-import type { ApiResponse, AuthTokens, LoginResponse, User } from '@/types';
+import type {
+  ApiResponse,
+  AuthTokens,
+  LoginResponse,
+  ResetPasswordRequest,
+  User,
+  VerifyResetOtpResponse,
+} from '@/types';
 import { findUserByEmail, mockUsers, validateCredentials } from './data/users';
+import { VERIFY_OTP_PURPOSE } from '@/types/auth.types';
 
 // Helper to create API response wrapper
 function createResponse<T>(data: T, message?: string): ApiResponse<T> {
@@ -94,18 +102,65 @@ export async function mockGetCurrentUser(userId: string): Promise<ApiResponse<Us
   return createResponse(user);
 }
 
+// In-memory store for mock: email -> OTP (use "123456" when testing)
+const mockOtpStore = new Map<string, string>();
+const MOCK_OTP = '123456';
+
 /**
- * Mock Forgot Password Handler
+ * Mock Forgot Password Handler (sends OTP to email)
  */
 export async function mockForgotPassword(email: string): Promise<ApiResponse<{ message: string }>> {
   await delay(600);
 
-  const user = findUserByEmail(email);
+  findUserByEmail(email);
+
+  mockOtpStore.set(email, MOCK_OTP);
 
   // Always return success to prevent email enumeration
   return createResponse(
-    { message: 'If an account with that email exists, we sent password reset instructions.' },
-    'Password reset email sent'
+    { message: 'If an account with that email exists, we sent a reset code to your email.' },
+    'OTP sent'
+  );
+}
+
+/**
+ * Mock Verify Reset OTP Handler
+ */
+export async function mockVerifyResetOtp(
+  email: string,
+  otp: string,
+  purpose: VERIFY_OTP_PURPOSE
+): Promise<ApiResponse<VerifyResetOtpResponse>> {
+  await delay(500);
+
+  if (purpose !== VERIFY_OTP_PURPOSE.PASSWORD_RESET) {
+    throw createErrorResponse('Invalid purpose', 400);
+  }
+
+  const expectedOtp = mockOtpStore.get(email);
+  if (!expectedOtp || otp !== expectedOtp) {
+    throw createErrorResponse('Invalid or expired OTP', 400);
+  }
+
+  const reset_token = `mock_reset_${Date.now()}_${Math.random().toString(36).substring(7)}`;
+  return createResponse({ reset_token }, 'OTP verified');
+}
+
+/**
+ * Mock Reset Password Handler
+ */
+export async function mockResetPassword(
+  data: ResetPasswordRequest
+): Promise<ApiResponse<{ message: string }>> {
+  await delay(500);
+
+  if (!data.email || !data.new_password || !data.reset_token) {
+    throw createErrorResponse('Missing required fields', 400);
+  }
+
+  return createResponse(
+    { message: 'Your password has been reset successfully.' },
+    'Password reset successful'
   );
 }
 
@@ -208,6 +263,8 @@ export const mockHandlers = {
   login: mockLogin,
   getCurrentUser: mockGetCurrentUser,
   forgotPassword: mockForgotPassword,
+  verifyResetOtp: mockVerifyResetOtp,
+  resetPassword: mockResetPassword,
   refreshToken: mockRefreshToken,
   logout: mockLogout,
   sendOtp: mockSendOtp,

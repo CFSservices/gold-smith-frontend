@@ -12,6 +12,8 @@ import type {
     LoginResponse,
     ResetPasswordRequest,
     User,
+    VerifyResetOtpRequest,
+    VerifyResetOtpResponse,
 } from '@/types';
 import { api } from '../client';
 import { API_ENDPOINTS } from '../endpoints';
@@ -53,20 +55,39 @@ export const authService = {
   },
 
   /**
-   * Forgot password - send reset email
+   * Forgot password - send OTP to email
    */
   forgotPassword: async (data: ForgotPasswordRequest): Promise<ApiResponse<{ message: string }>> => {
     if (isMockEnabled()) {
       return mockHandlers.forgotPassword(data.email);
     }
+    // console.log('data in forgotPassword:', data);
     return api.post<{ message: string }>(API_ENDPOINTS.auth.forgotPassword, data);
   },
 
   /**
-   * Reset password with token
+   * Verify reset OTP (returns reset_token for reset password step)
    */
-  resetPassword: (data: ResetPasswordRequest) =>
-    api.post<{ message: string }>(API_ENDPOINTS.auth.resetPassword, data),
+  verifyResetOtp: async (
+    data: VerifyResetOtpRequest
+  ): Promise<ApiResponse<VerifyResetOtpResponse>> => {
+    if (isMockEnabled()) {
+      return mockHandlers.verifyResetOtp(data.email, data.otp, data.purpose);
+    }
+    // console.log('data in verifyResetOtp:', data);
+    return api.post<VerifyResetOtpResponse>(API_ENDPOINTS.auth.verifyResetOtp, data);
+  },
+
+  /**
+   * Reset password (payload: email, new_password, reset_token)
+   */
+  resetPassword: async (data: ResetPasswordRequest): Promise<ApiResponse<{ message: string }>> => {
+    if (isMockEnabled()) {
+      return mockHandlers.resetPassword(data);
+    }
+    // console.log('data in resetPassword:', data);
+    return api.post<{ message: string }>(API_ENDPOINTS.auth.resetPassword, data);
+  },
 
   /**
    * Change password (authenticated)

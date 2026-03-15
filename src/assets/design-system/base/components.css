@@ -3,7 +3,7 @@
  * PrimeReact component customizations and layout utilities.
  */
 
-/* Page Header - Fixed height 80px with border, sticky positioning */
+/* Layout */
 .page-header {
   height: 80px;
   background-color: var(--surface-section);
@@ -18,7 +18,7 @@
   border-bottom-color: var(--color-secondary-700);
 }
 
-/* Tab bar - SelectButton used as tabs */
+/* Tabs (SelectButton as tab bar) */
 .tab-bar .p-selectbutton {
   background-color: var(--color-base-bg);
   padding: 8px;
@@ -42,32 +42,15 @@
 }
 
 .dark .tab-bar .p-selectbutton {
-  background-color: var(--color-secondary-800);
+  background-color: var(--color-secondary-900);
 }
 
 .dark .tab-bar .p-selectbutton .p-button {
-  background-color: var(--color-secondary-800);
-  color: var(--color-secondary-400);
+  background-color: transparent;
+  color: var(--color-secondary-300);
 }
 
 .dark .tab-bar .p-selectbutton .p-button.p-highlight {
-  background-color: var(--color-secondary-600);
+  background-color: var(--color-primary-default);
   color: var(--primary-color-text);
-}
-
-/* DataTable header - section background (base layer overrides primereact) */
-.datatable .p-datatable-thead > tr > th {
-  background-color: var(--color-base-bg);
-  border-color: var(--surface-border);
-  color: var(--text-color);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  padding: 8px 16px;
-  height: 32px;
-}
-
-.dark .datatable .p-datatable-thead > tr > th {
-  background-color: var(--color-secondary-800);
-  border-color: var(--color-secondary-700);
-  color: var(--text-color);
 }
